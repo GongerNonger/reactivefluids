@@ -118,4 +118,12 @@ public class ModItems {
     public static final DeferredItem<BlockItem> FOAM_BLOCK_ITEM =
         ITEMS.register("foam_block", () ->
             new BlockItem(ModBlocks.FOAM_BLOCK.get(), new Item.Properties()));
+
+    // =========================================================================
+    // Acid
+    // =========================================================================
+    public static final DeferredItem<BucketItem> ACID_BUCKET =
+        ITEMS.register("acid_bucket", () ->
+            new BucketItem(ModFluids.ACID_SOURCE.get(),
+                new Item.Properties().stacksTo(1).craftRemainder(Items.BUCKET)));
 }

@@ -229,6 +229,29 @@ public class ModFluids {
             .bucket(() -> ModItems.POTASSIUM_IODIDE_BUCKET.get());
 
     // =========================================================================
+    // ACID  (bright green, corrosive — medium speed)
+    // =========================================================================
+    public static final DeferredHolder<FluidType, FluidType> ACID_TYPE =
+        FLUID_TYPES.register("acid", () -> makeFluidType(
+            0xC044FF22,
+            ResourceLocation.fromNamespaceAndPath(ReactiveFluids.MOD_ID, "block/acid_still"),
+            ResourceLocation.fromNamespaceAndPath(ReactiveFluids.MOD_ID, "block/acid_flow")
+        ));
+
+    public static final DeferredHolder<Fluid, FlowingFluid> ACID_SOURCE =
+        FLUIDS.register("acid", () -> new BaseFlowingFluid.Source(ModFluids.ACID_PROPS));
+
+    public static final DeferredHolder<Fluid, FlowingFluid> ACID_FLOWING =
+        FLUIDS.register("acid_flowing", () -> new BaseFlowingFluid.Flowing(ModFluids.ACID_PROPS));
+
+    public static final BaseFlowingFluid.Properties ACID_PROPS =
+        new BaseFlowingFluid.Properties(ACID_TYPE, ACID_SOURCE, ACID_FLOWING)
+            .slopeFindDistance(3)
+            .levelDecreasePerBlock(1)
+            .block(() -> (net.minecraft.world.level.block.LiquidBlock) ModBlocks.ACID_BLOCK.get())
+            .bucket(() -> ModItems.ACID_BUCKET.get());
+
+    // =========================================================================
     // Shared helper
     // =========================================================================
     private static FluidType makeFluidType(int tintColor, ResourceLocation still, ResourceLocation flow) {

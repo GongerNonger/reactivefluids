@@ -42,5 +42,8 @@ public class TranslucentLiquidBlock extends LiquidBlock {
         ItemBlockRenderTypes.setRenderLayer(ModFluids.HYDROGEN_PEROXIDE_FLOWING.get(),   RenderType.translucent());
         ItemBlockRenderTypes.setRenderLayer(ModFluids.POTASSIUM_IODIDE_SOURCE.get(),     RenderType.translucent());
         ItemBlockRenderTypes.setRenderLayer(ModFluids.POTASSIUM_IODIDE_FLOWING.get(),    RenderType.translucent());
+        // Acid
+        ItemBlockRenderTypes.setRenderLayer(ModFluids.ACID_SOURCE.get(),                 RenderType.translucent());
+        ItemBlockRenderTypes.setRenderLayer(ModFluids.ACID_FLOWING.get(),                RenderType.translucent());
     }
 }

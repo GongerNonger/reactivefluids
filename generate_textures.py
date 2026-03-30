@@ -317,6 +317,7 @@ BUCKET_PALETTES = {
     'jade_glowing_resin':  {'outline':(45,74,58),    'primary':(30,175,80),   'highlight':(100,240,150), 'shadow':(10,120,50)},
     'hydrogen_peroxide':   {'outline':(120,140,160), 'primary':(200,225,255), 'highlight':(230,245,255), 'shadow':(160,190,220)},
     'potassium_iodide':    {'outline':(80,55,20),    'primary':(170,115,35),  'highlight':(210,160,70),  'shadow':(120,80,20)},
+    'acid':                {'outline':(20,80,10),    'primary':(50,220,20),   'highlight':(120,255,80),  'shadow':(30,150,10)},
 }
 
 def make_bucket(name):
@@ -373,6 +374,8 @@ FLUIDS = [
     # Elephant's Toothpaste fluids
     ("hydrogen_peroxide",        (160,200, 255),  70, False,  3, 2, ( 0, 0, 8)),
     ("potassium_iodide",         (170,115,  35),  65, True,   4, 3, ( 5, 0,-3)),
+    # Acid
+    ("acid",                     ( 50,220,  20),  75, False,  3, 2, ( 0, 8,-5)),
 ]
 
 EPOXY = [
@@ -393,6 +396,7 @@ BUCKET_COLORS = {
     "jade_glowing_resin":   ( 10,160,  55),
     "hydrogen_peroxide":    (200,225, 255),
     "potassium_iodide":     (170,115,  35),
+    "acid":                 ( 50,220,  20),
 }
 
 def make_foam(seed=5001):

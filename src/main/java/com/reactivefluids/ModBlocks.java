@@ -150,4 +150,12 @@ public class ModBlocks {
             new FoamBlock(BlockBehaviour.Properties.of()
                 .strength(0.3f, 0.3f).sound(SoundType.WOOL)
                 .mapColor(MapColor.SNOW)));
+
+    // =========================================================================
+    // Acid — dissolves stone downward, exposes ores
+    // =========================================================================
+    public static final DeferredBlock<AcidBlock> ACID_BLOCK =
+        BLOCKS.register("acid_block", () ->
+            new AcidBlock((FlowingFluid) ModFluids.ACID_SOURCE.get(),
+                fluidProps(MapColor.COLOR_LIGHT_GREEN)));
 }
