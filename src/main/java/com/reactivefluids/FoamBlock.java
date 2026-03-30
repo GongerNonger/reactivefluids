@@ -80,17 +80,41 @@ public class FoamBlock extends Block {
             double cz = abovePos.getZ() + 0.5;
             level.sendParticles(ParticleTypes.CLOUD, cx, cy + 0.3, cz, 6, 0.25, 0.15, 0.25, 0.06);
 
-            // Chance to spread sideways for a more organic shape (no upward growth from side blocks)
-            if (height > 3 && random.nextFloat() < 0.25f) {
-                Direction dir = Direction.Plane.HORIZONTAL.getRandomDirection(random);
-                BlockPos sidePos = abovePos.relative(dir);
-                BlockState sideState = level.getBlockState(sidePos);
-                if (sideState.isAir() || sideState.canBeReplaced()) {
-                    // Place side block directly without triggering growth tick
-                    level.setBlock(sidePos, defaultBlockState(), 2);
-                    level.sendParticles(ParticleTypes.CLOUD,
-                            sidePos.getX() + 0.5, sidePos.getY() + 0.5, sidePos.getZ() + 0.5,
-                            3, 0.2, 0.1, 0.2, 0.04);
+            // Bloom outward — chance and radius increase with height for a mushroom/cone shape
+            float bloomChance;
+            int bloomCount;
+            if (height < 4) {
+                bloomChance = 0.1f;
+                bloomCount = 1;
+            } else if (height < 10) {
+                bloomChance = 0.4f;
+                bloomCount = 1 + random.nextInt(2);  // 1-2 directions
+            } else {
+                bloomChance = 0.65f;
+                bloomCount = 2 + random.nextInt(2);  // 2-3 directions
+            }
+
+            if (random.nextFloat() < bloomChance) {
+                for (int i = 0; i < bloomCount; i++) {
+                    Direction dir = Direction.Plane.HORIZONTAL.getRandomDirection(random);
+                    // Sometimes extend 2 blocks out at higher elevations
+                    int reach = (height > 8 && random.nextFloat() < 0.3f) ? 2 : 1;
+                    BlockPos sidePos = abovePos.relative(dir, reach);
+                    BlockState sideState = level.getBlockState(sidePos);
+                    if (sideState.isAir() || sideState.canBeReplaced()) {
+                        level.setBlock(sidePos, defaultBlockState(), 2);
+                        level.sendParticles(ParticleTypes.CLOUD,
+                                sidePos.getX() + 0.5, sidePos.getY() + 0.5, sidePos.getZ() + 0.5,
+                                3, 0.2, 0.1, 0.2, 0.04);
+                        // Fill gap block if reaching 2 out
+                        if (reach == 2) {
+                            BlockPos midPos = abovePos.relative(dir, 1);
+                            BlockState midState = level.getBlockState(midPos);
+                            if (midState.isAir() || midState.canBeReplaced()) {
+                                level.setBlock(midPos, defaultBlockState(), 2);
+                            }
+                        }
+                    }
                 }
             }
         }

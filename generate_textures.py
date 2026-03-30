@@ -371,7 +371,7 @@ FLUIDS = [
     ("cobalt_glowing_resin",     ( 20, 80, 220), 100, True,   4, 3, ( 0, 2,15)),
     ("jade_glowing_resin",       ( 10,160,  55), 100, True,   4, 3, ( 0, 8,-2)),
     # Elephant's Toothpaste fluids
-    ("hydrogen_peroxide",        (200,225, 255),  45, False,  3, 2, ( 0, 0, 5)),
+    ("hydrogen_peroxide",        (160,200, 255),  70, False,  3, 2, ( 0, 0, 8)),
     ("potassium_iodide",         (170,115,  35),  65, True,   4, 3, ( 5, 0,-3)),
 ]
 

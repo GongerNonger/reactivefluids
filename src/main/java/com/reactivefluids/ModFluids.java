@@ -178,7 +178,7 @@ public class ModFluids {
     // =========================================================================
     public static final DeferredHolder<FluidType, FluidType> HYDROGEN_PEROXIDE_TYPE =
         FLUID_TYPES.register("hydrogen_peroxide", () -> makeFluidType(
-            0x60D0E8FF,
+            0xA0B0D8FF,
             ResourceLocation.fromNamespaceAndPath(ReactiveFluids.MOD_ID, "block/hydrogen_peroxide_still"),
             ResourceLocation.fromNamespaceAndPath(ReactiveFluids.MOD_ID, "block/hydrogen_peroxide_flow")
         ));
