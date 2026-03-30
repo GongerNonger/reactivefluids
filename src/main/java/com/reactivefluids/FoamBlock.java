@@ -16,7 +16,7 @@ import net.minecraft.world.level.block.state.BlockState;
  */
 public class FoamBlock extends Block {
 
-    private static final int MAX_HEIGHT = 15;
+    private static final int MAX_HEIGHT = 20;
     private static final int MIN_GROW_TICKS = 2;
     private static final int MAX_GROW_TICKS = 4;
 
@@ -28,9 +28,36 @@ public class FoamBlock extends Block {
     public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean movedByPiston) {
         super.onPlace(state, level, pos, oldState, movedByPiston);
         if (!level.isClientSide()) {
-            int delay = MIN_GROW_TICKS + level.getRandom().nextInt(MAX_GROW_TICKS - MIN_GROW_TICKS + 1);
-            level.scheduleTick(pos, this, delay);
+            // Only schedule upward growth if this block has foam or a non-air base below it
+            // (prevents sideways-spread decorative foam from starting new eruption columns)
+            boolean hasFoamBelow = level.getBlockState(pos.below()).getBlock() instanceof FoamBlock;
+            boolean isReactionBase = !oldState.getFluidState().isEmpty();
+            if (hasFoamBelow || isReactionBase) {
+                int delay = MIN_GROW_TICKS + level.getRandom().nextInt(MAX_GROW_TICKS - MIN_GROW_TICKS + 1);
+                level.scheduleTick(pos, this, delay);
+            }
         }
+    }
+
+    /**
+     * Count total foam height in this column — walk down to find the
+     * lowest foam block, then count up from there.
+     */
+    private int countColumnHeight(ServerLevel level, BlockPos pos) {
+        // Walk down to the base of the foam column
+        BlockPos base = pos;
+        while (level.getBlockState(base.below()).getBlock() instanceof FoamBlock) {
+            base = base.below();
+        }
+        // Count upward from base
+        int height = 0;
+        BlockPos cur = base;
+        while (level.getBlockState(cur).getBlock() instanceof FoamBlock) {
+            height++;
+            cur = cur.above();
+            if (height > MAX_HEIGHT + 5) break; // safety
+        }
+        return height;
     }
 
     @Override
@@ -38,14 +65,7 @@ public class FoamBlock extends Block {
         // Only the topmost foam in a column should grow
         if (level.getBlockState(pos.above()).getBlock() instanceof FoamBlock) return;
 
-        // Count foam height below
-        int height = 1;
-        BlockPos check = pos.below();
-        while (level.getBlockState(check).getBlock() instanceof FoamBlock && height < MAX_HEIGHT + 5) {
-            height++;
-            check = check.below();
-        }
-
+        int height = countColumnHeight(level, pos);
         if (height >= MAX_HEIGHT) return;
 
         // Grow upward — can push through fluid or replace air
@@ -60,13 +80,14 @@ public class FoamBlock extends Block {
             double cz = abovePos.getZ() + 0.5;
             level.sendParticles(ParticleTypes.CLOUD, cx, cy + 0.3, cz, 6, 0.25, 0.15, 0.25, 0.06);
 
-            // Chance to spread sideways for a more organic shape
+            // Chance to spread sideways for a more organic shape (no upward growth from side blocks)
             if (height > 3 && random.nextFloat() < 0.25f) {
                 Direction dir = Direction.Plane.HORIZONTAL.getRandomDirection(random);
                 BlockPos sidePos = abovePos.relative(dir);
                 BlockState sideState = level.getBlockState(sidePos);
                 if (sideState.isAir() || sideState.canBeReplaced()) {
-                    level.setBlock(sidePos, defaultBlockState(), 3);
+                    // Place side block directly without triggering growth tick
+                    level.setBlock(sidePos, defaultBlockState(), 2);
                     level.sendParticles(ParticleTypes.CLOUD,
                             sidePos.getX() + 0.5, sidePos.getY() + 0.5, sidePos.getZ() + 0.5,
                             3, 0.2, 0.1, 0.2, 0.04);
