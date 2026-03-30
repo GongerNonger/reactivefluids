@@ -1,0 +1,5 @@
+{
+  "variants": {
+    "": { "model": "reactivefluids:block/foam_block" }
+  }
+}

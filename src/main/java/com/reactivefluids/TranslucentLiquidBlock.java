@@ -37,5 +37,10 @@ public class TranslucentLiquidBlock extends LiquidBlock {
         ItemBlockRenderTypes.setRenderLayer(ModFluids.COBALT_GLOWING_RESIN_FLOWING.get(),RenderType.translucent());
         ItemBlockRenderTypes.setRenderLayer(ModFluids.JADE_GLOWING_RESIN_SOURCE.get(),   RenderType.translucent());
         ItemBlockRenderTypes.setRenderLayer(ModFluids.JADE_GLOWING_RESIN_FLOWING.get(),  RenderType.translucent());
+        // Elephant's Toothpaste fluids
+        ItemBlockRenderTypes.setRenderLayer(ModFluids.HYDROGEN_PEROXIDE_SOURCE.get(),    RenderType.translucent());
+        ItemBlockRenderTypes.setRenderLayer(ModFluids.HYDROGEN_PEROXIDE_FLOWING.get(),   RenderType.translucent());
+        ItemBlockRenderTypes.setRenderLayer(ModFluids.POTASSIUM_IODIDE_SOURCE.get(),     RenderType.translucent());
+        ItemBlockRenderTypes.setRenderLayer(ModFluids.POTASSIUM_IODIDE_FLOWING.get(),    RenderType.translucent());
     }
 }

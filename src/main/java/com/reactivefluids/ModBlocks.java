@@ -131,4 +131,23 @@ public class ModBlocks {
             new Block(BlockBehaviour.Properties.of()
                 .strength(3.0f, 8.0f).sound(SoundType.STONE)
                 .mapColor(MapColor.COLOR_GREEN)));
+
+    // =========================================================================
+    // Elephant's Toothpaste — fluid blocks + foam product
+    // =========================================================================
+    public static final DeferredBlock<TranslucentLiquidBlock> HYDROGEN_PEROXIDE_BLOCK =
+        BLOCKS.register("hydrogen_peroxide_block", () ->
+            new TranslucentLiquidBlock((FlowingFluid) ModFluids.HYDROGEN_PEROXIDE_SOURCE.get(),
+                fluidProps(MapColor.ICE)));
+
+    public static final DeferredBlock<TranslucentLiquidBlock> POTASSIUM_IODIDE_BLOCK =
+        BLOCKS.register("potassium_iodide_block", () ->
+            new TranslucentLiquidBlock((FlowingFluid) ModFluids.POTASSIUM_IODIDE_SOURCE.get(),
+                fluidProps(MapColor.COLOR_BROWN)));
+
+    public static final DeferredBlock<FoamBlock> FOAM_BLOCK =
+        BLOCKS.register("foam_block", () ->
+            new FoamBlock(BlockBehaviour.Properties.of()
+                .strength(0.3f, 0.3f).sound(SoundType.WOOL)
+                .mapColor(MapColor.SNOW)));
 }

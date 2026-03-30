@@ -315,6 +315,8 @@ BUCKET_PALETTES = {
     'jade_resin':          {'outline':(45,74,58),    'primary':(82,165,114),  'highlight':(130,212,168), 'shadow':(58,122,90)},
     'jade_hardener':       {'outline':(45,74,58),    'primary':(130,212,168), 'highlight':(184,232,212), 'shadow':(82,165,114)},
     'jade_glowing_resin':  {'outline':(45,74,58),    'primary':(30,175,80),   'highlight':(100,240,150), 'shadow':(10,120,50)},
+    'hydrogen_peroxide':   {'outline':(120,140,160), 'primary':(200,225,255), 'highlight':(230,245,255), 'shadow':(160,190,220)},
+    'potassium_iodide':    {'outline':(80,55,20),    'primary':(170,115,35),  'highlight':(210,160,70),  'shadow':(120,80,20)},
 }
 
 def make_bucket(name):
@@ -368,6 +370,9 @@ FLUIDS = [
     ("amber_glowing_resin",      (220,130,  10), 100, True,   4, 3, (12, 2, 0)),
     ("cobalt_glowing_resin",     ( 20, 80, 220), 100, True,   4, 3, ( 0, 2,15)),
     ("jade_glowing_resin",       ( 10,160,  55), 100, True,   4, 3, ( 0, 8,-2)),
+    # Elephant's Toothpaste fluids
+    ("hydrogen_peroxide",        (200,225, 255),  45, False,  3, 2, ( 0, 0, 5)),
+    ("potassium_iodide",         (170,115,  35),  65, True,   4, 3, ( 5, 0,-3)),
 ]
 
 EPOXY = [
@@ -386,7 +391,37 @@ BUCKET_COLORS = {
     "jade_resin":           ( 18,105,  48),
     "jade_hardener":        ( 78,185,  72),
     "jade_glowing_resin":   ( 10,160,  55),
+    "hydrogen_peroxide":    (200,225, 255),
+    "potassium_iodide":     (170,115,  35),
 }
+
+def make_foam(seed=5001):
+    """White/cream bubbly foam texture — 16x16 static."""
+    rng = random.Random(seed)
+    base = (245, 242, 235, 255)
+    pixels = []
+    for py in range(T):
+        row = []
+        for px in range(T):
+            # Gentle noise for bubbly look
+            noise = rng.randint(-12, 12)
+            r = cl(base[0] + noise)
+            g = cl(base[1] + noise - 2)
+            b = cl(base[2] + noise - 5)
+            # Edge darkening
+            if px == 0 or py == 0 or px == T-1 or py == T-1:
+                r, g, b = cl(r*0.82), cl(g*0.82), cl(b*0.82)
+            row.append((r, g, b, 255))
+        pixels.append(row)
+    # Scatter bubble highlights (bright spots)
+    for _ in range(18):
+        bx, by = rng.randint(1, T-2), rng.randint(1, T-2)
+        pixels[by][bx] = (255, 255, 252, 255)
+    # Scatter bubble shadows (dark spots)
+    for _ in range(10):
+        bx, by = rng.randint(1, T-2), rng.randint(1, T-2)
+        pixels[by][bx] = (215, 210, 200, 255)
+    return pixels
 
 BLK = os.path.join("src","main","resources","assets","reactivefluids","textures","block")
 ITM = os.path.join("src","main","resources","assets","reactivefluids","textures","item")
@@ -407,6 +442,9 @@ def main():
         save_png(os.path.join(BLK, f"{color}_epoxy_block.png"),   make_epoxy_transparent(rgba, seed))
         save_png(os.path.join(BLK, f"{color}_epoxy_opaque.png"),  make_epoxy_opaque(rgba, seed))
         save_png(os.path.join(BLK, f"{color}_epoxy_glowing.png"), make_epoxy_glowing(rgba, seed))
+
+    print("=== Foam block texture ===")
+    save_png(os.path.join(BLK, "foam_block.png"), make_foam())
 
     print("=== Bucket item textures ===")
     for name in BUCKET_PALETTES:

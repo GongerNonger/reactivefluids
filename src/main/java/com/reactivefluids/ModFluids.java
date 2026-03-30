@@ -174,6 +174,61 @@ public class ModFluids {
             .bucket(() -> ModItems.JADE_GLOWING_RESIN_BUCKET.get());
 
     // =========================================================================
+    // HYDROGEN PEROXIDE  (clear/pale blue — fast, watery)
+    // =========================================================================
+    public static final DeferredHolder<FluidType, FluidType> HYDROGEN_PEROXIDE_TYPE =
+        FLUID_TYPES.register("hydrogen_peroxide", () -> makeFluidType(
+            0x60D0E8FF,
+            ResourceLocation.fromNamespaceAndPath(ReactiveFluids.MOD_ID, "block/hydrogen_peroxide_still"),
+            ResourceLocation.fromNamespaceAndPath(ReactiveFluids.MOD_ID, "block/hydrogen_peroxide_flow")
+        ));
+
+    public static final DeferredHolder<Fluid, FlowingFluid> HYDROGEN_PEROXIDE_SOURCE =
+        FLUIDS.register("hydrogen_peroxide", () -> new BaseFlowingFluid.Source(ModFluids.HYDROGEN_PEROXIDE_PROPS));
+
+    public static final DeferredHolder<Fluid, FlowingFluid> HYDROGEN_PEROXIDE_FLOWING =
+        FLUIDS.register("hydrogen_peroxide_flowing", () -> new BaseFlowingFluid.Flowing(ModFluids.HYDROGEN_PEROXIDE_PROPS));
+
+    public static final BaseFlowingFluid.Properties HYDROGEN_PEROXIDE_PROPS =
+        new BaseFlowingFluid.Properties(HYDROGEN_PEROXIDE_TYPE, HYDROGEN_PEROXIDE_SOURCE, HYDROGEN_PEROXIDE_FLOWING)
+            .slopeFindDistance(4)
+            .levelDecreasePerBlock(1)
+            .block(() -> (net.minecraft.world.level.block.LiquidBlock) ModBlocks.HYDROGEN_PEROXIDE_BLOCK.get())
+            .bucket(() -> ModItems.HYDROGEN_PEROXIDE_BUCKET.get());
+
+    // =========================================================================
+    // POTASSIUM IODIDE  (amber/brown — medium speed)
+    // =========================================================================
+    private static class MediumSource extends BaseFlowingFluid.Source {
+        MediumSource(BaseFlowingFluid.Properties p) { super(p); }
+        @Override public int getTickDelay(LevelReader level) { return 15; }
+    }
+    private static class MediumFlowing extends BaseFlowingFluid.Flowing {
+        MediumFlowing(BaseFlowingFluid.Properties p) { super(p); }
+        @Override public int getTickDelay(LevelReader level) { return 15; }
+    }
+
+    public static final DeferredHolder<FluidType, FluidType> POTASSIUM_IODIDE_TYPE =
+        FLUID_TYPES.register("potassium_iodide", () -> makeFluidType(
+            0x90B47828,
+            ResourceLocation.fromNamespaceAndPath(ReactiveFluids.MOD_ID, "block/potassium_iodide_still"),
+            ResourceLocation.fromNamespaceAndPath(ReactiveFluids.MOD_ID, "block/potassium_iodide_flow")
+        ));
+
+    public static final DeferredHolder<Fluid, FlowingFluid> POTASSIUM_IODIDE_SOURCE =
+        FLUIDS.register("potassium_iodide", () -> new MediumSource(ModFluids.POTASSIUM_IODIDE_PROPS));
+
+    public static final DeferredHolder<Fluid, FlowingFluid> POTASSIUM_IODIDE_FLOWING =
+        FLUIDS.register("potassium_iodide_flowing", () -> new MediumFlowing(ModFluids.POTASSIUM_IODIDE_PROPS));
+
+    public static final BaseFlowingFluid.Properties POTASSIUM_IODIDE_PROPS =
+        new BaseFlowingFluid.Properties(POTASSIUM_IODIDE_TYPE, POTASSIUM_IODIDE_SOURCE, POTASSIUM_IODIDE_FLOWING)
+            .slopeFindDistance(3)
+            .levelDecreasePerBlock(2)
+            .block(() -> (net.minecraft.world.level.block.LiquidBlock) ModBlocks.POTASSIUM_IODIDE_BLOCK.get())
+            .bucket(() -> ModItems.POTASSIUM_IODIDE_BUCKET.get());
+
+    // =========================================================================
     // Shared helper
     // =========================================================================
     private static FluidType makeFluidType(int tintColor, ResourceLocation still, ResourceLocation flow) {

@@ -39,6 +39,10 @@ public class ModCreativeTab {
                     output.accept(ModItems.AMBER_EPOXY_OPAQUE_ITEM.get());
                     output.accept(ModItems.COBALT_EPOXY_OPAQUE_ITEM.get());
                     output.accept(ModItems.JADE_EPOXY_OPAQUE_ITEM.get());
+                    // Elephant's Toothpaste
+                    output.accept(ModItems.HYDROGEN_PEROXIDE_BUCKET.get());
+                    output.accept(ModItems.POTASSIUM_IODIDE_BUCKET.get());
+                    output.accept(ModItems.FOAM_BLOCK_ITEM.get());
                 })
                 .build()
         );

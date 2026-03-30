@@ -30,5 +30,11 @@
 
   "block.reactivefluids.amber_epoxy_opaque":  "Amber Solid Epoxy",
   "block.reactivefluids.cobalt_epoxy_opaque": "Cobalt Solid Epoxy",
-  "block.reactivefluids.jade_epoxy_opaque":   "Jade Solid Epoxy"
+  "block.reactivefluids.jade_epoxy_opaque":   "Jade Solid Epoxy",
+
+  "block.reactivefluids.hydrogen_peroxide_block": "Hydrogen Peroxide",
+  "block.reactivefluids.potassium_iodide_block":  "Potassium Iodide",
+  "block.reactivefluids.foam_block":              "Foam",
+  "item.reactivefluids.hydrogen_peroxide_bucket":  "Hydrogen Peroxide Bucket",
+  "item.reactivefluids.potassium_iodide_bucket":   "Potassium Iodide Bucket"
 }

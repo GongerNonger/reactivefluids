@@ -101,4 +101,21 @@ public class ModItems {
     public static final DeferredItem<BlockItem> JADE_EPOXY_OPAQUE_ITEM =
         ITEMS.register("jade_epoxy_opaque", () ->
             new BlockItem(ModBlocks.JADE_EPOXY_OPAQUE.get(), new Item.Properties()));
+
+    // =========================================================================
+    // Elephant's Toothpaste
+    // =========================================================================
+    public static final DeferredItem<BucketItem> HYDROGEN_PEROXIDE_BUCKET =
+        ITEMS.register("hydrogen_peroxide_bucket", () ->
+            new BucketItem(ModFluids.HYDROGEN_PEROXIDE_SOURCE.get(),
+                new Item.Properties().stacksTo(1).craftRemainder(Items.BUCKET)));
+
+    public static final DeferredItem<BucketItem> POTASSIUM_IODIDE_BUCKET =
+        ITEMS.register("potassium_iodide_bucket", () ->
+            new BucketItem(ModFluids.POTASSIUM_IODIDE_SOURCE.get(),
+                new Item.Properties().stacksTo(1).craftRemainder(Items.BUCKET)));
+
+    public static final DeferredItem<BlockItem> FOAM_BLOCK_ITEM =
+        ITEMS.register("foam_block", () ->
+            new BlockItem(ModBlocks.FOAM_BLOCK.get(), new Item.Properties()));
 }
