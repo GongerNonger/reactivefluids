@@ -120,6 +120,14 @@ public class ModItems {
             new BlockItem(ModBlocks.FOAM_BLOCK.get(), new Item.Properties()));
 
     // =========================================================================
+    // Bioluminescent Plankton
+    // =========================================================================
+    public static final DeferredItem<BucketItem> PLANKTON_BUCKET =
+        ITEMS.register("plankton_bucket", () ->
+            new BucketItem(ModFluids.PLANKTON_SOURCE.get(),
+                new Item.Properties().stacksTo(1).craftRemainder(Items.BUCKET)));
+
+    // =========================================================================
     // Acid
     // =========================================================================
     public static final DeferredItem<BucketItem> ACID_BUCKET =

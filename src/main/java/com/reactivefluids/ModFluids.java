@@ -229,6 +229,29 @@ public class ModFluids {
             .bucket(() -> ModItems.POTASSIUM_IODIDE_BUCKET.get());
 
     // =========================================================================
+    // BIOLUMINESCENT PLANKTON  (deep ocean — slow, dark until disturbed)
+    // =========================================================================
+    public static final DeferredHolder<FluidType, FluidType> PLANKTON_TYPE =
+        FLUID_TYPES.register("plankton", () -> makeFluidType(
+            0xC0081830,
+            ResourceLocation.fromNamespaceAndPath(ReactiveFluids.MOD_ID, "block/plankton_still"),
+            ResourceLocation.fromNamespaceAndPath(ReactiveFluids.MOD_ID, "block/plankton_flow")
+        ));
+
+    public static final DeferredHolder<Fluid, FlowingFluid> PLANKTON_SOURCE =
+        FLUIDS.register("plankton", () -> new SlowSource(ModFluids.PLANKTON_PROPS));
+
+    public static final DeferredHolder<Fluid, FlowingFluid> PLANKTON_FLOWING =
+        FLUIDS.register("plankton_flowing", () -> new SlowFlowing(ModFluids.PLANKTON_PROPS));
+
+    public static final BaseFlowingFluid.Properties PLANKTON_PROPS =
+        new BaseFlowingFluid.Properties(PLANKTON_TYPE, PLANKTON_SOURCE, PLANKTON_FLOWING)
+            .slopeFindDistance(3)
+            .levelDecreasePerBlock(1)
+            .block(() -> (net.minecraft.world.level.block.LiquidBlock) ModBlocks.PLANKTON_BLOCK.get())
+            .bucket(() -> ModItems.PLANKTON_BUCKET.get());
+
+    // =========================================================================
     // ACID  (bright green, corrosive — medium speed)
     // =========================================================================
     public static final DeferredHolder<FluidType, FluidType> ACID_TYPE =

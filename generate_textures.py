@@ -318,6 +318,7 @@ BUCKET_PALETTES = {
     'hydrogen_peroxide':   {'outline':(120,140,160), 'primary':(200,225,255), 'highlight':(230,245,255), 'shadow':(160,190,220)},
     'potassium_iodide':    {'outline':(80,55,20),    'primary':(170,115,35),  'highlight':(210,160,70),  'shadow':(120,80,20)},
     'acid':                {'outline':(20,80,10),    'primary':(50,220,20),   'highlight':(120,255,80),  'shadow':(30,150,10)},
+    'plankton':            {'outline':(4,8,20),     'primary':(8,18,38),     'highlight':(30,180,200), 'shadow':(3,10,25)},
 }
 
 def make_bucket(name):
@@ -397,6 +398,7 @@ BUCKET_COLORS = {
     "hydrogen_peroxide":    (200,225, 255),
     "potassium_iodide":     (170,115,  35),
     "acid":                 ( 50,220,  20),
+    "plankton":             (  8, 18,  38),
 }
 
 def make_foam(seed=5001):
@@ -427,6 +429,227 @@ def make_foam(seed=5001):
         pixels[by][bx] = (215, 210, 200, 255)
     return pixels
 
+# ---------------------------------------------------------------------------
+# BIOLUMINESCENT PLANKTON — special animated texture
+# Deep dark ocean with individual plankton organisms that glow and fade
+# asynchronously. Each plankton pixel has its own lifecycle:
+#   - dormant (near invisible) → igniting → peak glow → fading → dormant
+# Multiple glow colors: electric cyan, seafoam green, pale blue, warm teal
+# ---------------------------------------------------------------------------
+def make_plankton_still():
+    """
+    Still plankton texture — 16x16, 64 frames (longer cycle for rich animation).
+    Dark indigo ocean base with ~30 plankton organisms scattered across the
+    surface, each with independent glow phase, color, and lifetime.
+    """
+    NUM_FRAMES = 64  # longer cycle for more variation
+    rng = random.Random(7777)
+
+    # Deep ocean base palette — very dark, shifts subtly per frame
+    DEEP    = ( 5, 12, 28)   # darkest ocean
+    MID     = ( 8, 18, 38)   # mid-deep
+    SHIMMER = (12, 24, 48)   # subtle movement highlight
+
+    # Plankton glow palette — multiple ethereal colors
+    GLOW_COLORS = [
+        ( 20, 220, 255),  # electric cyan
+        ( 40, 255, 210),  # seafoam green
+        ( 80, 200, 255),  # pale sky blue
+        ( 10, 180, 200),  # deep teal
+        ( 60, 255, 180),  # mint
+        (100, 240, 255),  # ice blue
+        (  0, 160, 220),  # ocean cyan
+        ( 30, 255, 140),  # bright sea green
+    ]
+
+    # Generate plankton organisms with individual properties
+    class Plankton:
+        def __init__(self, rng):
+            self.x = rng.randint(0, T-1)
+            self.y = rng.randint(0, T-1)
+            self.color = rng.choice(GLOW_COLORS)
+            self.phase = rng.uniform(0, math.tau)     # start time offset
+            self.speed = rng.uniform(0.06, 0.18)       # glow cycle speed
+            self.max_brightness = rng.uniform(0.5, 1.0)  # peak intensity
+            self.duty = rng.uniform(0.25, 0.55)        # fraction of cycle spent glowing
+            self.size = rng.choice([1, 1, 1, 2])        # 1=single pixel, 2=2x1 or 1x2
+
+    # Create 30-40 plankton organisms
+    plankton = [Plankton(rng) for _ in range(35)]
+
+    # Gentle water movement waves for the base
+    BASE_WAVES_X = [(0.35, 0.04, 3.5, rng.uniform(0, math.tau)) for _ in range(3)]
+    BASE_WAVES_Y = [(0.45, 0.03, 3.0, rng.uniform(0, math.tau)) for _ in range(3)]
+
+    alpha = 180  # fairly opaque — deep ocean water
+
+    rows = []
+    for frame in range(NUM_FRAMES):
+        t = frame
+
+        for py in range(T):
+            row = []
+            for px in range(T):
+                # Base ocean color with subtle wave modulation
+                wave_x = sum(a * math.sin(k * px + o * t + ph)
+                             for k, o, a, ph in BASE_WAVES_X)
+                wave_y = sum(a * math.sin(k * py + o * t + ph)
+                             for k, o, a, ph in BASE_WAVES_Y)
+                wave = (wave_x + wave_y) / 2.0
+
+                # Blend between deep and mid based on wave
+                wn = max(0.0, min(1.0, (wave + 6.0) / 12.0))
+                bR = cl(DEEP[0] + (MID[0] - DEEP[0]) * wn)
+                bG = cl(DEEP[1] + (MID[1] - DEEP[1]) * wn)
+                bB = cl(DEEP[2] + (MID[2] - DEEP[2]) * wn)
+
+                # Subtle shimmer on wave peaks
+                if wn > 0.7:
+                    sm = (wn - 0.7) / 0.3
+                    bR = cl(bR + (SHIMMER[0] - bR) * sm * 0.4)
+                    bG = cl(bG + (SHIMMER[1] - bG) * sm * 0.4)
+                    bB = cl(bB + (SHIMMER[2] - bB) * sm * 0.4)
+
+                # Edge darkening for seamless tiling depth
+                ex = min(px, T-1-px) / (T/2.0)
+                ey = min(py, T-1-py) / (T/2.0)
+                edge = min(1.0, min(ex, ey) * 3.0)
+                bR = cl(bR * (0.7 + 0.3 * edge))
+                bG = cl(bG * (0.7 + 0.3 * edge))
+                bB = cl(bB * (0.7 + 0.3 * edge))
+
+                row.append((bR, bG, bB, alpha))
+            rows.append(row)
+
+        # Overlay plankton glows for this frame
+        frame_base = frame * T  # row offset in the stacked image
+        for p in plankton:
+            # Glow envelope: smooth pulse using sin, with configurable duty cycle
+            cycle = math.sin(p.phase + p.speed * t)
+            # Map [-1,1] → glow intensity, only positive part glows
+            glow = max(0.0, (cycle - (1.0 - 2.0 * p.duty)) / (2.0 * p.duty))
+            glow = glow ** 0.6  # soften the curve for natural fade-in/out
+            glow *= p.max_brightness
+
+            if glow < 0.02:
+                continue
+
+            # Core pixel
+            fy = frame_base + p.y
+            base_pixel = rows[fy][p.x]
+            gR = cl(base_pixel[0] + p.color[0] * glow)
+            gG = cl(base_pixel[1] + p.color[1] * glow)
+            gB = cl(base_pixel[2] + p.color[2] * glow)
+            # Brighter alpha when glowing
+            gA = cl(alpha + 40 * glow)
+            rows[fy][p.x] = (gR, gG, gB, gA)
+
+            # Soft halo on adjacent pixels (dimmer)
+            halo = glow * 0.3
+            if halo > 0.03:
+                for dx, dy in [(-1,0),(1,0),(0,-1),(0,1)]:
+                    hx, hy = p.x + dx, p.y + dy
+                    if 0 <= hx < T and 0 <= hy < T:
+                        hp = rows[frame_base + hy][hx]
+                        hR = cl(hp[0] + p.color[0] * halo)
+                        hG = cl(hp[1] + p.color[1] * halo)
+                        hB = cl(hp[2] + p.color[2] * halo)
+                        hA = cl(hp[3] + 20 * halo)
+                        rows[frame_base + hy][hx] = (hR, hG, hB, hA)
+
+            # Extended size for larger organisms
+            if p.size == 2:
+                # Add a second pixel in a random adjacent direction
+                sdx, sdy = rng.choice([(1,0),(0,1)])
+                sx, sy = p.x + sdx, p.y + sdy
+                if 0 <= sx < T and 0 <= sy < T:
+                    sp = rows[frame_base + sy][sx]
+                    sR = cl(sp[0] + p.color[0] * glow * 0.7)
+                    sG = cl(sp[1] + p.color[1] * glow * 0.7)
+                    sB = cl(sp[2] + p.color[2] * glow * 0.7)
+                    sA = cl(sp[3] + 30 * glow)
+                    rows[frame_base + sy][sx] = (sR, sG, sB, sA)
+
+    return rows
+
+def make_plankton_flow():
+    """
+    Flow plankton texture — similar aesthetic but with vertical drift.
+    Individual plankton trail downward as the fluid moves.
+    """
+    NUM_FRAMES = 64
+    rng = random.Random(8888)
+
+    DEEP = ( 5, 12, 28)
+    MID  = ( 8, 18, 38)
+
+    GLOW_COLORS = [
+        ( 20, 220, 255), ( 40, 255, 210), ( 80, 200, 255),
+        ( 10, 180, 200), ( 60, 255, 180), (100, 240, 255),
+    ]
+
+    class FlowPlankton:
+        def __init__(self, rng):
+            self.x = rng.randint(0, T-1)
+            self.base_y = rng.uniform(0, T)
+            self.color = rng.choice(GLOW_COLORS)
+            self.phase = rng.uniform(0, math.tau)
+            self.speed = rng.uniform(0.08, 0.2)
+            self.max_brightness = rng.uniform(0.4, 0.9)
+            self.drift = rng.uniform(0.2, 0.5)  # downward speed
+
+    plankton = [FlowPlankton(rng) for _ in range(28)]
+    alpha = 170
+
+    rows = []
+    for frame in range(NUM_FRAMES):
+        t = frame
+        for py in range(T):
+            row = []
+            for px in range(T):
+                # Vertical ribbon base (like flow textures)
+                col_bright = math.sin(px * 0.9 + 1.2) * 3.0
+                drift_off = math.sin(py * 0.4 - t * 0.15) * 2.0
+                val = col_bright + drift_off
+                wn = max(0.0, min(1.0, (val + 5.0) / 10.0))
+                bR = cl(DEEP[0] + (MID[0] - DEEP[0]) * wn)
+                bG = cl(DEEP[1] + (MID[1] - DEEP[1]) * wn)
+                bB = cl(DEEP[2] + (MID[2] - DEEP[2]) * wn)
+                row.append((bR, bG, bB, alpha))
+            rows.append(row)
+
+        frame_base = frame * T
+        for p in plankton:
+            # Plankton drifts downward each frame
+            current_y = (p.base_y + t * p.drift) % T
+            iy = int(current_y)
+
+            cycle = math.sin(p.phase + p.speed * t)
+            glow = max(0.0, cycle)
+            glow = glow ** 0.7 * p.max_brightness
+            if glow < 0.03:
+                continue
+
+            fy = frame_base + iy
+            bp = rows[fy][p.x]
+            gR = cl(bp[0] + p.color[0] * glow)
+            gG = cl(bp[1] + p.color[1] * glow)
+            gB = cl(bp[2] + p.color[2] * glow)
+            gA = cl(alpha + 35 * glow)
+            rows[fy][p.x] = (gR, gG, gB, gA)
+
+            # Small trailing glow below (flow trail)
+            for trail in range(1, 3):
+                ty = (iy + trail) % T
+                tp = rows[frame_base + ty][p.x]
+                tfade = glow * (0.4 / trail)
+                tR = cl(tp[0] + p.color[0] * tfade)
+                tG = cl(tp[1] + p.color[1] * tfade)
+                tB = cl(tp[2] + p.color[2] * tfade)
+                rows[frame_base + ty][p.x] = (tR, tG, tB, cl(alpha + 15 * tfade))
+
+    return rows
+
 BLK = os.path.join("src","main","resources","assets","reactivefluids","textures","block")
 ITM = os.path.join("src","main","resources","assets","reactivefluids","textures","item")
 
@@ -446,6 +669,14 @@ def main():
         save_png(os.path.join(BLK, f"{color}_epoxy_block.png"),   make_epoxy_transparent(rgba, seed))
         save_png(os.path.join(BLK, f"{color}_epoxy_opaque.png"),  make_epoxy_opaque(rgba, seed))
         save_png(os.path.join(BLK, f"{color}_epoxy_glowing.png"), make_epoxy_glowing(rgba, seed))
+
+    print("=== Bioluminescent Plankton textures ===")
+    sp = os.path.join(BLK, "plankton_still.png")
+    fp = os.path.join(BLK, "plankton_flow.png")
+    save_png(sp, make_plankton_still())
+    save_mcmeta(sp, frametime=3, interpolate=True)
+    save_png(fp, make_plankton_flow())
+    save_mcmeta(fp, frametime=2, interpolate=True)
 
     print("=== Foam block texture ===")
     save_png(os.path.join(BLK, "foam_block.png"), make_foam())

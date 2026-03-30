@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "lit=false": {"model": "reactivefluids:block/plankton_block"},
+    "lit=true": {"model": "reactivefluids:block/plankton_block"}
+  }
+}

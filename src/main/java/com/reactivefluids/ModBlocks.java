@@ -152,6 +152,15 @@ public class ModBlocks {
                 .mapColor(MapColor.SNOW)));
 
     // =========================================================================
+    // Bioluminescent plankton — glows when entities move through it
+    // =========================================================================
+    public static final DeferredBlock<PlanktonBlock> PLANKTON_BLOCK =
+        BLOCKS.register("plankton_block", () ->
+            new PlanktonBlock((FlowingFluid) ModFluids.PLANKTON_SOURCE.get(),
+                fluidProps(MapColor.COLOR_BLUE).lightLevel(state ->
+                    state.getValue(PlanktonBlock.LIT) ? 10 : 0)));
+
+    // =========================================================================
     // Acid — dissolves stone downward, exposes ores
     // =========================================================================
     public static final DeferredBlock<AcidBlock> ACID_BLOCK =

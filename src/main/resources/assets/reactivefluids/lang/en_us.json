@@ -39,5 +39,8 @@
   "item.reactivefluids.potassium_iodide_bucket":   "Potassium Iodide Bucket",
 
   "block.reactivefluids.acid_block":  "Acid",
-  "item.reactivefluids.acid_bucket":  "Acid Bucket"
+  "item.reactivefluids.acid_bucket":  "Acid Bucket",
+
+  "block.reactivefluids.plankton_block":  "Bioluminescent Plankton",
+  "item.reactivefluids.plankton_bucket":  "Bioluminescent Plankton Bucket"
 }

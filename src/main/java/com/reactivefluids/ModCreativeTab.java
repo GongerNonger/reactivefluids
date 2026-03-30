@@ -43,6 +43,8 @@ public class ModCreativeTab {
                     output.accept(ModItems.HYDROGEN_PEROXIDE_BUCKET.get());
                     output.accept(ModItems.POTASSIUM_IODIDE_BUCKET.get());
                     output.accept(ModItems.FOAM_BLOCK_ITEM.get());
+                    // Bioluminescent Plankton
+                    output.accept(ModItems.PLANKTON_BUCKET.get());
                     // Acid
                     output.accept(ModItems.ACID_BUCKET.get());
                 })
