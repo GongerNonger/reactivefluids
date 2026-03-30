@@ -1,0 +1,34 @@
+{
+  "itemGroup.reactivefluids.reactive_fluids": "Reactive Fluids",
+
+  "item.reactivefluids.amber_resin_bucket":    "Amber Resin Bucket",
+  "item.reactivefluids.amber_hardener":        "Amber Hardener",
+  "item.reactivefluids.cobalt_resin_bucket":   "Cobalt Resin Bucket",
+  "item.reactivefluids.cobalt_hardener":       "Cobalt Hardener",
+  "item.reactivefluids.jade_resin_bucket":     "Jade Resin Bucket",
+  "item.reactivefluids.jade_hardener":         "Jade Hardener",
+
+  "block.reactivefluids.amber_resin_block":    "Amber Resin",
+  "block.reactivefluids.cobalt_resin_block":   "Cobalt Resin",
+  "block.reactivefluids.jade_resin_block":     "Jade Resin",
+
+  "block.reactivefluids.amber_epoxy_block":  "Amber Epoxy",
+  "block.reactivefluids.cobalt_epoxy_block": "Cobalt Epoxy",
+  "block.reactivefluids.jade_epoxy_block":   "Jade Epoxy",
+
+  "item.reactivefluids.amber_glowing_resin_bucket":  "Amber Glowing Resin Bucket",
+  "item.reactivefluids.cobalt_glowing_resin_bucket": "Cobalt Glowing Resin Bucket",
+  "item.reactivefluids.jade_glowing_resin_bucket":   "Jade Glowing Resin Bucket",
+
+  "block.reactivefluids.amber_glowing_resin_block":  "Amber Glowing Resin",
+  "block.reactivefluids.cobalt_glowing_resin_block": "Cobalt Glowing Resin",
+  "block.reactivefluids.jade_glowing_resin_block":   "Jade Glowing Resin",
+
+  "block.reactivefluids.amber_epoxy_glowing":  "Amber Glowing Epoxy",
+  "block.reactivefluids.cobalt_epoxy_glowing": "Cobalt Glowing Epoxy",
+  "block.reactivefluids.jade_epoxy_glowing":   "Jade Glowing Epoxy",
+
+  "block.reactivefluids.amber_epoxy_opaque":  "Amber Solid Epoxy",
+  "block.reactivefluids.cobalt_epoxy_opaque": "Cobalt Solid Epoxy",
+  "block.reactivefluids.jade_epoxy_opaque":   "Jade Solid Epoxy"
+}

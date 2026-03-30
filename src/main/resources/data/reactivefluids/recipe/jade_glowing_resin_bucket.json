@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {"item": "reactivefluids:jade_resin_bucket"},
+    {"item": "minecraft:glow_ink_sac"}
+  ],
+  "result": {"id": "reactivefluids:jade_glowing_resin_bucket", "count": 1}
+}

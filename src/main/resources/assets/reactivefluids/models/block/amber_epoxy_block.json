@@ -1,0 +1,6 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "reactivefluids:block/amber_epoxy_block"
+  }
+}

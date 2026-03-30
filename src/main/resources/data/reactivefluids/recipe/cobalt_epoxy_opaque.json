@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {"item": "reactivefluids:cobalt_epoxy_block"},
+    {"item": "minecraft:ink_sac"}
+  ],
+  "result": {"id": "reactivefluids:cobalt_epoxy_opaque", "count": 1}
+}
