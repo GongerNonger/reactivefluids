@@ -48,5 +48,20 @@ public class TranslucentLiquidBlock extends LiquidBlock {
         // Acid
         ItemBlockRenderTypes.setRenderLayer(ModFluids.ACID_SOURCE.get(),                 RenderType.translucent());
         ItemBlockRenderTypes.setRenderLayer(ModFluids.ACID_FLOWING.get(),                RenderType.translucent());
+        // Liquid Nitrogen
+        ItemBlockRenderTypes.setRenderLayer(ModFluids.LIQUID_NITROGEN_SOURCE.get(),      RenderType.translucent());
+        ItemBlockRenderTypes.setRenderLayer(ModFluids.LIQUID_NITROGEN_FLOWING.get(),     RenderType.translucent());
+        // Greek Fire
+        ItemBlockRenderTypes.setRenderLayer(ModFluids.GREEK_FIRE_SOURCE.get(),           RenderType.translucent());
+        ItemBlockRenderTypes.setRenderLayer(ModFluids.GREEK_FIRE_FLOWING.get(),          RenderType.translucent());
+        // Ferrofluid
+        ItemBlockRenderTypes.setRenderLayer(ModFluids.FERROFLUID_SOURCE.get(),           RenderType.translucent());
+        ItemBlockRenderTypes.setRenderLayer(ModFluids.FERROFLUID_FLOWING.get(),          RenderType.translucent());
+        // Superfluid
+        ItemBlockRenderTypes.setRenderLayer(ModFluids.SUPERFLUID_SOURCE.get(),           RenderType.translucent());
+        ItemBlockRenderTypes.setRenderLayer(ModFluids.SUPERFLUID_FLOWING.get(),          RenderType.translucent());
+        // Mycelium Slurry
+        ItemBlockRenderTypes.setRenderLayer(ModFluids.MYCELIUM_SLURRY_SOURCE.get(),      RenderType.translucent());
+        ItemBlockRenderTypes.setRenderLayer(ModFluids.MYCELIUM_SLURRY_FLOWING.get(),     RenderType.translucent());
     }
 }

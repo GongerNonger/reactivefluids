@@ -319,6 +319,11 @@ BUCKET_PALETTES = {
     'potassium_iodide':    {'outline':(80,55,20),    'primary':(170,115,35),  'highlight':(210,160,70),  'shadow':(120,80,20)},
     'acid':                {'outline':(20,80,10),    'primary':(50,220,20),   'highlight':(120,255,80),  'shadow':(30,150,10)},
     'plankton':            {'outline':(4,8,20),     'primary':(8,18,38),     'highlight':(30,180,200), 'shadow':(3,10,25)},
+    'liquid_nitrogen':     {'outline':(80,110,140), 'primary':(170,215,255), 'highlight':(210,240,255), 'shadow':(130,180,230)},
+    'greek_fire':          {'outline':(5,60,55),    'primary':(15,150,130),  'highlight':(40,200,170),  'shadow':(8,100,90)},
+    'ferrofluid':          {'outline':(10,10,15),   'primary':(25,25,35),    'highlight':(55,55,70),    'shadow':(15,15,22)},
+    'superfluid':          {'outline':(100,130,155),'primary':(200,230,255), 'highlight':(230,248,255), 'shadow':(170,205,240)},
+    'mycelium_slurry':     {'outline':(40,22,55),   'primary':(95,55,125),   'highlight':(140,90,170),  'shadow':(65,35,90)},
 }
 
 def make_bucket(name):
@@ -377,6 +382,16 @@ FLUIDS = [
     ("potassium_iodide",         (170,115,  35),  65, True,   4, 3, ( 5, 0,-3)),
     # Acid
     ("acid",                     ( 50,220,  20),  75, False,  3, 2, ( 0, 8,-5)),
+    # Liquid Nitrogen — pale icy blue, fast, watery
+    ("liquid_nitrogen",          (160,210, 255),  65, False,  3, 2, ( 0, 5,10)),
+    # Greek Fire — blue-green, slow oily
+    ("greek_fire",               ( 10,140, 120),  85, True,   4, 3, ( 0,10, 5)),
+    # Ferrofluid — dark metallic black
+    ("ferrofluid",               ( 20, 20, 30),   90, True,   4, 3, ( 2, 0, 5)),
+    # Superfluid — very pale blue, almost clear
+    ("superfluid",               (190,225, 255),  45, False,  2, 1, ( 0, 3, 8)),
+    # Mycelium Slurry — deep purple/brown fungal
+    ("mycelium_slurry",          ( 90, 50,120),   80, True,   4, 3, ( 5,-3, 8)),
 ]
 
 EPOXY = [
@@ -399,6 +414,11 @@ BUCKET_COLORS = {
     "potassium_iodide":     (170,115,  35),
     "acid":                 ( 50,220,  20),
     "plankton":             (  8, 18,  38),
+    "liquid_nitrogen":      (170,215, 255),
+    "greek_fire":           ( 15,150, 130),
+    "ferrofluid":           ( 25, 25,  35),
+    "superfluid":           (200,230, 255),
+    "mycelium_slurry":      ( 95, 55, 125),
 }
 
 def make_foam(seed=5001):
@@ -650,6 +670,130 @@ def make_plankton_flow():
 
     return rows
 
+# ---------------------------------------------------------------------------
+# MUSHROOM block textures — static 16x16 for custom mushroom varieties
+# ---------------------------------------------------------------------------
+def make_mushroom(base_rgb, pattern_fn, seed):
+    """Generic mushroom texture with a pattern overlay function."""
+    rng = random.Random(seed)
+    bR, bG, bB = base_rgb
+    pixels = []
+    for py in range(T):
+        row = []
+        for px in range(T):
+            # Base color with slight noise
+            noise = rng.randint(-8, 8)
+            r, g, b = cl(bR + noise), cl(bG + noise), cl(bB + noise)
+            # Apply pattern overlay
+            r, g, b = pattern_fn(px, py, r, g, b, rng)
+            # Edge darkening
+            if px == 0 or py == 0 or px == T-1 or py == T-1:
+                r, g, b = cl(r * 0.7), cl(g * 0.7), cl(b * 0.7)
+            row.append((r, g, b, 255))
+        pixels.append(row)
+    return pixels
+
+def make_ghost_fungus():
+    """Cream/white with blue-green bioluminescent gill lines."""
+    def pattern(px, py, r, g, b, rng):
+        # Gill lines on lower half
+        if py > 8 and px % 3 == 1:
+            glow = 0.5 + 0.3 * math.sin(py * 0.8)
+            r = cl(r * 0.6 + 30 * glow)
+            g = cl(g * 0.6 + 180 * glow)
+            b = cl(b * 0.6 + 160 * glow)
+        return r, g, b
+    return make_mushroom((220, 215, 200), pattern, 6001)
+
+def make_indigo_milk_cap():
+    """Deep blue with concentric ring pattern."""
+    def pattern(px, py, r, g, b, rng):
+        cx, cy = 7.5, 7.5
+        dist = math.sqrt((px - cx)**2 + (py - cy)**2)
+        ring = math.sin(dist * 1.8) * 0.4
+        r = cl(r + ring * -20)
+        g = cl(g + ring * -10)
+        b = cl(b + ring * 30)
+        return r, g, b
+    return make_mushroom((30, 50, 160), pattern, 6002)
+
+def make_bleeding_tooth():
+    """White base with scattered red blood droplets."""
+    rng_drops = random.Random(6003)
+    drops = [(rng_drops.randint(2, 13), rng_drops.randint(2, 13)) for _ in range(12)]
+    def pattern(px, py, r, g, b, rng):
+        for dx, dy in drops:
+            dist = abs(px - dx) + abs(py - dy)
+            if dist == 0:
+                return 180, 10, 10
+            elif dist == 1:
+                return cl(r * 0.7 + 60), cl(g * 0.5), cl(b * 0.5)
+        return r, g, b
+    return make_mushroom((230, 225, 218), pattern, 6003)
+
+def make_amethyst_deceiver():
+    """Deep violet-purple with gradient from center."""
+    def pattern(px, py, r, g, b, rng):
+        cx, cy = 7.5, 7.5
+        dist = math.sqrt((px - cx)**2 + (py - cy)**2) / 10.0
+        # Lighter in center
+        bright = max(0, 1.0 - dist) * 0.3
+        r = cl(r + bright * 40)
+        g = cl(g + bright * 15)
+        b = cl(b + bright * 50)
+        return r, g, b
+    return make_mushroom((120, 45, 170), pattern, 6004)
+
+def make_lions_mane():
+    """White cascading tendrils — vertical streaks."""
+    def pattern(px, py, r, g, b, rng):
+        # Vertical tendril streaks
+        streak = math.sin(px * 2.3 + py * 0.3) * 15
+        drip = math.sin(py * 1.5 + px * 0.2) * 10
+        val = streak + drip
+        r = cl(r + val)
+        g = cl(g + val)
+        b = cl(b + val - 3)
+        return r, g, b
+    return make_mushroom((240, 238, 232), pattern, 6005)
+
+def make_devils_cigar_closed():
+    """Dark brown cigar shape — closed state."""
+    def pattern(px, py, r, g, b, rng):
+        # Vertical wood-grain texture
+        grain = math.sin(py * 1.2 + px * 0.15) * 12
+        r = cl(r + grain)
+        g = cl(g + grain * 0.7)
+        b = cl(b + grain * 0.4)
+        return r, g, b
+    return make_mushroom((75, 50, 30), pattern, 6006)
+
+def make_devils_cigar_open():
+    """Star-burst pattern — open state."""
+    def pattern(px, py, r, g, b, rng):
+        cx, cy = 7.5, 7.5
+        angle = math.atan2(py - cy, px - cx)
+        dist = math.sqrt((px - cx)**2 + (py - cy)**2)
+        # Star rays (6 points)
+        ray = abs(math.sin(angle * 3)) * max(0, 1.0 - dist / 8.0)
+        if ray > 0.3:
+            # Pale tan interior
+            r = cl(180 + ray * 40)
+            g = cl(160 + ray * 30)
+            b = cl(120 + ray * 20)
+        return r, g, b
+    return make_mushroom((75, 50, 30), pattern, 6007)
+
+MUSHROOM_TEXTURES = {
+    "ghost_fungus":         make_ghost_fungus,
+    "indigo_milk_cap":      make_indigo_milk_cap,
+    "bleeding_tooth":       make_bleeding_tooth,
+    "amethyst_deceiver":    make_amethyst_deceiver,
+    "lions_mane":           make_lions_mane,
+    "devils_cigar":         make_devils_cigar_closed,
+    "devils_cigar_open":    make_devils_cigar_open,
+}
+
 BLK = os.path.join("src","main","resources","assets","reactivefluids","textures","block")
 ITM = os.path.join("src","main","resources","assets","reactivefluids","textures","item")
 
@@ -680,6 +824,10 @@ def main():
 
     print("=== Foam block texture ===")
     save_png(os.path.join(BLK, "foam_block.png"), make_foam())
+
+    print("=== Mushroom block textures ===")
+    for name, gen_fn in MUSHROOM_TEXTURES.items():
+        save_png(os.path.join(BLK, f"{name}.png"), gen_fn())
 
     print("=== Bucket item textures ===")
     for name in BUCKET_PALETTES:

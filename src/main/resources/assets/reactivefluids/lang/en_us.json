@@ -42,5 +42,27 @@
   "item.reactivefluids.acid_bucket":  "Acid Bucket",
 
   "block.reactivefluids.plankton_block":  "Bioluminescent Plankton",
-  "item.reactivefluids.plankton_bucket":  "Bioluminescent Plankton Bucket"
+  "item.reactivefluids.plankton_bucket":  "Bioluminescent Plankton Bucket",
+
+  "block.reactivefluids.liquid_nitrogen_block":  "Liquid Nitrogen",
+  "item.reactivefluids.liquid_nitrogen_bucket":  "Liquid Nitrogen Bucket",
+
+  "block.reactivefluids.greek_fire_block":  "Greek Fire",
+  "item.reactivefluids.greek_fire_bucket":  "Greek Fire Bucket",
+
+  "block.reactivefluids.ferrofluid_block":  "Ferrofluid",
+  "item.reactivefluids.ferrofluid_bucket":  "Ferrofluid Bucket",
+
+  "block.reactivefluids.superfluid_block":  "Superfluid",
+  "item.reactivefluids.superfluid_bucket":  "Superfluid Bucket",
+
+  "block.reactivefluids.mycelium_slurry_block":  "Mycelium Slurry",
+  "item.reactivefluids.mycelium_slurry_bucket":  "Mycelium Slurry Bucket",
+
+  "block.reactivefluids.ghost_fungus":      "Ghost Fungus",
+  "block.reactivefluids.indigo_milk_cap":   "Indigo Milk Cap",
+  "block.reactivefluids.bleeding_tooth":    "Bleeding Tooth Fungus",
+  "block.reactivefluids.amethyst_deceiver": "Amethyst Deceiver",
+  "block.reactivefluids.lions_mane":        "Lion's Mane",
+  "block.reactivefluids.devils_cigar":      "Devil's Cigar"
 }

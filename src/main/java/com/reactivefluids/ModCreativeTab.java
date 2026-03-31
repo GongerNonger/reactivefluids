@@ -47,6 +47,23 @@ public class ModCreativeTab {
                     output.accept(ModItems.PLANKTON_BUCKET.get());
                     // Acid
                     output.accept(ModItems.ACID_BUCKET.get());
+                    // Liquid Nitrogen
+                    output.accept(ModItems.LIQUID_NITROGEN_BUCKET.get());
+                    // Greek Fire
+                    output.accept(ModItems.GREEK_FIRE_BUCKET.get());
+                    // Ferrofluid
+                    output.accept(ModItems.FERROFLUID_BUCKET.get());
+                    // Superfluid
+                    output.accept(ModItems.SUPERFLUID_BUCKET.get());
+                    // Mycelium Slurry
+                    output.accept(ModItems.MYCELIUM_SLURRY_BUCKET.get());
+                    // Custom Mushrooms
+                    output.accept(ModItems.GHOST_FUNGUS_ITEM.get());
+                    output.accept(ModItems.INDIGO_MILK_CAP_ITEM.get());
+                    output.accept(ModItems.BLEEDING_TOOTH_ITEM.get());
+                    output.accept(ModItems.AMETHYST_DECEIVER_ITEM.get());
+                    output.accept(ModItems.LIONS_MANE_ITEM.get());
+                    output.accept(ModItems.DEVILS_CIGAR_ITEM.get());
                 })
                 .build()
         );

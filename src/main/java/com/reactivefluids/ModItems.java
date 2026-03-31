@@ -134,4 +134,71 @@ public class ModItems {
         ITEMS.register("acid_bucket", () ->
             new BucketItem(ModFluids.ACID_SOURCE.get(),
                 new Item.Properties().stacksTo(1).craftRemainder(Items.BUCKET)));
+
+    // =========================================================================
+    // Liquid Nitrogen
+    // =========================================================================
+    public static final DeferredItem<BucketItem> LIQUID_NITROGEN_BUCKET =
+        ITEMS.register("liquid_nitrogen_bucket", () ->
+            new BucketItem(ModFluids.LIQUID_NITROGEN_SOURCE.get(),
+                new Item.Properties().stacksTo(1).craftRemainder(Items.BUCKET)));
+
+    // =========================================================================
+    // Greek Fire
+    // =========================================================================
+    public static final DeferredItem<BucketItem> GREEK_FIRE_BUCKET =
+        ITEMS.register("greek_fire_bucket", () ->
+            new BucketItem(ModFluids.GREEK_FIRE_SOURCE.get(),
+                new Item.Properties().stacksTo(1).craftRemainder(Items.BUCKET)));
+
+    // =========================================================================
+    // Ferrofluid
+    // =========================================================================
+    public static final DeferredItem<BucketItem> FERROFLUID_BUCKET =
+        ITEMS.register("ferrofluid_bucket", () ->
+            new BucketItem(ModFluids.FERROFLUID_SOURCE.get(),
+                new Item.Properties().stacksTo(1).craftRemainder(Items.BUCKET)));
+
+    // =========================================================================
+    // Superfluid
+    // =========================================================================
+    public static final DeferredItem<BucketItem> SUPERFLUID_BUCKET =
+        ITEMS.register("superfluid_bucket", () ->
+            new BucketItem(ModFluids.SUPERFLUID_SOURCE.get(),
+                new Item.Properties().stacksTo(1).craftRemainder(Items.BUCKET)));
+
+    // =========================================================================
+    // Mycelium Slurry
+    // =========================================================================
+    public static final DeferredItem<BucketItem> MYCELIUM_SLURRY_BUCKET =
+        ITEMS.register("mycelium_slurry_bucket", () ->
+            new BucketItem(ModFluids.MYCELIUM_SLURRY_SOURCE.get(),
+                new Item.Properties().stacksTo(1).craftRemainder(Items.BUCKET)));
+
+    // =========================================================================
+    // Custom Mushroom Block Items
+    // =========================================================================
+    public static final DeferredItem<BlockItem> GHOST_FUNGUS_ITEM =
+        ITEMS.register("ghost_fungus", () ->
+            new BlockItem(ModBlocks.GHOST_FUNGUS.get(), new Item.Properties()));
+
+    public static final DeferredItem<BlockItem> INDIGO_MILK_CAP_ITEM =
+        ITEMS.register("indigo_milk_cap", () ->
+            new BlockItem(ModBlocks.INDIGO_MILK_CAP.get(), new Item.Properties()));
+
+    public static final DeferredItem<BlockItem> BLEEDING_TOOTH_ITEM =
+        ITEMS.register("bleeding_tooth", () ->
+            new BlockItem(ModBlocks.BLEEDING_TOOTH.get(), new Item.Properties()));
+
+    public static final DeferredItem<BlockItem> AMETHYST_DECEIVER_ITEM =
+        ITEMS.register("amethyst_deceiver", () ->
+            new BlockItem(ModBlocks.AMETHYST_DECEIVER.get(), new Item.Properties()));
+
+    public static final DeferredItem<BlockItem> LIONS_MANE_ITEM =
+        ITEMS.register("lions_mane", () ->
+            new BlockItem(ModBlocks.LIONS_MANE.get(), new Item.Properties()));
+
+    public static final DeferredItem<BlockItem> DEVILS_CIGAR_ITEM =
+        ITEMS.register("devils_cigar", () ->
+            new BlockItem(ModBlocks.DEVILS_CIGAR.get(), new Item.Properties()));
 }

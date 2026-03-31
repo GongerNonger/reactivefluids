@@ -167,4 +167,79 @@ public class ModBlocks {
         BLOCKS.register("acid_block", () ->
             new AcidBlock((FlowingFluid) ModFluids.ACID_SOURCE.get(),
                 fluidProps(MapColor.COLOR_LIGHT_GREEN)));
+
+    // =========================================================================
+    // Liquid Nitrogen — freezes water/lava, slows entities
+    // =========================================================================
+    public static final DeferredBlock<LiquidNitrogenBlock> LIQUID_NITROGEN_BLOCK =
+        BLOCKS.register("liquid_nitrogen_block", () ->
+            new LiquidNitrogenBlock((FlowingFluid) ModFluids.LIQUID_NITROGEN_SOURCE.get(),
+                fluidProps(MapColor.ICE)));
+
+    // =========================================================================
+    // Greek Fire — sticky burning fluid, water makes it spread
+    // =========================================================================
+    public static final DeferredBlock<GreekFireBlock> GREEK_FIRE_BLOCK =
+        BLOCKS.register("greek_fire_block", () ->
+            new GreekFireBlock((FlowingFluid) ModFluids.GREEK_FIRE_SOURCE.get(),
+                fluidProps(MapColor.COLOR_ORANGE).lightLevel(state -> 12)));
+
+    // =========================================================================
+    // Ferrofluid — responds to redstone, solidifies into iron blocks
+    // =========================================================================
+    public static final DeferredBlock<FerrofluidBlock> FERROFLUID_BLOCK =
+        BLOCKS.register("ferrofluid_block", () ->
+            new FerrofluidBlock((FlowingFluid) ModFluids.FERROFLUID_SOURCE.get(),
+                fluidProps(MapColor.COLOR_BLACK)));
+
+    // =========================================================================
+    // Superfluid (Helium-3) — zero friction, climbs walls
+    // =========================================================================
+    public static final DeferredBlock<SuperfluidBlock> SUPERFLUID_BLOCK =
+        BLOCKS.register("superfluid_block", () ->
+            new SuperfluidBlock((FlowingFluid) ModFluids.SUPERFLUID_SOURCE.get(),
+                fluidProps(MapColor.ICE)));
+
+    // =========================================================================
+    // Mycelium Slurry — spreads mushrooms, reacts with bone meal
+    // =========================================================================
+    public static final DeferredBlock<MyceliumSlurryBlock> MYCELIUM_SLURRY_BLOCK =
+        BLOCKS.register("mycelium_slurry_block", () ->
+            new MyceliumSlurryBlock((FlowingFluid) ModFluids.MYCELIUM_SLURRY_SOURCE.get(),
+                fluidProps(MapColor.COLOR_PURPLE)));
+
+    // =========================================================================
+    // Custom Mushroom Blocks — grown by Mycelium Slurry
+    // =========================================================================
+    private static BlockBehaviour.Properties mushroomProps() {
+        return BlockBehaviour.Properties.of()
+                .noCollission().instabreak()
+                .sound(SoundType.GRASS)
+                .pushReaction(net.minecraft.world.level.material.PushReaction.DESTROY);
+    }
+
+    public static final DeferredBlock<GhostFungusBlock> GHOST_FUNGUS =
+        BLOCKS.register("ghost_fungus", () ->
+            new GhostFungusBlock(mushroomProps().lightLevel(state -> 8)
+                .mapColor(MapColor.TERRACOTTA_WHITE)));
+
+    public static final DeferredBlock<IndigoMilkCapBlock> INDIGO_MILK_CAP =
+        BLOCKS.register("indigo_milk_cap", () ->
+            new IndigoMilkCapBlock(mushroomProps().mapColor(MapColor.COLOR_BLUE)));
+
+    public static final DeferredBlock<BleedingToothBlock> BLEEDING_TOOTH =
+        BLOCKS.register("bleeding_tooth", () ->
+            new BleedingToothBlock(mushroomProps().mapColor(MapColor.TERRACOTTA_WHITE)));
+
+    public static final DeferredBlock<AmethystDeceiverBlock> AMETHYST_DECEIVER =
+        BLOCKS.register("amethyst_deceiver", () ->
+            new AmethystDeceiverBlock(mushroomProps().mapColor(MapColor.COLOR_PURPLE)));
+
+    public static final DeferredBlock<LionsManeBlock> LIONS_MANE =
+        BLOCKS.register("lions_mane", () ->
+            new LionsManeBlock(mushroomProps().mapColor(MapColor.SNOW)));
+
+    public static final DeferredBlock<DevilsCigarBlock> DEVILS_CIGAR =
+        BLOCKS.register("devils_cigar", () ->
+            new DevilsCigarBlock(mushroomProps().mapColor(MapColor.COLOR_BROWN)));
 }

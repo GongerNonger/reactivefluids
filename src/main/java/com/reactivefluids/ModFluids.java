@@ -275,6 +275,130 @@ public class ModFluids {
             .bucket(() -> ModItems.ACID_BUCKET.get());
 
     // =========================================================================
+    // LIQUID NITROGEN  (pale icy blue — fast, watery)
+    // =========================================================================
+    public static final DeferredHolder<FluidType, FluidType> LIQUID_NITROGEN_TYPE =
+        FLUID_TYPES.register("liquid_nitrogen", () -> makeFluidType(
+            0xA0C8EEFF,
+            ResourceLocation.fromNamespaceAndPath(ReactiveFluids.MOD_ID, "block/liquid_nitrogen_still"),
+            ResourceLocation.fromNamespaceAndPath(ReactiveFluids.MOD_ID, "block/liquid_nitrogen_flow")
+        ));
+
+    public static final DeferredHolder<Fluid, FlowingFluid> LIQUID_NITROGEN_SOURCE =
+        FLUIDS.register("liquid_nitrogen", () -> new BaseFlowingFluid.Source(ModFluids.LIQUID_NITROGEN_PROPS));
+
+    public static final DeferredHolder<Fluid, FlowingFluid> LIQUID_NITROGEN_FLOWING =
+        FLUIDS.register("liquid_nitrogen_flowing", () -> new BaseFlowingFluid.Flowing(ModFluids.LIQUID_NITROGEN_PROPS));
+
+    public static final BaseFlowingFluid.Properties LIQUID_NITROGEN_PROPS =
+        new BaseFlowingFluid.Properties(LIQUID_NITROGEN_TYPE, LIQUID_NITROGEN_SOURCE, LIQUID_NITROGEN_FLOWING)
+            .slopeFindDistance(4)
+            .levelDecreasePerBlock(1)
+            .block(() -> (net.minecraft.world.level.block.LiquidBlock) ModBlocks.LIQUID_NITROGEN_BLOCK.get())
+            .bucket(() -> ModItems.LIQUID_NITROGEN_BUCKET.get());
+
+    // =========================================================================
+    // GREEK FIRE  (blue-green — slow, viscous like oil)
+    // =========================================================================
+    public static final DeferredHolder<FluidType, FluidType> GREEK_FIRE_TYPE =
+        FLUID_TYPES.register("greek_fire", () -> makeFluidType(
+            0xC0009988,
+            ResourceLocation.fromNamespaceAndPath(ReactiveFluids.MOD_ID, "block/greek_fire_still"),
+            ResourceLocation.fromNamespaceAndPath(ReactiveFluids.MOD_ID, "block/greek_fire_flow")
+        ));
+
+    public static final DeferredHolder<Fluid, FlowingFluid> GREEK_FIRE_SOURCE =
+        FLUIDS.register("greek_fire", () -> new SlowSource(ModFluids.GREEK_FIRE_PROPS));
+
+    public static final DeferredHolder<Fluid, FlowingFluid> GREEK_FIRE_FLOWING =
+        FLUIDS.register("greek_fire_flowing", () -> new SlowFlowing(ModFluids.GREEK_FIRE_PROPS));
+
+    public static final BaseFlowingFluid.Properties GREEK_FIRE_PROPS =
+        new BaseFlowingFluid.Properties(GREEK_FIRE_TYPE, GREEK_FIRE_SOURCE, GREEK_FIRE_FLOWING)
+            .slopeFindDistance(3)
+            .levelDecreasePerBlock(2)
+            .block(() -> (net.minecraft.world.level.block.LiquidBlock) ModBlocks.GREEK_FIRE_BLOCK.get())
+            .bucket(() -> ModItems.GREEK_FIRE_BUCKET.get());
+
+    // =========================================================================
+    // FERROFLUID  (dark metallic black — medium speed)
+    // =========================================================================
+    public static final DeferredHolder<FluidType, FluidType> FERROFLUID_TYPE =
+        FLUID_TYPES.register("ferrofluid", () -> makeFluidType(
+            0xD0181820,
+            ResourceLocation.fromNamespaceAndPath(ReactiveFluids.MOD_ID, "block/ferrofluid_still"),
+            ResourceLocation.fromNamespaceAndPath(ReactiveFluids.MOD_ID, "block/ferrofluid_flow")
+        ));
+
+    public static final DeferredHolder<Fluid, FlowingFluid> FERROFLUID_SOURCE =
+        FLUIDS.register("ferrofluid", () -> new MediumSource(ModFluids.FERROFLUID_PROPS));
+
+    public static final DeferredHolder<Fluid, FlowingFluid> FERROFLUID_FLOWING =
+        FLUIDS.register("ferrofluid_flowing", () -> new MediumFlowing(ModFluids.FERROFLUID_PROPS));
+
+    public static final BaseFlowingFluid.Properties FERROFLUID_PROPS =
+        new BaseFlowingFluid.Properties(FERROFLUID_TYPE, FERROFLUID_SOURCE, FERROFLUID_FLOWING)
+            .slopeFindDistance(3)
+            .levelDecreasePerBlock(1)
+            .block(() -> (net.minecraft.world.level.block.LiquidBlock) ModBlocks.FERROFLUID_BLOCK.get())
+            .bucket(() -> ModItems.FERROFLUID_BUCKET.get());
+
+    // =========================================================================
+    // SUPERFLUID (Helium-3)  (very pale blue, almost clear — extremely fast)
+    // =========================================================================
+    private static class FastSource extends BaseFlowingFluid.Source {
+        FastSource(BaseFlowingFluid.Properties p) { super(p); }
+        @Override public int getTickDelay(LevelReader level) { return 2; }
+    }
+    private static class FastFlowing extends BaseFlowingFluid.Flowing {
+        FastFlowing(BaseFlowingFluid.Properties p) { super(p); }
+        @Override public int getTickDelay(LevelReader level) { return 2; }
+    }
+
+    public static final DeferredHolder<FluidType, FluidType> SUPERFLUID_TYPE =
+        FLUID_TYPES.register("superfluid", () -> makeFluidType(
+            0x60D0E8FF,
+            ResourceLocation.fromNamespaceAndPath(ReactiveFluids.MOD_ID, "block/superfluid_still"),
+            ResourceLocation.fromNamespaceAndPath(ReactiveFluids.MOD_ID, "block/superfluid_flow")
+        ));
+
+    public static final DeferredHolder<Fluid, FlowingFluid> SUPERFLUID_SOURCE =
+        FLUIDS.register("superfluid", () -> new FastSource(ModFluids.SUPERFLUID_PROPS));
+
+    public static final DeferredHolder<Fluid, FlowingFluid> SUPERFLUID_FLOWING =
+        FLUIDS.register("superfluid_flowing", () -> new FastFlowing(ModFluids.SUPERFLUID_PROPS));
+
+    public static final BaseFlowingFluid.Properties SUPERFLUID_PROPS =
+        new BaseFlowingFluid.Properties(SUPERFLUID_TYPE, SUPERFLUID_SOURCE, SUPERFLUID_FLOWING)
+            .slopeFindDistance(6)
+            .levelDecreasePerBlock(1)
+            .block(() -> (net.minecraft.world.level.block.LiquidBlock) ModBlocks.SUPERFLUID_BLOCK.get())
+            .bucket(() -> ModItems.SUPERFLUID_BUCKET.get());
+
+    // =========================================================================
+    // MYCELIUM SLURRY  (deep purple/brown — medium speed)
+    // =========================================================================
+    public static final DeferredHolder<FluidType, FluidType> MYCELIUM_SLURRY_TYPE =
+        FLUID_TYPES.register("mycelium_slurry", () -> makeFluidType(
+            0xB0603880,
+            ResourceLocation.fromNamespaceAndPath(ReactiveFluids.MOD_ID, "block/mycelium_slurry_still"),
+            ResourceLocation.fromNamespaceAndPath(ReactiveFluids.MOD_ID, "block/mycelium_slurry_flow")
+        ));
+
+    public static final DeferredHolder<Fluid, FlowingFluid> MYCELIUM_SLURRY_SOURCE =
+        FLUIDS.register("mycelium_slurry", () -> new MediumSource(ModFluids.MYCELIUM_SLURRY_PROPS));
+
+    public static final DeferredHolder<Fluid, FlowingFluid> MYCELIUM_SLURRY_FLOWING =
+        FLUIDS.register("mycelium_slurry_flowing", () -> new MediumFlowing(ModFluids.MYCELIUM_SLURRY_PROPS));
+
+    public static final BaseFlowingFluid.Properties MYCELIUM_SLURRY_PROPS =
+        new BaseFlowingFluid.Properties(MYCELIUM_SLURRY_TYPE, MYCELIUM_SLURRY_SOURCE, MYCELIUM_SLURRY_FLOWING)
+            .slopeFindDistance(3)
+            .levelDecreasePerBlock(1)
+            .block(() -> (net.minecraft.world.level.block.LiquidBlock) ModBlocks.MYCELIUM_SLURRY_BLOCK.get())
+            .bucket(() -> ModItems.MYCELIUM_SLURRY_BUCKET.get());
+
+    // =========================================================================
     // Shared helper
     // =========================================================================
     private static FluidType makeFluidType(int tintColor, ResourceLocation still, ResourceLocation flow) {
