@@ -1,5 +1,6 @@
 package com.reactivefluids;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.BlockGetter;
@@ -16,10 +17,16 @@ import net.minecraft.world.phys.shapes.VoxelShape;
  */
 public class LionsManeBlock extends BushBlock {
 
+    public static final MapCodec<LionsManeBlock> CODEC = simpleCodec(LionsManeBlock::new);
     private static final VoxelShape SHAPE = box(3, 0, 3, 13, 11, 13);
 
     public LionsManeBlock(Properties properties) {
         super(properties);
+    }
+
+    @Override
+    protected MapCodec<LionsManeBlock> codec() {
+        return CODEC;
     }
 
     @Override

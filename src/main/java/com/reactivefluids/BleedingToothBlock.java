@@ -1,5 +1,6 @@
 package com.reactivefluids;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.util.RandomSource;
@@ -17,10 +18,16 @@ import org.joml.Vector3f;
  */
 public class BleedingToothBlock extends BushBlock {
 
+    public static final MapCodec<BleedingToothBlock> CODEC = simpleCodec(BleedingToothBlock::new);
     private static final VoxelShape SHAPE = box(3, 0, 3, 13, 8, 13);
 
     public BleedingToothBlock(Properties properties) {
         super(properties);
+    }
+
+    @Override
+    protected MapCodec<BleedingToothBlock> codec() {
+        return CODEC;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.reactivefluids;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.BlockGetter;
@@ -18,10 +19,16 @@ import org.joml.Vector3f;
  */
 public class AmethystDeceiverBlock extends BushBlock {
 
+    public static final MapCodec<AmethystDeceiverBlock> CODEC = simpleCodec(AmethystDeceiverBlock::new);
     private static final VoxelShape SHAPE = box(5, 0, 5, 11, 9, 11);
 
     public AmethystDeceiverBlock(Properties properties) {
         super(properties);
+    }
+
+    @Override
+    protected MapCodec<AmethystDeceiverBlock> codec() {
+        return CODEC;
     }
 
     @Override

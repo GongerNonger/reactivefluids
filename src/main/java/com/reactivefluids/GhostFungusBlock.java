@@ -1,5 +1,6 @@
 package com.reactivefluids;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.util.RandomSource;
@@ -18,10 +19,16 @@ import org.joml.Vector3f;
  */
 public class GhostFungusBlock extends BushBlock {
 
+    public static final MapCodec<GhostFungusBlock> CODEC = simpleCodec(GhostFungusBlock::new);
     private static final VoxelShape SHAPE = box(4, 0, 4, 12, 10, 12);
 
     public GhostFungusBlock(Properties properties) {
         super(properties);
+    }
+
+    @Override
+    protected MapCodec<GhostFungusBlock> codec() {
+        return CODEC;
     }
 
     @Override

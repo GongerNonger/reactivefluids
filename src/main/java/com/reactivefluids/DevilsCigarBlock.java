@@ -1,5 +1,6 @@
 package com.reactivefluids;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
@@ -28,6 +29,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
  */
 public class DevilsCigarBlock extends BushBlock {
 
+    public static final MapCodec<DevilsCigarBlock> CODEC = simpleCodec(DevilsCigarBlock::new);
     public static final BooleanProperty OPEN = BooleanProperty.create("open");
     private static final VoxelShape CLOSED_SHAPE = box(5, 0, 5, 11, 12, 11);
     private static final VoxelShape OPEN_SHAPE = box(2, 0, 2, 14, 8, 14);
@@ -35,6 +37,11 @@ public class DevilsCigarBlock extends BushBlock {
     public DevilsCigarBlock(Properties properties) {
         super(properties);
         registerDefaultState(stateDefinition.any().setValue(OPEN, false));
+    }
+
+    @Override
+    protected MapCodec<DevilsCigarBlock> codec() {
+        return CODEC;
     }
 
     @Override
@@ -54,7 +61,6 @@ public class DevilsCigarBlock extends BushBlock {
                 || super.mayPlaceOn(state, level, pos);
     }
 
-    @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
                                   InteractionHand hand, BlockHitResult hit) {
         if (!state.getValue(OPEN)) {

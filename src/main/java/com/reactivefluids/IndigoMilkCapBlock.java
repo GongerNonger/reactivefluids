@@ -1,5 +1,6 @@
 package com.reactivefluids;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
@@ -21,10 +22,16 @@ import java.util.List;
  */
 public class IndigoMilkCapBlock extends BushBlock {
 
+    public static final MapCodec<IndigoMilkCapBlock> CODEC = simpleCodec(IndigoMilkCapBlock::new);
     private static final VoxelShape SHAPE = box(4, 0, 4, 12, 9, 12);
 
     public IndigoMilkCapBlock(Properties properties) {
         super(properties);
+    }
+
+    @Override
+    protected MapCodec<IndigoMilkCapBlock> codec() {
+        return CODEC;
     }
 
     @Override
