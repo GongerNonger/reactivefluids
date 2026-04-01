@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "reactivefluids:item/wall_of_stone_scroll"
+  }
+}

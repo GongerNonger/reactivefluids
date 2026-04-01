@@ -47,6 +47,39 @@ public class ModCreativeTab {
                     output.accept(ModItems.PLANKTON_BUCKET.get());
                     // Acid
                     output.accept(ModItems.ACID_BUCKET.get());
+                    // Crystal Solution
+                    output.accept(ModItems.CRYSTAL_SOLUTION_BUCKET.get());
+                    output.accept(ModItems.CRYSTAL_BLOCK_ITEM.get());
+                    // Rainbow Indicator
+                    output.accept(ModItems.INDICATOR_BUCKET.get());
+                    output.accept(ModItems.ACID_REAGENT.get());
+                    output.accept(ModItems.BASE_REAGENT.get());
+                    // Spell Scrolls
+                    output.accept(ModItems.MOLD_EARTH_SCROLL.get());
+                    output.accept(ModItems.DANCING_LIGHTS_SCROLL.get());
+                    output.accept(ModItems.CONJURE_ANIMALS_SCROLL.get());
+                    output.accept(ModItems.TOWER_SCROLL.get());
+                    output.accept(ModItems.STEED_SCROLL.get());
+                    output.accept(ModItems.DIMENSION_DOOR_SCROLL.get());
+                    output.accept(ModItems.WALL_OF_STONE_SCROLL.get());
+                    output.accept(ModItems.PASSWALL_SCROLL.get());
+                    output.accept(ModItems.DISINTEGRATE_SCROLL.get());
+                    output.accept(ModItems.REVERSE_GRAVITY_SCROLL.get());
+                    // New spell scrolls — ordered by spell level
+                    output.accept(ModItems.FOG_CLOUD_SCROLL.get());       // 1st level
+                    output.accept(ModItems.PLANT_GROWTH_SCROLL.get());    // 3rd level
+                    output.accept(ModItems.ERUPTING_EARTH_SCROLL.get());  // 3rd level
+                    output.accept(ModItems.TINY_HUT_SCROLL.get());        // 3rd level
+                    output.accept(ModItems.CONTROL_WATER_SCROLL.get());   // 4th level
+                    output.accept(ModItems.MOVE_EARTH_SCROLL.get());      // 6th level
+                    output.accept(ModItems.BONES_OF_THE_EARTH_SCROLL.get()); // 6th level
+                    output.accept(ModItems.ARCANE_GATE_SCROLL.get());     // 6th level
+                    output.accept(ModItems.METEOR_SWARM_SCROLL.get());    // 9th level
+                    output.accept(ModItems.MAGNIFICENT_MANSION_SCROLL.get()); // 7th level
+                    output.accept(ModItems.GONGERS_GROTTO_SCROLL.get());      // 7th level
+                    output.accept(ModItems.RAISE_DEAD_SCROLL.get());         // 3rd level
+                    // Undead crafting blocks
+                    output.accept(ModItems.ROTTEN_FLESH_BLOCK_ITEM.get());
                 })
                 .build()
         );

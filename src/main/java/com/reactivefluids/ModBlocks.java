@@ -158,7 +158,7 @@ public class ModBlocks {
         BLOCKS.register("plankton_block", () ->
             new PlanktonBlock((FlowingFluid) ModFluids.PLANKTON_SOURCE.get(),
                 fluidProps(MapColor.COLOR_BLUE).lightLevel(state ->
-                    state.getValue(PlanktonBlock.LIT) ? 10 : 0)));
+                    state.getValue(PlanktonBlock.GLOW) * 3)));
 
     // =========================================================================
     // Acid — dissolves stone downward, exposes ores
@@ -167,4 +167,53 @@ public class ModBlocks {
         BLOCKS.register("acid_block", () ->
             new AcidBlock((FlowingFluid) ModFluids.ACID_SOURCE.get(),
                 fluidProps(MapColor.COLOR_LIGHT_GREEN)));
+
+    // =========================================================================
+    // Crystal solution — grows crystals, crystallizes skeletons
+    // =========================================================================
+    public static final DeferredBlock<CrystalSolutionBlock> CRYSTAL_SOLUTION_BLOCK =
+        BLOCKS.register("crystal_solution_block", () ->
+            new CrystalSolutionBlock((FlowingFluid) ModFluids.CRYSTAL_SOLUTION_SOURCE.get(),
+                BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.ICE)
+                    .replaceable()
+                    .noCollission()
+                    .strength(100.0f)
+                    .noLootTable()
+                    .liquid()
+                    .pushReaction(net.minecraft.world.level.material.PushReaction.DESTROY)
+                    .sound(SoundType.EMPTY)
+                    .randomTicks()));
+
+    public static final DeferredBlock<CrystalBlock> CRYSTAL_BLOCK =
+        BLOCKS.register("crystal_block", () -> new CrystalBlock());
+
+    // =========================================================================
+    // Arcane Barrier — translucent shimmering dome block for Tiny Hut
+    // =========================================================================
+    public static final DeferredBlock<ArcaneBarrierBlock> ARCANE_BARRIER =
+        BLOCKS.register("arcane_barrier", ArcaneBarrierBlock::new);
+
+    // =========================================================================
+    // Return Portal — pocket dimension exit block
+    // =========================================================================
+    public static final DeferredBlock<ReturnPortalBlock> RETURN_PORTAL =
+        BLOCKS.register("return_portal", ReturnPortalBlock::new);
+
+    // =========================================================================
+    // Rotten Flesh Block — crafted from 9 rotten flesh, used for Raise Dead
+    // =========================================================================
+    public static final DeferredBlock<Block> ROTTEN_FLESH_BLOCK =
+        BLOCKS.register("rotten_flesh_block", () ->
+            new Block(BlockBehaviour.Properties.of()
+                .strength(0.5f, 0.5f).sound(SoundType.SLIME_BLOCK)
+                .mapColor(MapColor.COLOR_BROWN)));
+
+    // =========================================================================
+    // Rainbow indicator — pH-reactive fluid
+    // =========================================================================
+    public static final DeferredBlock<IndicatorBlock> INDICATOR_BLOCK =
+        BLOCKS.register("indicator_block", () ->
+            new IndicatorBlock((FlowingFluid) ModFluids.INDICATOR_SOURCE.get(),
+                fluidProps(MapColor.COLOR_GREEN)));
 }

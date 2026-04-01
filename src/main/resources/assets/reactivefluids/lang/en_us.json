@@ -42,5 +42,110 @@
   "item.reactivefluids.acid_bucket":  "Acid Bucket",
 
   "block.reactivefluids.plankton_block":  "Bioluminescent Plankton",
-  "item.reactivefluids.plankton_bucket":  "Bioluminescent Plankton Bucket"
+  "item.reactivefluids.plankton_bucket":  "Bioluminescent Plankton Bucket",
+
+  "block.reactivefluids.crystal_solution_block":  "Crystal Solution",
+  "item.reactivefluids.crystal_solution_bucket":  "Crystal Solution Bucket",
+  "block.reactivefluids.crystal_block":           "Crystal",
+  "entity.reactivefluids.crystallized_skeleton":  "Crystallized Skeleton",
+
+  "block.reactivefluids.indicator_block":  "pH Indicator",
+  "item.reactivefluids.indicator_bucket":  "pH Indicator Bucket",
+  "item.reactivefluids.acid_reagent":      "Acid Reagent",
+  "item.reactivefluids.base_reagent":      "Base Reagent",
+
+  "item.reactivefluids.tower_scroll":          "Galder's Tower Scroll",
+  "item.reactivefluids.tower_scroll.tooltip":  "Conjures a two-story tower for one day",
+  "message.reactivefluids.tower_blocked":      "Not enough space to conjure the tower!",
+
+  "item.reactivefluids.steed_scroll":          "Phantom Steed Scroll",
+  "item.reactivefluids.steed_scroll.tooltip":  "Conjures a swift phantom steed for 10 minutes",
+  "entity.reactivefluids.phantom_steed":       "Phantom Steed",
+
+  "item.reactivefluids.dancing_lights_scroll":          "Dancing Lights Scroll",
+  "item.reactivefluids.dancing_lights_scroll.tooltip":  "Conjures four orbiting lights for 1 minute",
+  "entity.reactivefluids.dancing_light":                "Dancing Light",
+
+  "item.reactivefluids.disintegrate_scroll":          "Disintegrate Scroll",
+  "item.reactivefluids.disintegrate_scroll.tooltip":  "Fires a green ray that disintegrates the target",
+
+  "item.reactivefluids.mold_earth_scroll":            "Mold Earth Scroll",
+  "item.reactivefluids.mold_earth_scroll.tooltip":    "Excavates a 3x3x3 cube of soft earth",
+  "message.reactivefluids.mold_earth_fail":           "No soft earth to excavate!",
+
+  "item.reactivefluids.wall_of_stone_scroll":          "Wall of Stone Scroll",
+  "item.reactivefluids.wall_of_stone_scroll.tooltip":  "Conjures a permanent stone brick wall",
+  "message.reactivefluids.wall_blocked":               "Not enough space for the wall!",
+
+  "item.reactivefluids.passwall_scroll":               "Passwall Scroll",
+  "item.reactivefluids.passwall_scroll.tooltip":       "Creates a temporary tunnel through solid walls",
+  "message.reactivefluids.passwall_fail":              "Cannot tunnel through this material!",
+
+  "item.reactivefluids.dimension_door_scroll":          "Dimension Door Scroll",
+  "item.reactivefluids.dimension_door_scroll.tooltip":  "Teleport up to 64 blocks in look direction",
+  "message.reactivefluids.dimension_door_fail":         "No safe landing found!",
+
+  "item.reactivefluids.conjure_animals_scroll":          "Conjure Animals Scroll",
+  "item.reactivefluids.conjure_animals_scroll.tooltip":  "Summons a pack of spectral creatures for 2 minutes",
+  "entity.reactivefluids.spectral_wolf":                 "Spectral Wolf",
+  "entity.reactivefluids.spectral_fox":                  "Spectral Fox",
+  "entity.reactivefluids.spectral_axolotl":              "Spectral Axolotl",
+
+  "item.reactivefluids.reverse_gravity_scroll":          "Reverse Gravity Scroll",
+  "item.reactivefluids.reverse_gravity_scroll.tooltip":  "Launches all nearby creatures skyward",
+
+  "item.reactivefluids.plant_growth_scroll":              "Plant Growth Scroll",
+  "item.reactivefluids.plant_growth_scroll.tooltip":      "Causes rapid growth in a wide area",
+  "message.reactivefluids.plant_growth_fail":             "No plants to grow here!",
+
+  "item.reactivefluids.fog_cloud_scroll":                 "Fog Cloud Scroll",
+  "item.reactivefluids.fog_cloud_scroll.tooltip":         "Blinds hostile mobs in a large radius",
+
+  "item.reactivefluids.erupting_earth_scroll":            "Erupting Earth Scroll",
+  "item.reactivefluids.erupting_earth_scroll.tooltip":    "Erupts blocks upward in a violent explosion",
+  "message.reactivefluids.erupting_earth_fail":           "No eruptable earth here!",
+
+  "item.reactivefluids.tiny_hut_scroll":                  "Tiny Hut Scroll",
+  "item.reactivefluids.tiny_hut_scroll.tooltip":          "Conjures a glass dome shelter for 10 minutes",
+  "message.reactivefluids.tiny_hut_blocked":              "Not enough space for the dome!",
+
+  "item.reactivefluids.bones_of_the_earth_scroll":        "Bones of the Earth Scroll",
+  "item.reactivefluids.bones_of_the_earth_scroll.tooltip": "Erupts stone pillars from the ground",
+  "message.reactivefluids.bones_blocked":                 "Cannot erect pillars here!",
+
+  "item.reactivefluids.move_earth_scroll":                "Move Earth Scroll",
+  "item.reactivefluids.move_earth_scroll.tooltip":        "Raises or lowers soft terrain (sneak to lower)",
+  "message.reactivefluids.move_earth_fail":               "No soft earth to move!",
+
+  "item.reactivefluids.arcane_gate_scroll":               "Arcane Gate Scroll",
+  "item.reactivefluids.arcane_gate_scroll.tooltip":       "Place two linked portals (use twice)",
+  "message.reactivefluids.arcane_gate_entry":             "Entry portal placed! Use again for exit.",
+  "message.reactivefluids.arcane_gate_fail":              "Too far from the entry portal!",
+
+  "item.reactivefluids.meteor_swarm_scroll":              "Meteor Swarm Scroll",
+  "item.reactivefluids.meteor_swarm_scroll.tooltip":      "Rains four devastating meteors from the sky",
+
+  "item.reactivefluids.control_water_scroll":             "Control Water Scroll",
+  "item.reactivefluids.control_water_scroll.tooltip":     "Parts a body of water for 60 seconds",
+  "message.reactivefluids.control_water_fail":            "Must target water!",
+
+  "item.reactivefluids.magnificent_mansion_scroll":              "Magnificent Mansion Scroll",
+  "item.reactivefluids.magnificent_mansion_scroll.tooltip":      "Opens a portal to a furnished mansion for one day",
+  "message.reactivefluids.mansion_blocked":                      "Not enough space for the mansion!",
+
+  "item.reactivefluids.gongers_grotto_scroll":                   "Gonger's Glorious Grotto Scroll",
+  "item.reactivefluids.gongers_grotto_scroll.tooltip":           "Opens a portal to a magical island grotto for one day",
+  "message.reactivefluids.grotto_blocked":                       "Cannot conjure the grotto here!",
+
+  "block.reactivefluids.arcane_barrier":                         "Arcane Barrier",
+  "block.reactivefluids.return_portal":                          "Return Portal",
+  "entity.reactivefluids.fog_cloud":                             "Fog Cloud",
+  "entity.reactivefluids.meteor":                                "Meteor",
+
+  "item.reactivefluids.raise_dead_scroll":                       "Raise Dead Scroll",
+  "item.reactivefluids.raise_dead_scroll.tooltip":               "Cast on stacked rotten flesh blocks or bone blocks to raise undead",
+  "message.reactivefluids.raise_dead_fail":                      "Must target two stacked rotten flesh blocks or bone blocks!",
+  "block.reactivefluids.rotten_flesh_block":                     "Rotten Flesh Block",
+  "entity.reactivefluids.raised_zombie":                         "Raised Zombie",
+  "entity.reactivefluids.raised_skeleton":                       "Raised Skeleton"
 }

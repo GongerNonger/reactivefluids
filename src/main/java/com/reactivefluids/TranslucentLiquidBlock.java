@@ -48,5 +48,11 @@ public class TranslucentLiquidBlock extends LiquidBlock {
         // Acid
         ItemBlockRenderTypes.setRenderLayer(ModFluids.ACID_SOURCE.get(),                 RenderType.translucent());
         ItemBlockRenderTypes.setRenderLayer(ModFluids.ACID_FLOWING.get(),                RenderType.translucent());
+        // Crystal Solution
+        ItemBlockRenderTypes.setRenderLayer(ModFluids.CRYSTAL_SOLUTION_SOURCE.get(),     RenderType.translucent());
+        ItemBlockRenderTypes.setRenderLayer(ModFluids.CRYSTAL_SOLUTION_FLOWING.get(),    RenderType.translucent());
+        // Rainbow Indicator
+        ItemBlockRenderTypes.setRenderLayer(ModFluids.INDICATOR_SOURCE.get(),            RenderType.translucent());
+        ItemBlockRenderTypes.setRenderLayer(ModFluids.INDICATOR_FLOWING.get(),           RenderType.translucent());
     }
 }

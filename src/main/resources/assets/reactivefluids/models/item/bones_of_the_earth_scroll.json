@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "reactivefluids:item/bones_of_the_earth_scroll"
+  }
+}

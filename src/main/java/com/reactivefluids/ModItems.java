@@ -134,4 +134,106 @@ public class ModItems {
         ITEMS.register("acid_bucket", () ->
             new BucketItem(ModFluids.ACID_SOURCE.get(),
                 new Item.Properties().stacksTo(1).craftRemainder(Items.BUCKET)));
+
+    // =========================================================================
+    // Crystal Solution
+    // =========================================================================
+    public static final DeferredItem<BucketItem> CRYSTAL_SOLUTION_BUCKET =
+        ITEMS.register("crystal_solution_bucket", () ->
+            new BucketItem(ModFluids.CRYSTAL_SOLUTION_SOURCE.get(),
+                new Item.Properties().stacksTo(1).craftRemainder(Items.BUCKET)));
+
+    public static final DeferredItem<BlockItem> CRYSTAL_BLOCK_ITEM =
+        ITEMS.register("crystal_block", () ->
+            new BlockItem(ModBlocks.CRYSTAL_BLOCK.get(), new Item.Properties()));
+
+    // =========================================================================
+    // Rainbow Indicator
+    // =========================================================================
+    public static final DeferredItem<BucketItem> INDICATOR_BUCKET =
+        ITEMS.register("indicator_bucket", () ->
+            new BucketItem(ModFluids.INDICATOR_SOURCE.get(),
+                new Item.Properties().stacksTo(1).craftRemainder(Items.BUCKET)));
+
+    public static final DeferredItem<ReagentItem> ACID_REAGENT =
+        ITEMS.register("acid_reagent", () -> new ReagentItem(new Item.Properties().stacksTo(16)));
+
+    public static final DeferredItem<ReagentItem> BASE_REAGENT =
+        ITEMS.register("base_reagent", () -> new ReagentItem(new Item.Properties().stacksTo(16)));
+
+    // =========================================================================
+    // Rotten Flesh Block item
+    // =========================================================================
+    public static final DeferredItem<BlockItem> ROTTEN_FLESH_BLOCK_ITEM =
+        ITEMS.register("rotten_flesh_block", () ->
+            new BlockItem(ModBlocks.ROTTEN_FLESH_BLOCK.get(), new Item.Properties()));
+
+    // =========================================================================
+    // Spell Scrolls
+    // =========================================================================
+    public static final DeferredItem<TowerScrollItem> TOWER_SCROLL =
+        ITEMS.register("tower_scroll", () -> new TowerScrollItem(new Item.Properties().stacksTo(1)));
+
+    public static final DeferredItem<SteedScrollItem> STEED_SCROLL =
+        ITEMS.register("steed_scroll", () -> new SteedScrollItem(new Item.Properties().stacksTo(1)));
+
+    public static final DeferredItem<DancingLightsScrollItem> DANCING_LIGHTS_SCROLL =
+        ITEMS.register("dancing_lights_scroll", () -> new DancingLightsScrollItem(new Item.Properties().stacksTo(1)));
+
+    public static final DeferredItem<DisintegrateScrollItem> DISINTEGRATE_SCROLL =
+        ITEMS.register("disintegrate_scroll", () -> new DisintegrateScrollItem(new Item.Properties().stacksTo(1)));
+
+    public static final DeferredItem<MoldEarthScrollItem> MOLD_EARTH_SCROLL =
+        ITEMS.register("mold_earth_scroll", () -> new MoldEarthScrollItem(new Item.Properties().stacksTo(16)));
+
+    public static final DeferredItem<WallOfStoneScrollItem> WALL_OF_STONE_SCROLL =
+        ITEMS.register("wall_of_stone_scroll", () -> new WallOfStoneScrollItem(new Item.Properties().stacksTo(1)));
+
+    public static final DeferredItem<PasswallScrollItem> PASSWALL_SCROLL =
+        ITEMS.register("passwall_scroll", () -> new PasswallScrollItem(new Item.Properties().stacksTo(1)));
+
+    public static final DeferredItem<DimensionDoorScrollItem> DIMENSION_DOOR_SCROLL =
+        ITEMS.register("dimension_door_scroll", () -> new DimensionDoorScrollItem(new Item.Properties().stacksTo(1)));
+
+    public static final DeferredItem<ConjureAnimalsScrollItem> CONJURE_ANIMALS_SCROLL =
+        ITEMS.register("conjure_animals_scroll", () -> new ConjureAnimalsScrollItem(new Item.Properties().stacksTo(1)));
+
+    public static final DeferredItem<ReverseGravityScrollItem> REVERSE_GRAVITY_SCROLL =
+        ITEMS.register("reverse_gravity_scroll", () -> new ReverseGravityScrollItem(new Item.Properties().stacksTo(1)));
+
+    public static final DeferredItem<PlantGrowthScrollItem> PLANT_GROWTH_SCROLL =
+        ITEMS.register("plant_growth_scroll", () -> new PlantGrowthScrollItem(new Item.Properties().stacksTo(1)));
+
+    public static final DeferredItem<FogCloudScrollItem> FOG_CLOUD_SCROLL =
+        ITEMS.register("fog_cloud_scroll", () -> new FogCloudScrollItem(new Item.Properties().stacksTo(1)));
+
+    public static final DeferredItem<EruptingEarthScrollItem> ERUPTING_EARTH_SCROLL =
+        ITEMS.register("erupting_earth_scroll", () -> new EruptingEarthScrollItem(new Item.Properties().stacksTo(1)));
+
+    public static final DeferredItem<TinyHutScrollItem> TINY_HUT_SCROLL =
+        ITEMS.register("tiny_hut_scroll", () -> new TinyHutScrollItem(new Item.Properties().stacksTo(1)));
+
+    public static final DeferredItem<BonesOfTheEarthScrollItem> BONES_OF_THE_EARTH_SCROLL =
+        ITEMS.register("bones_of_the_earth_scroll", () -> new BonesOfTheEarthScrollItem(new Item.Properties().stacksTo(1)));
+
+    public static final DeferredItem<MoveEarthScrollItem> MOVE_EARTH_SCROLL =
+        ITEMS.register("move_earth_scroll", () -> new MoveEarthScrollItem(new Item.Properties().stacksTo(1)));
+
+    public static final DeferredItem<ArcaneGateScrollItem> ARCANE_GATE_SCROLL =
+        ITEMS.register("arcane_gate_scroll", () -> new ArcaneGateScrollItem(new Item.Properties().stacksTo(1)));
+
+    public static final DeferredItem<MeteorSwarmScrollItem> METEOR_SWARM_SCROLL =
+        ITEMS.register("meteor_swarm_scroll", () -> new MeteorSwarmScrollItem(new Item.Properties().stacksTo(1)));
+
+    public static final DeferredItem<ControlWaterScrollItem> CONTROL_WATER_SCROLL =
+        ITEMS.register("control_water_scroll", () -> new ControlWaterScrollItem(new Item.Properties().stacksTo(1)));
+
+    public static final DeferredItem<MagnificentMansionScrollItem> MAGNIFICENT_MANSION_SCROLL =
+        ITEMS.register("magnificent_mansion_scroll", () -> new MagnificentMansionScrollItem(new Item.Properties().stacksTo(1)));
+
+    public static final DeferredItem<GongersGrottoScrollItem> GONGERS_GROTTO_SCROLL =
+        ITEMS.register("gongers_grotto_scroll", () -> new GongersGrottoScrollItem(new Item.Properties().stacksTo(1)));
+
+    public static final DeferredItem<RaiseDeadScrollItem> RAISE_DEAD_SCROLL =
+        ITEMS.register("raise_dead_scroll", () -> new RaiseDeadScrollItem(new Item.Properties().stacksTo(1)));
 }
