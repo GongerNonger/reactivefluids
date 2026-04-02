@@ -16,11 +16,7 @@ import javax.annotation.Nullable;
 
 /**
  * Renders the phantom steed as a translucent, self-lit ghostly horse.
- * Uses the vanilla horse texture with a translucent emissive render type.
- *
- * Translucency is achieved by returning null from getRenderType (skip opaque render)
- * and using a custom RenderLayer that calls renderToBuffer with an ARGB color
- * that has alpha < 255.
+ * Uses entityTranslucentCull to hide inner face z-clipping on neck/legs.
  */
 public class PhantomSteedRenderer extends MobRenderer<PhantomSteedEntity, HorseModel<PhantomSteedEntity>> {
 
@@ -33,16 +29,15 @@ public class PhantomSteedRenderer extends MobRenderer<PhantomSteedEntity, HorseM
     public PhantomSteedRenderer(EntityRendererProvider.Context context) {
         super(context, new HorseModel<>(context.bakeLayer(ModelLayers.HORSE)), 0.0F);
 
-        // Custom layer renders the model with translucent emissive color
         this.addLayer(new RenderLayer<PhantomSteedEntity, HorseModel<PhantomSteedEntity>>(this) {
             @Override
             public void render(PoseStack poseStack, MultiBufferSource buffer, int light,
                                PhantomSteedEntity entity, float limbSwing, float limbSwingAmount,
                                float partialTick, float ageInTicks, float netHeadYaw, float headPitch) {
-                VertexConsumer consumer = buffer.getBuffer(RenderType.entityTranslucentCull(TEXTURE));
                 int overlay = OverlayTexture.pack(
                         OverlayTexture.u(0),
                         OverlayTexture.v(entity.hurtTime > 0 || entity.deathTime > 0));
+                VertexConsumer consumer = buffer.getBuffer(RenderType.entityTranslucentCull(TEXTURE));
                 getParentModel().renderToBuffer(poseStack, consumer, 15728880, overlay, GHOST_COLOR);
             }
         });
@@ -62,7 +57,6 @@ public class PhantomSteedRenderer extends MobRenderer<PhantomSteedEntity, HorseM
     @Override
     protected RenderType getRenderType(PhantomSteedEntity entity, boolean bodyVisible,
                                         boolean translucent, boolean glowing) {
-        // Return null — skip the default opaque render; our custom layer handles it
         return null;
     }
 

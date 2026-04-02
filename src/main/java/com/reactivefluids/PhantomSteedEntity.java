@@ -96,22 +96,48 @@ public class PhantomSteedEntity extends AbstractHorse {
             }
         }
 
-        // Client-side ghost particles
+        // Client-side spectral aura — particles stay close to body, don't obstruct rider
         if (level().isClientSide()) {
-            double px = getX() + (random.nextDouble() - 0.5) * getBbWidth();
-            double py = getY() + random.nextDouble() * getBbHeight();
-            double pz = getZ() + (random.nextDouble() - 0.5) * getBbWidth();
+            double hw = getBbWidth() * 0.6;
+
+            // Subtle body wisps — drift sideways/downward, never up into the rider
             if (random.nextInt(3) == 0) {
-                level().addParticle(ModParticles.SPECTRAL.get(), px, py, pz, 0, 0.02, 0);
+                double px = getX() + (random.nextDouble() - 0.5) * getBbWidth();
+                double py = getY() + random.nextDouble() * getBbHeight() * 0.6; // lower half only
+                double pz = getZ() + (random.nextDouble() - 0.5) * getBbWidth();
+                double vx = (random.nextDouble() - 0.5) * 0.02;
+                double vy = -0.01 - random.nextDouble() * 0.01; // drift DOWN
+                double vz = (random.nextDouble() - 0.5) * 0.02;
+                level().addParticle(ModParticles.SPECTRAL.get(), px, py, pz, vx, vy, vz);
+            }
+
+            // Hoof trail — soul fire at ground level behind each leg
+            if (random.nextInt(2) == 0) {
+                double angle = random.nextDouble() * Math.PI * 2;
+                double dist = 0.3 + random.nextDouble() * 0.3;
+                double px = getX() + Math.cos(angle) * dist;
+                double pz = getZ() + Math.sin(angle) * dist;
+                level().addParticle(ParticleTypes.SOUL_FIRE_FLAME,
+                        px, getY() + 0.05, pz,
+                        0, -0.02, 0); // sink into ground
+            }
+
+            // Occasional ground mist around hooves
+            if (random.nextInt(5) == 0) {
+                double px = getX() + (random.nextDouble() - 0.5) * getBbWidth() * 1.2;
+                double pz = getZ() + (random.nextDouble() - 0.5) * getBbWidth() * 1.2;
+                level().addParticle(ParticleTypes.SOUL,
+                        px, getY() + 0.1, pz,
+                        (random.nextDouble() - 0.5) * 0.01, 0.005, (random.nextDouble() - 0.5) * 0.01);
             }
 
             // Extra particles when fading
             int remaining = getTicksRemaining();
             if (remaining <= FADE_TICKS) {
                 for (int i = 0; i < 3; i++) {
-                    px = getX() + (random.nextDouble() - 0.5) * getBbWidth() * 2;
-                    py = getY() + random.nextDouble() * getBbHeight();
-                    pz = getZ() + (random.nextDouble() - 0.5) * getBbWidth() * 2;
+                    double px = getX() + (random.nextDouble() - 0.5) * getBbWidth() * 2;
+                    double py = getY() + random.nextDouble() * getBbHeight();
+                    double pz = getZ() + (random.nextDouble() - 0.5) * getBbWidth() * 2;
                     level().addParticle(ParticleTypes.ENCHANT, px, py, pz, 0, -0.1, 0);
                 }
             }

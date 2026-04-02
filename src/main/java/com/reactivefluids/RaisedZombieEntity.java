@@ -72,7 +72,8 @@ public class RaisedZombieEntity extends Zombie {
         this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 8.0F));
 
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Monster.class, 10, true, false,
-                target -> !(target instanceof Creeper) && !(target instanceof Ghast)));
+                target -> !(target instanceof Creeper) && !(target instanceof Ghast)
+                        && !(target instanceof RaisedZombieEntity) && !(target instanceof RaisedSkeletonEntity)));
     }
 
     @Override
@@ -92,6 +93,24 @@ public class RaisedZombieEntity extends Zombie {
             if (remaining <= 100 && remaining % 20 == 0) {
                 level().playSound(null, this, SoundEvents.ZOMBIE_AMBIENT,
                         SoundSource.NEUTRAL, 0.4F, 0.8F);
+            }
+        }
+
+        // Client-side necromantic aura particles
+        if (level().isClientSide()) {
+            if (random.nextInt(3) == 0) {
+                double px = getX() + (random.nextDouble() - 0.5) * getBbWidth();
+                double py = getY() + random.nextDouble() * getBbHeight() * 0.8;
+                double pz = getZ() + (random.nextDouble() - 0.5) * getBbWidth();
+                level().addParticle(ModParticles.NECROTIC.get(), px, py, pz,
+                        (random.nextDouble() - 0.5) * 0.01, 0.02, (random.nextDouble() - 0.5) * 0.01);
+            }
+            // Occasional soul particles at feet
+            if (random.nextInt(6) == 0) {
+                double px = getX() + (random.nextDouble() - 0.5) * getBbWidth();
+                double pz = getZ() + (random.nextDouble() - 0.5) * getBbWidth();
+                level().addParticle(net.minecraft.core.particles.ParticleTypes.SOUL,
+                        px, getY() + 0.1, pz, 0, 0.01, 0);
             }
         }
     }

@@ -175,6 +175,12 @@ public class SpectralFoxEntity extends Fox {
         }
     }
 
+    @Override
+    protected void populateDefaultEquipmentSlots(net.minecraft.util.RandomSource random,
+                                                  net.minecraft.world.DifficultyInstance difficulty) {
+        // Don't let vanilla Fox replace our weapon with random items
+    }
+
     @Override public boolean isFood(ItemStack stack) { return false; }
     @Override public boolean canMate(Animal other) { return false; }
     @Override public boolean canBeLeashed() { return false; }

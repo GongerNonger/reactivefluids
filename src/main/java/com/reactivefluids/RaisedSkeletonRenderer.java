@@ -13,7 +13,7 @@ import net.minecraft.resources.ResourceLocation;
 public class RaisedSkeletonRenderer extends HumanoidMobRenderer<RaisedSkeletonEntity, SkeletonModel<RaisedSkeletonEntity>> {
 
     private static final ResourceLocation TEXTURE =
-            ResourceLocation.withDefaultNamespace("textures/entity/skeleton/skeleton.png");
+            ResourceLocation.fromNamespaceAndPath("reactivefluids", "textures/entity/raised_skeleton.png");
 
     public RaisedSkeletonRenderer(EntityRendererProvider.Context context) {
         super(context, new SkeletonModel<>(context.bakeLayer(ModelLayers.SKELETON)), 0.5F);

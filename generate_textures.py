@@ -7,7 +7,7 @@ FLOW:  4 column groups, vertical curtain streaks, edge darkening.
 Key distinction — Resin: alpha 242, interpolate=false, sharp gloss, thick streaks.
                   Hardener: alpha 210, interpolate=true, diffuse sheen, thin streaks.
 """
-import zlib, struct, os, math, random
+import zlib, struct, os, math, random, zipfile, io, tempfile
 
 # ---------------------------------------------------------------------------
 # PNG writer (stdlib only)
@@ -1535,6 +1535,71 @@ def make_gongers_grotto_scroll():
     _apply_ribbon(pixels, (60, 60, 80, 255), (90, 80, 120, 255), (40, 40, 60, 255))
     return pixels
 
+
+def make_raise_dead_scroll():
+    """16x16 raise dead scroll item sprite — parchment with a rising skeletal hand rune."""
+    pixels = _scroll_base()
+
+    # Rune colors — necromantic dark green / sickly yellow-green
+    RUNE     = (30, 75, 30, 255)     # dark green bone
+    RUNE_MID = (55, 110, 40, 255)    # mid sickly green
+    RUNE_GL  = (120, 170, 50, 255)   # yellow-green glow
+    RUNE_BR  = (160, 200, 60, 255)   # bright sickly highlight
+
+    # Ribbon — deathly black-green
+    RIBBON   = (20, 30, 18, 255)
+    RIBN_HI  = (40, 55, 30, 255)
+    RIBN_DK  = (10, 15, 8, 255)
+
+    # Rising skeletal hand clawing upward from below
+    # Row 3: middle finger tip (highest point, bright)
+    pixels[3][8] = RUNE_BR
+    # Row 4: middle finger upper, index finger tip
+    pixels[4][7] = RUNE_BR
+    pixels[4][8] = RUNE_GL
+    # Row 5: ring finger tip, middle finger, index finger
+    pixels[5][6] = RUNE_GL
+    pixels[5][7] = RUNE_MID
+    pixels[5][8] = RUNE
+    # Row 6: pinky tip, ring, middle, index continuing
+    pixels[6][5] = RUNE_GL
+    pixels[6][6] = RUNE_MID
+    pixels[6][7] = RUNE
+    pixels[6][8] = RUNE
+    pixels[6][9] = RUNE_GL   # thumb start
+    # Row 7: fingers converge into palm
+    pixels[7][6] = RUNE
+    pixels[7][7] = RUNE
+    pixels[7][8] = RUNE
+    pixels[7][9] = RUNE_MID
+    # Row 8: palm / wrist
+    pixels[8][6] = RUNE_MID
+    pixels[8][7] = RUNE
+    pixels[8][8] = RUNE
+    pixels[8][9] = RUNE_MID
+    # Row 9: wrist bones narrowing
+    pixels[9][7] = RUNE
+    pixels[9][8] = RUNE
+    # Row 10: forearm bone emerging from ground
+    pixels[10][7] = RUNE_MID
+    pixels[10][8] = RUNE_MID
+    # Ground line — cracked earth the hand bursts from
+    pixels[10][5] = RUNE_GL
+    pixels[10][6] = RUNE_GL
+    pixels[10][9] = RUNE_GL
+    pixels[10][10] = RUNE_GL
+
+    # Necromantic energy wisps flanking the hand
+    pixels[4][10] = RUNE_BR
+    pixels[6][4] = RUNE_BR
+    pixels[8][10] = RUNE_GL
+    pixels[5][10] = RUNE_MID
+
+    _apply_ribbon(pixels, RIBBON, RIBN_HI, RIBN_DK)
+
+    return pixels
+
+
 def make_spectral_wolf_texture():
     """64x64 ghostly wolf entity texture — semi-transparent blue-white."""
     rows = []
@@ -1602,7 +1667,7 @@ def read_png(path):
 
         if chunk_type == b'IHDR':
             width, height, bit_depth, color_type = struct.unpack('>IIBB', chunk_data[:10])
-            assert bit_depth == 8, f"Only 8-bit depth supported, got {bit_depth}"
+            assert bit_depth in (1, 2, 4, 8), f"Only 1/2/4/8-bit depth supported, got {bit_depth}"
             assert color_type in (2, 3, 6), f"Only RGB(2), indexed(3), and RGBA(6) supported, got {color_type}"
         elif chunk_type == b'PLTE':
             # Palette: sequence of (R,G,B) entries
@@ -1618,14 +1683,19 @@ def read_png(path):
     # Decompress all IDAT data
     raw = zlib.decompress(b''.join(idat_chunks))
 
-    # Bytes per pixel (for indexed, 1 byte per pixel = palette index)
+    # Bytes per pixel (for filtering purposes, minimum 1)
     if color_type == 3:
-        bpp = 1
+        bpp_filter = max(1, bit_depth // 8)  # for sub-byte depths, filter uses bpp=1
     elif color_type == 2:
-        bpp = 3
+        bpp_filter = 3
     else:
-        bpp = 4
-    stride = width * bpp  # bytes per row (without filter byte)
+        bpp_filter = 4
+    # Stride = bytes per scanline (for sub-byte indexed, ceil(width*bits/8))
+    if color_type == 3 and bit_depth < 8:
+        stride = (width * bit_depth + 7) // 8
+    else:
+        stride = width * bpp_filter
+    bpp = bpp_filter  # used by unfilter below
 
     def paeth_predictor(a, b, c):
         p = a + b - c
@@ -1672,17 +1742,31 @@ def read_png(path):
 
         # Convert scanline bytes to pixel tuples
         row = []
-        for x in range(width):
-            p = x * bpp
-            if color_type == 3:  # Indexed
-                idx = scanline[p]
+        if color_type == 3 and bit_depth < 8:
+            # Sub-byte indexed: extract pixel indices from packed bytes
+            pixels_per_byte = 8 // bit_depth
+            mask = (1 << bit_depth) - 1
+            for x in range(width):
+                byte_idx = (x * bit_depth) // 8
+                bit_offset = 8 - bit_depth - ((x * bit_depth) % 8)
+                idx = (scanline[byte_idx] >> bit_offset) & mask
                 r, g, b = palette[idx]
                 a = trns[idx] if (trns is not None and idx < len(trns)) else 255
                 row.append((r, g, b, a))
-            elif color_type == 2:  # RGB
-                row.append((scanline[p], scanline[p+1], scanline[p+2], 255))
-            else:  # RGBA
-                row.append((scanline[p], scanline[p+1], scanline[p+2], scanline[p+3]))
+        else:
+            for x in range(width):
+                if color_type == 3:  # 8-bit Indexed
+                    p = x
+                    idx = scanline[p]
+                    r, g, b = palette[idx]
+                    a = trns[idx] if (trns is not None and idx < len(trns)) else 255
+                    row.append((r, g, b, a))
+                elif color_type == 2:  # RGB
+                    p = x * 3
+                    row.append((scanline[p], scanline[p+1], scanline[p+2], 255))
+                else:  # RGBA
+                    p = x * 4
+                    row.append((scanline[p], scanline[p+1], scanline[p+2], scanline[p+3]))
         rows.append(row)
 
     return rows
@@ -1690,16 +1774,139 @@ def read_png(path):
 def make_phantom_steed_texture():
     """64x64 ghostly horse entity texture based on vanilla horse_white.png.
 
-    Reads the vanilla horse texture, computes luminance, and tints toward
-    ghostly blue-white. Adds energy veins and glowing eyes.
+    Reads the vanilla horse texture, computes luminance, and applies a rich
+    spectral color palette with region-specific effects:
+    - Icy blue-white body with depth gradient (lighter highlights, deeper
+      blue-purple shadows)
+    - Bright cyan/white glowing eyes
+    - Soul-fire wisps on mane and tail
+    - Ethereal glowing hooves fading to bright cyan
+    - Arcane energy vein patterns across the body
+    - Edge-glow on UV region boundaries suggesting inner light
+
     All output pixels are fully opaque (alpha=255) — translucency comes from
     the render shader, not texture alpha.
     """
-    # Read vanilla horse texture
     vanilla_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'vanilla_horse_white.png')
     vanilla = read_png(vanilla_path)
     H = len(vanilla)
     W = len(vanilla[0])
+
+    # --- Color palette ---
+    # Base ghostly tint: highlights (bright icy white-blue) to shadows (deep blue-purple)
+    hi_color  = (210, 235, 255)  # bright icy white-blue for highlights
+    mid_color = (120, 160, 220)  # mid ethereal blue
+    lo_color  = (60, 50, 140)    # deep blue-purple for shadows
+
+    # Special colors
+    eye_color     = (220, 255, 255)  # bright white-cyan for eyes
+    eye_core      = (255, 255, 255)  # pure white eye center
+    vein_color    = (140, 230, 255)  # bright cyan for energy veins
+    hoof_glow     = (180, 245, 255)  # bright cyan-white for hooves
+    mane_wisp     = (100, 220, 255)  # soul fire cyan for mane/tail wisps
+    mane_bright   = (180, 250, 255)  # bright wisp tips
+
+    # --- Define UV region bounding boxes ---
+    # Each entry: (tex_u, tex_v, box_w, box_h, box_d, label)
+    # The UV footprint for a box of size (w, h, d) starting at texOffs(u, v):
+    #   top face:    (u+d,       v,        w, d)
+    #   bottom face: (u+d+w,     v,        w, d)
+    #   front face:  (u+d,       v+d,      w, h)
+    #   back face:   (u+d+w+d,   v+d,      w, h)
+    #   left face:   (u,         v+d,      d, h)
+    #   right face:  (u+d+w,     v+d,      d, h)
+
+    def uv_rects(u, v, bw, bh, bd):
+        """Return list of (x, y, w, h) pixel rectangles for a box's UV faces."""
+        return [
+            (u + bd,         v,          bw, bd),   # top
+            (u + bd + bw,    v,          bw, bd),   # bottom
+            (u + bd,         v + bd,     bw, bh),   # front
+            (u + bd + bw + bd, v + bd,   bw, bh),   # back
+            (u,              v + bd,     bd, bh),   # left
+            (u + bd + bw,    v + bd,     bd, bh),   # right
+        ]
+
+    # Build pixel-level region map (64x64) — each pixel tagged with its region
+    # Regions: 'body', 'head', 'mouth', 'headcluster', 'mane', 'tail', 'leg', 'ear', None
+    region_map = [[None]*W for _ in range(H)]
+    edge_map = [[False]*W for _ in range(H)]
+
+    region_defs = [
+        # (texOffs_u, texOffs_v, box_w, box_h, box_d, label)
+        (0,  32, 10, 10, 22, 'body'),
+        (0,  13,  6,  5,  7, 'head'),
+        (0,  25,  4,  5,  5, 'mouth'),
+        (0,  35,  4, 12,  7, 'headcluster'),
+        (56, 36,  2, 16,  2, 'mane'),
+        (42, 36,  3, 14,  4, 'tail'),
+        (48, 21,  4, 11,  4, 'leg'),
+        (19, 16,  2,  3,  1, 'ear'),
+    ]
+
+    for u, v, bw, bh, bd, label in region_defs:
+        rects = uv_rects(u, v, bw, bh, bd)
+        for rx, ry, rw, rh in rects:
+            for py in range(ry, min(ry + rh, H)):
+                for px in range(rx, min(rx + rw, W)):
+                    region_map[py][px] = label
+
+    # Build edge map — pixels at the border of each UV rect
+    for u, v, bw, bh, bd, label in region_defs:
+        rects = uv_rects(u, v, bw, bh, bd)
+        for rx, ry, rw, rh in rects:
+            for py in range(ry, min(ry + rh, H)):
+                for px in range(rx, min(rx + rw, W)):
+                    if py == ry or py == ry + rh - 1 or px == rx or px == rx + rw - 1:
+                        edge_map[py][px] = True
+
+    # Precompute hoof rows for legs — bottom 3 rows of front face of leg UV
+    # Leg at texOffs(48,21), box 4x11x4
+    # Front face: (48+4, 21+4, 4, 11) = (52, 25, 4, 11)
+    # Hoof = bottom 3 rows of each face
+    leg_rects = uv_rects(48, 21, 4, 11, 4)
+    hoof_pixels = set()
+    for rx, ry, rw, rh in leg_rects:
+        for py in range(max(ry, ry + rh - 3), ry + rh):
+            for px in range(rx, min(rx + rw, W)):
+                if py < H:
+                    hoof_pixels.add((px, py))
+
+    # Hoof gradient: how close to the very bottom (0.0 = top of hoof zone, 1.0 = bottom)
+    hoof_gradient = {}
+    for rx, ry, rw, rh in leg_rects:
+        hoof_start = max(ry, ry + rh - 3)
+        for py in range(hoof_start, min(ry + rh, H)):
+            t = (py - hoof_start) / 2.0  # 0..1 over 3 rows
+            for px in range(rx, min(rx + rw, W)):
+                hoof_gradient[(px, py)] = t
+
+    # Mane/tail pixel sets for wisp effects
+    mane_rects = uv_rects(56, 36, 2, 16, 2)
+    mane_pixels = set()
+    for rx, ry, rw, rh in mane_rects:
+        for py in range(ry, min(ry + rh, H)):
+            for px in range(rx, min(rx + rw, W)):
+                mane_pixels.add((px, py))
+
+    tail_rects = uv_rects(42, 36, 3, 14, 4)
+    tail_pixels = set()
+    for rx, ry, rw, rh in tail_rects:
+        for py in range(ry, min(ry + rh, H)):
+            for px in range(rx, min(rx + rw, W)):
+                tail_pixels.add((px, py))
+
+    # Body pixel set for energy veins
+    body_rects = uv_rects(0, 32, 10, 10, 22)
+    body_pixels = set()
+    for rx, ry, rw, rh in body_rects:
+        for py in range(ry, min(ry + rh, H)):
+            for px in range(rx, min(rx + rw, W)):
+                body_pixels.add((px, py))
+
+    # Seeded RNG for deterministic noise
+    rng = random.Random(42)
+    noise = [[rng.random() for _ in range(W)] for _ in range(H)]
 
     rows = []
     for y in range(H):
@@ -1707,38 +1914,194 @@ def make_phantom_steed_texture():
         for x in range(W):
             sr, sg, sb, sa = vanilla[y][x]
 
-            # Transparent pixels stay transparent
             if sa == 0:
                 row.append((0, 0, 0, 0))
                 continue
 
-            # Compute luminance from vanilla pixel
+            # Luminance from vanilla pixel
             lum = (sr * 0.299 + sg * 0.587 + sb * 0.114) / 255.0
 
-            # Tint toward ghostly blue-white
-            new_r = int(lum * 180 + (1 - lum) * 100)
-            new_g = int(lum * 210 + (1 - lum) * 130)
-            new_b = int(lum * 255 + (1 - lum) * 200)
+            # --- Base spectral tint with depth gradient ---
+            # Two-stop gradient: lo_color -> mid_color -> hi_color
+            if lum < 0.5:
+                t = lum * 2.0  # 0..1 over dark half
+                base_r = lo_color[0] + (mid_color[0] - lo_color[0]) * t
+                base_g = lo_color[1] + (mid_color[1] - lo_color[1]) * t
+                base_b = lo_color[2] + (mid_color[2] - lo_color[2]) * t
+            else:
+                t = (lum - 0.5) * 2.0  # 0..1 over bright half
+                base_r = mid_color[0] + (hi_color[0] - mid_color[0]) * t
+                base_g = mid_color[1] + (hi_color[1] - mid_color[1]) * t
+                base_b = mid_color[2] + (hi_color[2] - mid_color[2]) * t
 
-            # Subtle energy veins
-            if (x + y * 3) % 17 == 0:
-                new_r = min(255, new_r + 20)
-                new_g = min(255, new_g + 20)
-                new_b = min(255, new_b + 20)
+            # Add subtle noise for texture variation
+            n = noise[y][x]
+            base_r += (n - 0.5) * 16
+            base_g += (n - 0.5) * 12
+            base_b += (n - 0.5) * 10
 
-            # Glowing eyes — head front UV at texOffs(7,8) size 10x12
-            # Eye area roughly x=10-14, y=14-17
-            if 10 <= x <= 14 and 14 <= y <= 17:
-                new_r = min(255, new_r + 50)
-                new_g = min(255, new_g + 45)
-                new_b = 255
+            nr, ng, nb = base_r, base_g, base_b
+            region = region_map[y][x]
+
+            # --- Glowing eyes ---
+            # Head front face at texOffs(0,13), box 6x5x7
+            # Front face: (0+7, 13+7, 6, 5) = (7, 20, 6, 5)
+            # Eye pixels roughly x=10-13, y=14-16 on the head texture
+            if 10 <= x <= 13 and 14 <= y <= 16:
+                # Core of eye = pure white, edges = bright cyan
+                cx, cy = 11.5, 15.0
+                d = math.sqrt((x - cx)**2 + (y - cy)**2)
+                if d < 1.0:
+                    nr, ng, nb = eye_core
+                elif d < 2.0:
+                    t2 = d - 1.0
+                    nr = eye_core[0] + (eye_color[0] - eye_core[0]) * t2
+                    ng = eye_core[1] + (eye_color[1] - eye_core[1]) * t2
+                    nb = eye_core[2] + (eye_color[2] - eye_core[2]) * t2
+                else:
+                    nr, ng, nb = eye_color
+
+            # --- Ethereal hooves ---
+            elif (x, y) in hoof_pixels:
+                t_hoof = hoof_gradient.get((x, y), 0.5)
+                # Blend from base toward bright hoof glow
+                blend = 0.5 + 0.5 * t_hoof  # stronger glow at bottom
+                nr = nr + (hoof_glow[0] - nr) * blend
+                ng = ng + (hoof_glow[1] - ng) * blend
+                nb = nb + (hoof_glow[2] - nb) * blend
+                # Add sparkle at very bottom
+                if t_hoof > 0.8:
+                    sparkle = (noise[y][x] > 0.5)
+                    if sparkle:
+                        nr = min(255, nr + 40)
+                        ng = min(255, ng + 30)
+                        nb = min(255, nb + 20)
+
+            # --- Mane wisps (soul fire effect) ---
+            elif (x, y) in mane_pixels:
+                # Wispy pattern based on noise + position
+                wisp_val = math.sin(y * 1.3 + x * 0.7) * 0.5 + 0.5
+                wisp_val = wisp_val * 0.6 + noise[y][x] * 0.4
+                if wisp_val > 0.6:
+                    t_wisp = (wisp_val - 0.6) / 0.4  # 0..1
+                    nr = nr + (mane_bright[0] - nr) * t_wisp * 0.8
+                    ng = ng + (mane_bright[1] - ng) * t_wisp * 0.8
+                    nb = nb + (mane_bright[2] - nb) * t_wisp * 0.8
+                elif wisp_val > 0.3:
+                    t_wisp = (wisp_val - 0.3) / 0.3
+                    nr = nr + (mane_wisp[0] - nr) * t_wisp * 0.5
+                    ng = ng + (mane_wisp[1] - ng) * t_wisp * 0.5
+                    nb = nb + (mane_wisp[2] - nb) * t_wisp * 0.5
+
+            # --- Tail wisps (soul fire effect) ---
+            elif (x, y) in tail_pixels:
+                wisp_val = math.sin(y * 1.1 + x * 0.9 + 2.0) * 0.5 + 0.5
+                wisp_val = wisp_val * 0.55 + noise[y][x] * 0.45
+                if wisp_val > 0.55:
+                    t_wisp = (wisp_val - 0.55) / 0.45
+                    nr = nr + (mane_bright[0] - nr) * t_wisp * 0.75
+                    ng = ng + (mane_bright[1] - ng) * t_wisp * 0.75
+                    nb = nb + (mane_bright[2] - nb) * t_wisp * 0.75
+                elif wisp_val > 0.25:
+                    t_wisp = (wisp_val - 0.25) / 0.3
+                    nr = nr + (mane_wisp[0] - nr) * t_wisp * 0.45
+                    ng = ng + (mane_wisp[1] - ng) * t_wisp * 0.45
+                    nb = nb + (mane_wisp[2] - nb) * t_wisp * 0.45
+
+            # --- Body energy veins / arcane rune patterns ---
+            if (x, y) in body_pixels and not (10 <= x <= 13 and 14 <= y <= 16):
+                # Sine-based vein network
+                v1 = math.sin(x * 1.8 + y * 0.4) * math.cos(y * 1.2 - x * 0.6)
+                v2 = math.sin((x + y) * 0.9 + 1.5) * math.sin((x - y) * 0.7)
+                vein_intensity = max(v1, v2)
+                # Thin vein lines where intensity is near peak
+                if vein_intensity > 0.85:
+                    t_vein = (vein_intensity - 0.85) / 0.15
+                    nr = nr + (vein_color[0] - nr) * t_vein * 0.7
+                    ng = ng + (vein_color[1] - ng) * t_vein * 0.7
+                    nb = nb + (vein_color[2] - nb) * t_vein * 0.7
+                # Subtle wider glow around veins
+                elif vein_intensity > 0.7:
+                    t_vein = (vein_intensity - 0.7) / 0.15
+                    nr = nr + (vein_color[0] - nr) * t_vein * 0.2
+                    ng = ng + (vein_color[1] - ng) * t_vein * 0.2
+                    nb = nb + (vein_color[2] - nb) * t_vein * 0.2
+
+            # --- Edge glow (inner light at UV boundaries) ---
+            if edge_map[y][x] and sa > 0:
+                nr = min(255, nr + 22)
+                ng = min(255, ng + 28)
+                nb = min(255, nb + 18)
 
             # Clamp and force fully opaque
-            new_r = max(0, min(255, new_r))
-            new_g = max(0, min(255, new_g))
-            new_b = max(0, min(255, new_b))
+            row.append((cl(nr), cl(ng), cl(nb), 255))
+        rows.append(row)
+    return rows
 
-            row.append((new_r, new_g, new_b, 255))
+def make_raised_skeleton_texture():
+    """64x32 raised skeleton entity texture based on vanilla skeleton.png.
+
+    Subtle modifications — slightly yellowed bones, green glowing eye sockets,
+    and a few faint dark marks. Should still look like a skeleton, just aged
+    and necromantically reanimated.
+    """
+    jar_path = os.path.join(
+        os.path.expanduser("~"),
+        ".gradle", "caches", "minecraft", "versions", "1.21.1", "client.jar"
+    )
+    skeleton_entry = "assets/minecraft/textures/entity/skeleton/skeleton.png"
+    tmp = tempfile.NamedTemporaryFile(suffix=".png", delete=False)
+    try:
+        with zipfile.ZipFile(jar_path, 'r') as zf:
+            tmp.write(zf.read(skeleton_entry))
+            tmp.close()
+        vanilla = read_png(tmp.name)
+    finally:
+        os.unlink(tmp.name)
+
+    H = len(vanilla)
+    W = len(vanilla[0])
+    rng = random.Random(0xB00E0042)
+
+    rows = []
+    for y in range(H):
+        row = []
+        for x in range(W):
+            r, g, b, a = vanilla[y][x]
+
+            # Preserve transparency
+            if a == 0:
+                row.append((0, 0, 0, 0))
+                continue
+
+            lum = 0.299 * r + 0.587 * g + 0.114 * b
+
+            # Subtle warm/yellow shift on bones — blend 25% toward aged bone color
+            # Aged bone target varies by luminance
+            bone_r = 190 + (lum / 255.0) * 50  # 190-240
+            bone_g = 175 + (lum / 255.0) * 45  # 175-220
+            bone_b = 130 + (lum / 255.0) * 30  # 130-160
+            t = 0.25  # only 25% blend — keep it subtle
+            nr = r + t * (bone_r - r)
+            ng = g + t * (bone_g - g)
+            nb = b + t * (bone_b - b)
+
+            # Slight overall darken
+            nr *= 0.92
+            ng *= 0.92
+            nb *= 0.90
+
+            # Sparse dark marks (~5% of visible pixels)
+            if rng.random() < 0.05 and lum > 60:
+                nr *= 0.7
+                ng *= 0.7
+                nb *= 0.65
+
+            # Tiny noise
+            n = rng.uniform(-3, 3)
+            nr += n; ng += n; nb += n
+
+            row.append((cl(nr), cl(ng), cl(nb), a))
         rows.append(row)
     return rows
 
@@ -1815,6 +2178,265 @@ def make_spectral_particle():
     return rows
 
 
+def make_necrotic_particle_frames():
+    """Generate 11 animation frames for the necrotic particle (16x16 each).
+    Animation: teal-green wispy energy coalesces into a skull shape that
+    opens its mouth before dissipating into nothing.
+
+    Frame progression:
+      0-2: Amorphous teal-green wisp forming/coalescing
+      3-5: Wisp solidifies into a recognizable skull face (eye sockets, nose, teeth)
+      6-8: Skull opens its mouth wider each frame
+      9-10: Skull breaks apart and dissipates
+
+    Hard-edged pixel art at 16x16, matching vanilla soul particle style.
+    Returns list of 11 row-lists."""
+    W, H = 16, 16
+    frames = []
+
+    # Color palette — teal-green necromantic energy
+    # Bright core/highlight
+    C_BRIGHT = (100, 255, 220, 255)
+    # Main body color
+    C_MAIN   = (40, 200, 160, 255)
+    # Darker shade for edges/depth
+    C_DARK   = (20, 130, 100, 255)
+    # Very dark for eye sockets / deep features
+    C_DEEP   = (10, 60, 50, 255)
+    # Faint glow / wispy edges
+    C_GLOW   = (60, 180, 140, 180)
+    # Transparent
+    T = (0, 0, 0, 0)
+
+    # Helper to define frames as 16x16 grids using character maps
+    # . = transparent, 1 = C_GLOW, 2 = C_DARK, 3 = C_MAIN, 4 = C_BRIGHT, 0 = C_DEEP
+    palette = {'.': T, '1': C_GLOW, '2': C_DARK, '3': C_MAIN, '4': C_BRIGHT, '0': C_DEEP}
+
+    frame_maps = [
+        # Frame 0: Faint wisps forming at bottom — very sparse
+        [
+            "................",
+            "................",
+            "................",
+            "................",
+            "................",
+            "................",
+            "................",
+            "................",
+            "................",
+            "......1.1.......",
+            ".....1..........",
+            "......11.1......",
+            ".....1..21......",
+            "......1.1.......",
+            "................",
+            "................",
+        ],
+        # Frame 1: Wisps gathering, denser blob forming
+        [
+            "................",
+            "................",
+            "................",
+            "................",
+            "................",
+            "................",
+            "................",
+            ".....1..1.......",
+            "....1.21.1......",
+            "....12321.......",
+            ".....2332.......",
+            "....13321.......",
+            ".....1221.......",
+            "......11........",
+            "................",
+            "................",
+        ],
+        # Frame 2: Dense cloud, starting to hint at round shape
+        [
+            "................",
+            "................",
+            "................",
+            "................",
+            "................",
+            ".....1221.......",
+            "....123321......",
+            "...12334321.....",
+            "...23344321.....",
+            "...23343321.....",
+            "....233321......",
+            ".....2321.......",
+            "......11........",
+            "................",
+            "................",
+            "................",
+        ],
+        # Frame 3: Skull shape emerging — cranium round, eye sockets appear
+        [
+            "................",
+            "................",
+            "................",
+            ".....1221.......",
+            "....233332......",
+            "...23444321.....",
+            "...34444431.....",
+            "...30344031.....",
+            "...33400431.....",
+            "....304031......",
+            "....233321......",
+            ".....2332.......",
+            "......22........",
+            "................",
+            "................",
+            "................",
+        ],
+        # Frame 4: Clear skull — eyes, nose hole, teeth visible, mouth closed
+        [
+            "................",
+            "................",
+            "......122.......",
+            ".....233321.....",
+            "....2344432.....",
+            "...234444321....",
+            "...340440431....",
+            "...340440431....",
+            "....30030031....",
+            "....33403321....",
+            "....34343431....",
+            ".....303031.....",
+            ".....23332......",
+            "......222.......",
+            "................",
+            "................",
+        ],
+        # Frame 5: Skull fully formed — mouth starting to open slightly
+        [
+            "................",
+            "................",
+            ".....1232.......",
+            "....2344321.....",
+            "...234444321....",
+            "...344444431....",
+            "...340440431....",
+            "...340440431....",
+            "....30030031....",
+            "....34343431....",
+            "....30303031....",
+            "................",
+            ".....23332......",
+            "......222.......",
+            "................",
+            "................",
+        ],
+        # Frame 6: Mouth opening wider — jaw separating from upper skull
+        [
+            "................",
+            ".....1221.......",
+            "....234432......",
+            "...2344443......",
+            "...344444431....",
+            "...340440431....",
+            "...340440431....",
+            "....30030031....",
+            "....34343431....",
+            "................",
+            "................",
+            ".....30303......",
+            "....2343431.....",
+            ".....23332......",
+            "......12........",
+            "................",
+        ],
+        # Frame 7: Mouth wide open — jaw dropping, skull starting to crack
+        [
+            "................",
+            "....12321.......",
+            "...23444321.....",
+            "...344444431....",
+            "...340440431....",
+            "...340440431....",
+            "....3003003.....",
+            "....3434343.....",
+            "................",
+            "................",
+            "................",
+            "....303.303.....",
+            "....234.432.....",
+            ".....23.32......",
+            "......1.1.......",
+            "................",
+        ],
+        # Frame 8: Skull breaking apart — fragments separating, wisps escaping
+        [
+            "......12........",
+            "...1.3443.1.....",
+            "...23444321.....",
+            "...3404.0431....",
+            "....340.043.....",
+            "....300.003.....",
+            ".....3...3......",
+            "................",
+            "................",
+            "................",
+            "....1.....1.....",
+            "....23...32.....",
+            ".....2...2......",
+            "......1.1.......",
+            "................",
+            "................",
+        ],
+        # Frame 9: Mostly dissipated — scattered fragments
+        [
+            ".......1........",
+            "....1.23........",
+            ".....343.1......",
+            "....130..3......",
+            ".....3...1......",
+            "......1.........",
+            "................",
+            "................",
+            "................",
+            "................",
+            ".....1...1......",
+            "......2.2.......",
+            "......1.1.......",
+            "................",
+            "................",
+            "................",
+        ],
+        # Frame 10: Almost gone — tiny wisps
+        [
+            "................",
+            "................",
+            "......1.........",
+            ".....12.........",
+            "......3.........",
+            "......1.........",
+            "................",
+            "................",
+            "................",
+            "................",
+            "................",
+            "......1.........",
+            "................",
+            "................",
+            "................",
+            "................",
+        ],
+    ]
+
+    for fi, fmap in enumerate(frame_maps):
+        rows = []
+        for y in range(H):
+            row = []
+            line = fmap[y] if y < len(fmap) else '.' * W
+            for x in range(W):
+                ch = line[x] if x < len(line) else '.'
+                row.append(palette.get(ch, T))
+            rows.append(row)
+        frames.append(rows)
+    return frames
+
+
 def make_fog_cloud_particle():
     """8x8 particle — soft white cloud puff for Fog Cloud spell.
     Large, billowy, mostly opaque white with soft edges."""
@@ -1846,38 +2468,216 @@ def make_fog_cloud_particle():
         rows.append(row)
     return rows
 
-def make_meteor_texture():
-    """16x16 meteor entity texture — glowing orange-red fireball with bright core."""
+def make_raised_zombie_texture():
+    """64x64 raised zombie entity texture based on vanilla zombie.png.
+
+    Subtle modifications to the vanilla zombie — should still look like a zombie,
+    just slightly more grey/pallid with faint green glowing eyes and a few dark
+    vein-like marks. The vanilla texture does most of the heavy lifting.
+    """
+    jar_path = os.path.join(
+        os.path.expanduser("~"),
+        ".gradle", "caches", "minecraft", "versions", "1.21.1", "client.jar"
+    )
+    tex_entry = "assets/minecraft/textures/entity/zombie/zombie.png"
+    tmp_path = None
+    try:
+        with zipfile.ZipFile(jar_path, 'r') as jar:
+            tex_data = jar.read(tex_entry)
+        tmp_fd, tmp_path = tempfile.mkstemp(suffix='.png')
+        os.close(tmp_fd)
+        with open(tmp_path, 'wb') as f:
+            f.write(tex_data)
+        vanilla = read_png(tmp_path)
+    finally:
+        if tmp_path and os.path.exists(tmp_path):
+            os.remove(tmp_path)
+
+    H = len(vanilla)
+    W = len(vanilla[0])
+    rng = random.Random(0xDEAD0042)
+
+    # Sparse vein seeds — only 6 short paths for subtle effect
+    vein_pixels = set()
+    for _ in range(6):
+        sx, sy = rng.randint(0, W-1), rng.randint(0, H-1)
+        cx, cy = sx, sy
+        for __ in range(rng.randint(2, 4)):
+            vein_pixels.add((cx, cy))
+            cx = max(0, min(W-1, cx + rng.choice([-1, 0, 1])))
+            cy = max(0, min(H-1, cy + rng.choice([-1, 0, 1])))
+
     rows = []
-    cx, cy = 7.5, 7.5
+    for y in range(H):
+        row = []
+        for x in range(W):
+            r, g, b, a = vanilla[y][x]
+            if a == 0:
+                row.append((0, 0, 0, 0))
+                continue
+
+            # Subtle desaturation — 30% toward grey (keep most of original color)
+            lum = 0.299 * r + 0.587 * g + 0.114 * b
+            nr = r + 0.3 * (lum - r)
+            ng = g + 0.3 * (lum - g)
+            nb = b + 0.3 * (lum - b)
+
+            # Slight darken + cool shift (more grey-green, less warm)
+            nr = nr * 0.85
+            ng = ng * 0.90
+            nb = nb * 0.82
+
+            # Faint dark vein marks (blend 40% toward dark purple)
+            if (x, y) in vein_pixels:
+                nr = nr * 0.6 + 30 * 0.4
+                ng = ng * 0.6 + 15 * 0.4
+                nb = nb * 0.6 + 40 * 0.4
+
+            # Tiny per-pixel noise
+            n = rng.uniform(-4, 4)
+            nr += n; ng += n; nb += n
+
+            row.append((cl(nr), cl(ng), cl(nb), 255))
+        rows.append(row)
+    return rows
+
+def make_meteor_texture():
+    """16x16 meteor entity texture — rocky meteorite with heated edges.
+    Rendered as billboard quad with entityTranslucentEmissive; vertex color tint
+    is orange-yellow (1.0, 0.7, 0.2) so texture colors are multiplied by that.
+    The texture depicts a rough ROCK seen head-on: dark grey core with mineral
+    flecks, brighter heated rim, irregular rocky edges.
+    Uses only alpha=255 (opaque) or alpha=0 (transparent) — any intermediate
+    alpha causes checkerboard artifacts with entityTranslucentEmissive."""
+    rng = random.Random(42)
+
+    # --- Generate multiple octaves of noise for rocky surface detail ---
+    def make_noise():
+        return [[rng.uniform(-1.0, 1.0) for _ in range(16)] for _ in range(16)]
+
+    noise1 = make_noise()  # large-scale surface variation
+    noise2 = make_noise()  # fine grain / mineral texture
+    noise3 = make_noise()  # edge irregularity
+
+    # Smooth noise by averaging with neighbors (one pass)
+    def smooth(grid):
+        out = [[0.0] * 16 for _ in range(16)]
+        for sy in range(16):
+            for sx in range(16):
+                total = grid[sy][sx] * 2.0
+                count = 2.0
+                for dsy in (-1, 0, 1):
+                    for dsx in (-1, 0, 1):
+                        if dsy == 0 and dsx == 0:
+                            continue
+                        sy2 = max(0, min(15, sy + dsy))
+                        sx2 = max(0, min(15, sx + dsx))
+                        total += grid[sy2][sx2]
+                        count += 1.0
+                out[sy][sx] = total / count
+        return out
+
+    sn1 = smooth(noise1)  # smooth large-scale
+    sn3 = smooth(noise3)  # smooth edge noise
+
+    # --- Pre-place mineral flecks (bright spots in the rock) ---
+    fleck_set = set()
+    for _ in range(8):
+        fx = rng.randint(4, 11)
+        fy = rng.randint(4, 11)
+        fleck_set.add((fx, fy))
+
+    # --- Pre-place hot spots near the leading edge (bottom of texture) ---
+    hotspot_set = set()
+    for _ in range(4):
+        hx = rng.randint(5, 10)
+        hy = rng.randint(10, 13)
+        hotspot_set.add((hx, hy))
+
+    rows = []
+    # Center slightly off for natural asymmetry; leading edge is bottom
+    cx, cy = 7.3, 7.5
+    # Base radius of the rock (will be distorted by noise)
+    base_radius = 5.8
+
     for y in range(16):
         row = []
         for x in range(16):
             dx = x - cx
             dy = y - cy
             d = math.sqrt(dx * dx + dy * dy)
-            if d < 3.0:
-                # Bright white-yellow core
-                row.append((255, 255, 200, 255))
-            elif d < 5.0:
-                t = (d - 3.0) / 2.0
-                r = cl(255)
-                g = cl(255 - t * 120)
-                b = cl(200 - t * 180)
-                row.append((r, g, b, 255))
-            elif d < 7.0:
-                t = (d - 5.0) / 2.0
-                r = cl(255 - t * 40)
-                g = cl(135 - t * 80)
-                b = cl(20 - t * 20)
-                a = cl(255 - t * 60)
-                row.append((r, g, max(b, 0), a))
-            elif d < 8.5:
-                t = (d - 7.0) / 1.5
-                a = cl(195 - t * 195)
-                row.append((200, 50, 0, max(a, 0)))
-            else:
+            angle = math.atan2(dy, dx)
+
+            # Irregular rocky boundary: distort radius with noise
+            edge_noise = sn3[y][x] * 1.4 + math.sin(angle * 5.0) * 0.5
+            # Slightly larger toward the bottom (trailing ablation shape)
+            ablation_stretch = -0.4 * (dy / 8.0)  # negative dy = top, shrink slightly
+            effective_radius = base_radius + edge_noise + ablation_stretch
+
+            if d >= effective_radius:
+                # Outside the rock — fully transparent
                 row.append((0, 0, 0, 0))
+                continue
+
+            # --- Determine how deep inside the rock this pixel is ---
+            # 0.0 = at the very edge, 1.0 = at the center
+            depth = max(0.0, min(1.0, 1.0 - d / effective_radius))
+
+            # === Base rock color: dark grey with slight brown tint ===
+            # Remember: vertex tint (1.0, 0.7, 0.2) multiplies these values.
+            # We want the final appearance to be dark brownish-grey rock.
+            # A medium grey (120,120,120) * (1.0,0.7,0.2) = (120,84,24) — dark brown. Good.
+            # A lighter grey (180,180,180) * tint = (180,126,36) — warm brown. Good for heated edges.
+
+            # Large-scale surface variation
+            surface_var = sn1[y][x] * 18
+            # Fine grain noise (unsmoothed for gritty texture)
+            grain = noise2[y][x] * 12
+
+            # Core rock: darker in the middle, lighter toward edges (heating)
+            if depth > 0.55:
+                # Deep interior — dark rocky grey
+                base_v = 95 + surface_var + grain
+                r = cl(base_v + 5)   # very slight warm bias
+                g = cl(base_v - 2)
+                b = cl(base_v - 8)   # slightly less blue for warmth
+            elif depth > 0.3:
+                # Mid region — transitioning to heated
+                t = (0.55 - depth) / 0.25  # 0 at deep side, 1 at edge side
+                base_v = 95 + t * 55 + surface_var + grain
+                r = cl(base_v + 10 + t * 20)
+                g = cl(base_v - 2 + t * 5)
+                b = cl(base_v - 8 - t * 10)
+            else:
+                # Outer heated rim — brighter, will glow orange through tint
+                t = (0.3 - depth) / 0.3  # 0 at mid, 1 at very edge
+                base_v = 150 + t * 70 + surface_var * 0.6 + grain * 0.5
+                r = cl(base_v + 25 + t * 30)
+                g = cl(base_v + 5)
+                b = cl(base_v - 20 - t * 30)
+
+            # === Mineral flecks: bright spots that will glow through the tint ===
+            if (x, y) in fleck_set and depth > 0.35:
+                fleck_bright = rng.uniform(30, 60)
+                r = cl(r + fleck_bright)
+                g = cl(g + fleck_bright * 0.8)
+                b = cl(b + fleck_bright * 0.4)
+
+            # === Hot spots near leading edge (bottom): white-hot ===
+            if (x, y) in hotspot_set and depth > 0.15:
+                r = cl(240 + grain)
+                g = cl(235 + grain)
+                b = cl(210 + grain)
+
+            # === Dark cracks/veins: occasional dark lines in the rock ===
+            # Use a simple threshold on fine noise to create crack-like features
+            crack_val = noise2[y][x] + sn1[y][x] * 0.3
+            if crack_val < -0.75 and depth > 0.4:
+                r = cl(r * 0.55)
+                g = cl(g * 0.5)
+                b = cl(b * 0.45)
+
+            row.append((cl(r), cl(g), cl(b), 255))
         rows.append(row)
     return rows
 
@@ -2052,70 +2852,66 @@ def make_dancing_light_particle():
 
 
 def make_rotten_flesh_block_texture():
-    """16x16 rotten flesh block texture — sickly brownish-green, mottled organic look."""
+    """16x16 rotten flesh block — styled after vanilla rotten flesh item colors.
+    Pinkish-red compressed meat look with subtle green rot patches and fiber texture.
+    References the vanilla rotten_flesh item palette: salmon-pink base, darker red-brown
+    shadows, olive-green rot spots."""
     W, H = 16, 16
-    rng = random.Random(0x0070733)
+    rng = random.Random(0xF1E5)
 
-    # Base color: dark brownish flesh
-    BASE = (120, 80, 50)
-    # Greenish patches
-    GREEN = (90, 100, 50)
-    # Darker spots
-    DARK = (70, 50, 35)
+    # Palette — matches vanilla rotten flesh item colors closely
+    FLESH_LIGHT = (190, 110, 95)   # lighter flesh (salmon-pink)
+    FLESH_MID   = (165, 85, 70)    # mid flesh (the dominant color)
+    FLESH_DARK  = (130, 60, 50)    # shadow flesh
+    ROT_OLIVE   = (110, 105, 60)   # olive-green rot
+    ROT_DARK    = (85, 80, 45)     # darker rot
 
-    # Pre-generate noise for organic mottling
-    noise = [[rng.uniform(0.0, 1.0) for _ in range(W)] for _ in range(H)]
+    # Fill with randomized base flesh tones
+    pixels = [[None for _ in range(W)] for _ in range(H)]
+    for y in range(H):
+        for x in range(W):
+            v = rng.random()
+            if v < 0.35:
+                pixels[y][x] = FLESH_LIGHT
+            elif v < 0.75:
+                pixels[y][x] = FLESH_MID
+            else:
+                pixels[y][x] = FLESH_DARK
 
-    # Smooth noise (3x3 average, wrapping for seamless tiling)
-    def snoise(x, y):
-        total = 0.0
-        for dy in range(-1, 2):
-            for dx in range(-1, 2):
-                total += noise[(y + dy) % H][(x + dx) % W]
-        return total / 9.0
+    # Horizontal fiber lines — subtle darker streaks
+    for fy in (1, 4, 7, 10, 13):
+        for x in range(W):
+            if rng.random() < 0.8:
+                r, g, b = pixels[fy][x]
+                pixels[fy][x] = (max(0, r - 20), max(0, g - 15), max(0, b - 12))
 
+    # Rot patches — small olive-green blobs
+    rot_spots = [
+        [(3,2),(4,2),(3,3),(4,3),(5,3)],                    # top-left
+        [(10,5),(11,5),(10,6),(11,6),(12,6)],                # center-right
+        [(6,11),(7,11),(5,12),(6,12),(7,12),(6,13)],         # bottom-center
+        [(13,9),(14,9),(13,10)],                             # right edge
+    ]
+    for patch in rot_spots:
+        for px, py in patch:
+            pixels[py][px] = ROT_OLIVE if rng.random() < 0.6 else ROT_DARK
+
+    # Edge shading — single-pixel border darken
+    for y in range(H):
+        for x in range(W):
+            d = min(x, y, W-1-x, H-1-y)
+            if d == 0:
+                r, g, b = pixels[y][x]
+                pixels[y][x] = (max(0, r - 25), max(0, g - 18), max(0, b - 15))
+
+    # Per-pixel noise for organic variation
     rows = []
     for y in range(H):
         row = []
         for x in range(W):
-            n = snoise(x, y)
-            n2 = noise[y][x]  # raw noise for fine detail
-
-            # Base brownish flesh
-            r, g, b = BASE
-
-            # Greenish patches where noise is high
-            if n > 0.55:
-                t = (n - 0.55) / 0.45
-                r = int(r + (GREEN[0] - r) * t)
-                g = int(g + (GREEN[1] - g) * t)
-                b = int(b + (GREEN[2] - b) * t)
-
-            # Dark spots where raw noise is low
-            if n2 < 0.25:
-                t = (0.25 - n2) / 0.25
-                r = int(r + (DARK[0] - r) * t * 0.7)
-                g = int(g + (DARK[1] - g) * t * 0.7)
-                b = int(b + (DARK[2] - b) * t * 0.7)
-
-            # Stringy/fibrous texture — horizontal and vertical lines
-            if (x + y * 5) % 7 == 0:
-                r = max(0, r - 15)
-                g = max(0, g - 10)
-                b = max(0, b - 8)
-
-            # Occasional lighter fleshy spots
-            if n2 > 0.85:
-                r = min(255, r + 25)
-                g = min(255, g + 15)
-                b = min(255, b + 8)
-
-            # Slight reddish tinge in some areas (exposed meat)
-            if 0.4 < n < 0.5 and n2 > 0.5:
-                r = min(255, r + 20)
-                g = max(0, g - 10)
-
-            row.append((max(0, min(255, r)), max(0, min(255, g)), max(0, min(255, b)), 255))
+            r, g, b = pixels[y][x]
+            n = rng.randint(-6, 6)
+            row.append((cl(r + n), cl(g + n), cl(b + n), 255))
         rows.append(row)
     return rows
 
@@ -2195,6 +2991,7 @@ def main():
     save_png(os.path.join(ITM, "control_water_scroll.png"), make_control_water_scroll())
     save_png(os.path.join(ITM, "magnificent_mansion_scroll.png"), make_magnificent_mansion_scroll())
     save_png(os.path.join(ITM, "gongers_grotto_scroll.png"), make_gongers_grotto_scroll())
+    save_png(os.path.join(ITM, "raise_dead_scroll.png"), make_raise_dead_scroll())
 
     print("=== Spectral wolf entity texture ===")
     save_png(os.path.join("src","main","resources","assets","reactivefluids","textures","entity",
@@ -2210,6 +3007,9 @@ def main():
     save_png(os.path.join(PRT, "dancing_light_particle.png"), make_dancing_light_particle())
     save_png(os.path.join(PRT, "spectral_particle.png"), make_spectral_particle())
     save_png(os.path.join(PRT, "fog_cloud_particle.png"), make_fog_cloud_particle())
+    necrotic_frames = make_necrotic_particle_frames()
+    for i, frame_rows in enumerate(necrotic_frames):
+        save_png(os.path.join(PRT, f"necrotic_particle_{i}.png"), frame_rows)
 
     print("=== Disintegrate beam texture ===")
     ENT = os.path.join("src","main","resources","assets","reactivefluids","textures","entity")
@@ -2231,6 +3031,12 @@ def main():
 
     print("=== Rotten flesh block texture ===")
     save_png(os.path.join(BLK_DIR, "rotten_flesh_block.png"), make_rotten_flesh_block_texture())
+
+    print("=== Raised zombie entity texture ===")
+    save_png(os.path.join(ENT, "raised_zombie.png"), make_raised_zombie_texture())
+
+    print("=== Raised skeleton entity texture ===")
+    save_png(os.path.join(ENT, "raised_skeleton.png"), make_raised_skeleton_texture())
 
     print("\nDone.")
 

@@ -22,4 +22,7 @@ public class ModParticles {
 
     public static final DeferredHolder<ParticleType<?>, SimpleParticleType> FOG_CLOUD =
             PARTICLE_TYPES.register("fog_cloud", () -> new SimpleParticleType(false));
+
+    public static final DeferredHolder<ParticleType<?>, SimpleParticleType> NECROTIC =
+            PARTICLE_TYPES.register("necrotic", () -> new SimpleParticleType(false));
 }
