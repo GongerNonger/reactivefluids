@@ -113,3 +113,35 @@ Test instance: "Reactive Fluids Dev" in CurseForge.
 7. Add lang entries to `en_us.json` (bucket items, fluid blocks, epoxy blocks, hardener item).
 8. Add to `FLUIDS`, `EPOXY`, `BUCKET_PALETTES`, and `BUCKET_COLORS` in `generate_textures.py`.
 9. Run `python generate_textures.py`.
+
+## Adding a New Entity/Mob
+
+1. Create entity class extending appropriate base (`WaterAnimal`, `Monster`, `Animal`, etc.) in main package.
+2. Add `createAttributes()` static method returning `AttributeSupplier.Builder`.
+3. Register in `ModEntities.java` with `EntityType.Builder` (set `MobCategory`, `sized()`, `clientTrackingRange()`).
+4. Register attributes in `ReactiveFluids.registerAttributes()` via `event.put()`.
+5. Create model class extending `HierarchicalModel<T>` with `root()` method and `createBodyLayer()` static.
+6. Create renderer class extending `MobRenderer` with `getTextureLocation()`.
+7. Register renderer in `ClientEvents.registerEntityRenderers()`.
+8. Register model layer in `ClientEvents.registerLayerDefinitions()`.
+9. Add entity texture PNG to `textures/entity/`.
+10. Add lang entry to `en_us.json`.
+11. **For water mobs:** Copy vanilla Squid's `setupRotations` pattern exactly. Add `xBodyRot`/`zBodyRot` fields.
+12. **For spawn eggs:** Use `DeferredSpawnEggItem` in `ModItems`, item model JSON with parent `minecraft:item/template_spawn_egg`.
+13. **IMPORTANT:** Do NOT improvise model orientation — always reference the vanilla source for the closest equivalent mob.
+
+## Adding a New Block
+
+Always create ALL three JSON files alongside the Java registration:
+1. `blockstates/[name].json` — maps blockstate properties to model
+2. `models/block/[name].json` — block model (use `minecraft:block/cross` for plants, `block/water` for fluids)
+3. `models/item/[name].json` — item model (`minecraft:item/generated` for flat items)
+Missing any of these causes the magenta/black checkerboard texture in-game.
+
+## Future: GeckoLib Migration
+
+For complex animated mobs, consider migrating to GeckoLib 4.x:
+- Add dependency: `implementation "software.bernie.geckolib:geckolib-neoforge-1.21.1:4.7.x"`
+- Entity implements `GeoEntity`, model extends `GeoModel<T>`, renderer extends `GeoEntityRenderer<T>`
+- Models authored in Blockbench with GeckoLib plugin, exported as `.geo.json` + `.animation.json`
+- Claude Code can generate `.geo.json` geometry files from text descriptions
