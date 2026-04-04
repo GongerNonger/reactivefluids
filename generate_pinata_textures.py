@@ -472,6 +472,41 @@ SPECIES = {
         "dark": (140, 100, 60, 255),    # Dark choc chip
         "accent": (192, 48, 32, 255),   # Red comb
     },
+    "barkbark": {
+        "w": 32, "h": 32,
+        "main": (139, 90, 43, 255),     # Bark brown
+        "light": (210, 166, 109, 255),  # Light brown
+        "dark": (90, 55, 25, 255),      # Dark brown
+        "accent": (180, 130, 70, 255),  # Golden stripe
+    },
+    "kittyfloss": {
+        "w": 32, "h": 32,
+        "main": (255, 182, 193, 255),   # Candy-floss pink
+        "light": (255, 220, 230, 255),  # Light pink
+        "dark": (200, 100, 130, 255),   # Dark pink
+        "accent": (255, 105, 180, 255), # Hot pink stripe
+    },
+    "goobaa": {
+        "w": 48, "h": 32,
+        "main": (240, 240, 240, 255),   # Wool white
+        "light": (255, 255, 255, 255),  # Pure white
+        "dark": (200, 200, 200, 255),   # Light gray
+        "accent": (224, 208, 192, 255), # Cream accent
+    },
+    "rashberry": {
+        "w": 48, "h": 32,
+        "main": (232, 112, 144, 255),   # Raspberry pink
+        "light": (248, 170, 190, 255),  # Light raspberry
+        "dark": (192, 64, 96, 255),     # Dark raspberry
+        "accent": (250, 140, 170, 255), # Pink stripe
+    },
+    "doenut": {
+        "w": 32, "h": 32,
+        "main": (192, 144, 96, 255),    # Doughnut brown
+        "light": (240, 224, 208, 255),  # Sugar-dust white
+        "dark": (140, 100, 60, 255),    # Dark crust
+        "accent": (220, 180, 140, 255), # Glazed stripe
+    },
     "horstachio": {
         "w": 64, "h": 32,
         "main": (128, 176, 96, 255),    # Pistachio green

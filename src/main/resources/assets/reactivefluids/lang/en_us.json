@@ -233,6 +233,26 @@
   "block.reactivefluids.shearing_shed":                          "Shearing Shed",
   "item.reactivefluids.shearing_shed":                           "Shearing Shed",
 
+  "entity.reactivefluids.barkbark":                              "Barkbark",
+  "item.reactivefluids.barkbark_spawn_egg":                      "Barkbark Spawn Egg",
+  "item.reactivefluids.barkbark_candy":                          "Barkbark Candy",
+
+  "entity.reactivefluids.kittyfloss":                            "Kittyfloss",
+  "item.reactivefluids.kittyfloss_spawn_egg":                    "Kittyfloss Spawn Egg",
+  "item.reactivefluids.kittyfloss_candy":                        "Kittyfloss Candy",
+
+  "entity.reactivefluids.goobaa":                                "Goobaa",
+  "item.reactivefluids.goobaa_spawn_egg":                        "Goobaa Spawn Egg",
+  "item.reactivefluids.goobaa_candy":                            "Goobaa Candy",
+
+  "entity.reactivefluids.rashberry":                             "Rashberry",
+  "item.reactivefluids.rashberry_spawn_egg":                     "Rashberry Spawn Egg",
+  "item.reactivefluids.rashberry_candy":                         "Rashberry Candy",
+
+  "entity.reactivefluids.doenut":                                "Doenut",
+  "item.reactivefluids.doenut_spawn_egg":                        "Doenut Spawn Egg",
+  "item.reactivefluids.doenut_candy":                            "Doenut Candy",
+
   "entity.reactivefluids.seedos":                                "Seedos",
   "item.reactivefluids.seedos_spawn_egg":                        "Seedos Spawn Egg"
 }

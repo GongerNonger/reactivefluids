@@ -118,6 +118,36 @@ public class ModPinataEntities {
                     EntityType.Builder.<HorstachioEntity>of(HorstachioEntity::new, MobCategory.CREATURE)
                             .sized(1.4F, 1.6F).clientTrackingRange(10).build("horstachio"));
 
+    // === Barkbark (dog) ===
+    public static final DeferredHolder<EntityType<?>, EntityType<BarkbarkEntity>> BARKBARK =
+            ENTITY_TYPES.register("barkbark", () ->
+                    EntityType.Builder.<BarkbarkEntity>of(BarkbarkEntity::new, MobCategory.CREATURE)
+                            .sized(0.6F, 0.65F).clientTrackingRange(10).build("barkbark"));
+
+    // === Kittyfloss (cat) ===
+    public static final DeferredHolder<EntityType<?>, EntityType<KittyflossEntity>> KITTYFLOSS =
+            ENTITY_TYPES.register("kittyfloss", () ->
+                    EntityType.Builder.<KittyflossEntity>of(KittyflossEntity::new, MobCategory.CREATURE)
+                            .sized(0.5F, 0.55F).clientTrackingRange(10).build("kittyfloss"));
+
+    // === Goobaa (sheep) ===
+    public static final DeferredHolder<EntityType<?>, EntityType<GoobaaEntity>> GOOBAA =
+            ENTITY_TYPES.register("goobaa", () ->
+                    EntityType.Builder.<GoobaaEntity>of(GoobaaEntity::new, MobCategory.CREATURE)
+                            .sized(0.7F, 0.6F).clientTrackingRange(8).build("goobaa"));
+
+    // === Rashberry (pig) ===
+    public static final DeferredHolder<EntityType<?>, EntityType<RashberryEntity>> RASHBERRY =
+            ENTITY_TYPES.register("rashberry", () ->
+                    EntityType.Builder.<RashberryEntity>of(RashberryEntity::new, MobCategory.CREATURE)
+                            .sized(0.7F, 0.6F).clientTrackingRange(8).build("rashberry"));
+
+    // === Doenut (deer) ===
+    public static final DeferredHolder<EntityType<?>, EntityType<DoenutEntity>> DOENUT =
+            ENTITY_TYPES.register("doenut", () ->
+                    EntityType.Builder.<DoenutEntity>of(DoenutEntity::new, MobCategory.CREATURE)
+                            .sized(0.8F, 1.0F).clientTrackingRange(10).build("doenut"));
+
     // === Seedos NPC — seed-giving gardener ===
     public static final DeferredHolder<EntityType<?>, EntityType<SeedosEntity>> SEEDOS =
             ENTITY_TYPES.register("seedos", () ->

@@ -48,6 +48,12 @@ public class ClientEvents {
         event.registerEntityRenderer(ModPinataEntities.BUZZLEGUM.get(), BuzzlegumRenderer::new);
         event.registerEntityRenderer(ModPinataEntities.CLUCKLES.get(), ClucklesRenderer::new);
         event.registerEntityRenderer(ModPinataEntities.HORSTACHIO.get(), HorstachioRenderer::new);
+        // Batch 4 piñatas (reuse existing model shapes with different textures)
+        event.registerEntityRenderer(ModPinataEntities.BARKBARK.get(), BarkbarkRenderer::new);
+        event.registerEntityRenderer(ModPinataEntities.KITTYFLOSS.get(), KittyflossRenderer::new);
+        event.registerEntityRenderer(ModPinataEntities.GOOBAA.get(), GoobaaRenderer::new);
+        event.registerEntityRenderer(ModPinataEntities.RASHBERRY.get(), RashberryRenderer::new);
+        event.registerEntityRenderer(ModPinataEntities.DOENUT.get(), DoenutRenderer::new);
         // Seedos NPC — uses villager model as placeholder
         event.registerEntityRenderer(ModPinataEntities.SEEDOS.get(),
                 ctx -> new net.minecraft.client.renderer.entity.MobRenderer<SeedosEntity, VillagerModel<SeedosEntity>>(

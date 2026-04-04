@@ -204,6 +204,30 @@ public class ModPinataItems {
             ITEMS.register("watering_can", () ->
                     new WateringCanItem(new Item.Properties().stacksTo(1)));
 
+    // === Batch 4: Spawn Eggs ===
+    public static final DeferredHolder<Item, DeferredSpawnEggItem> BARKBARK_SPAWN_EGG =
+            ITEMS.register("barkbark_spawn_egg", () -> new DeferredSpawnEggItem(ModPinataEntities.BARKBARK, 0x8B5A2B, 0xD2A06D, new Item.Properties()));
+    public static final DeferredHolder<Item, DeferredSpawnEggItem> KITTYFLOSS_SPAWN_EGG =
+            ITEMS.register("kittyfloss_spawn_egg", () -> new DeferredSpawnEggItem(ModPinataEntities.KITTYFLOSS, 0xFFB6C1, 0xFF69B4, new Item.Properties()));
+    public static final DeferredHolder<Item, DeferredSpawnEggItem> GOOBAA_SPAWN_EGG =
+            ITEMS.register("goobaa_spawn_egg", () -> new DeferredSpawnEggItem(ModPinataEntities.GOOBAA, 0xF0F0F0, 0xE0D0C0, new Item.Properties()));
+    public static final DeferredHolder<Item, DeferredSpawnEggItem> RASHBERRY_SPAWN_EGG =
+            ITEMS.register("rashberry_spawn_egg", () -> new DeferredSpawnEggItem(ModPinataEntities.RASHBERRY, 0xE87090, 0xC04060, new Item.Properties()));
+    public static final DeferredHolder<Item, DeferredSpawnEggItem> DOENUT_SPAWN_EGG =
+            ITEMS.register("doenut_spawn_egg", () -> new DeferredSpawnEggItem(ModPinataEntities.DOENUT, 0xC09060, 0xF0E0D0, new Item.Properties()));
+
+    // === Batch 4: Candy ===
+    public static final DeferredHolder<Item, Item> BARKBARK_CANDY =
+            ITEMS.register("barkbark_candy", () -> new Item(new Item.Properties().food(candyFood(4, 0.5F))));
+    public static final DeferredHolder<Item, Item> KITTYFLOSS_CANDY =
+            ITEMS.register("kittyfloss_candy", () -> new Item(new Item.Properties().food(candyFood(4, 0.5F))));
+    public static final DeferredHolder<Item, Item> GOOBAA_CANDY =
+            ITEMS.register("goobaa_candy", () -> new Item(new Item.Properties().food(candyFood(4, 0.5F))));
+    public static final DeferredHolder<Item, Item> RASHBERRY_CANDY =
+            ITEMS.register("rashberry_candy", () -> new Item(new Item.Properties().food(candyFood(5, 0.6F))));
+    public static final DeferredHolder<Item, Item> DOENUT_CANDY =
+            ITEMS.register("doenut_candy", () -> new Item(new Item.Properties().food(candyFood(5, 0.6F))));
+
     // === Currency ===
     public static final DeferredHolder<Item, ChocolateCoinItem> CHOCOLATE_COIN =
             ITEMS.register("chocolate_coin", () ->
