@@ -1,6 +1,9 @@
 {
   "variants": {
-    "lit=false": {"model": "reactivefluids:block/plankton_block"},
-    "lit=true": {"model": "reactivefluids:block/plankton_block"}
+    "glow=0": {"model": "reactivefluids:block/plankton_block"},
+    "glow=1": {"model": "reactivefluids:block/plankton_block"},
+    "glow=2": {"model": "reactivefluids:block/plankton_block"},
+    "glow=3": {"model": "reactivefluids:block/plankton_block"},
+    "glow=4": {"model": "reactivefluids:block/plankton_block"}
   }
 }

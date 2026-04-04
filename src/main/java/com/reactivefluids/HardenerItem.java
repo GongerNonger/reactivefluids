@@ -1,15 +1,19 @@
 package com.reactivefluids;
 
+import net.minecraft.core.Direction;
+import net.minecraft.core.Position;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ProjectileItem;
 import net.minecraft.world.level.Level;
 
-public class HardenerItem extends Item {
+public class HardenerItem extends Item implements ProjectileItem {
 
     public HardenerItem(Properties properties) {
         super(properties);
@@ -29,5 +33,13 @@ public class HardenerItem extends Item {
         }
         if (!player.getAbilities().instabuild) stack.shrink(1);
         return InteractionResultHolder.sidedSuccess(stack, level.isClientSide());
+    }
+
+    @Override
+    public Projectile asProjectile(Level level, Position pos, ItemStack stack, Direction direction) {
+        HardenerEntity entity = new HardenerEntity(ModEntities.HARDENER.get(), level);
+        entity.setPos(pos.x(), pos.y(), pos.z());
+        entity.setItem(stack.copyWithCount(1));
+        return entity;
     }
 }

@@ -1,0 +1,11 @@
+{
+  "variants": {
+    "ph=0": {"model": "reactivefluids:block/indicator_block"},
+    "ph=1": {"model": "reactivefluids:block/indicator_block"},
+    "ph=2": {"model": "reactivefluids:block/indicator_block"},
+    "ph=3": {"model": "reactivefluids:block/indicator_block"},
+    "ph=4": {"model": "reactivefluids:block/indicator_block"},
+    "ph=5": {"model": "reactivefluids:block/indicator_block"},
+    "ph=6": {"model": "reactivefluids:block/indicator_block"}
+  }
+}

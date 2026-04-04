@@ -231,12 +231,79 @@ public class ModFluids {
     // =========================================================================
     // BIOLUMINESCENT PLANKTON  (deep ocean — slow, dark until disturbed)
     // =========================================================================
+    // Plankton tint endpoints — ARGB
+    private static final int PLANKTON_DARK_A = 0xC0, PLANKTON_DARK_R = 0x08, PLANKTON_DARK_G = 0x18, PLANKTON_DARK_B = 0x30;
+    private static final int PLANKTON_LIT_A  = 0xC0, PLANKTON_LIT_R  = 0x20, PLANKTON_LIT_G  = 0xDD, PLANKTON_LIT_B  = 0xFF;
+
+    /** Linearly interpolate between dark indigo and bright cyan based on glow level (0–4). */
+    private static int planktonTint(int glow) {
+        if (glow <= 0) return (PLANKTON_DARK_A << 24) | (PLANKTON_DARK_R << 16) | (PLANKTON_DARK_G << 8) | PLANKTON_DARK_B;
+        if (glow >= PlanktonBlock.MAX_GLOW) return (PLANKTON_LIT_A << 24) | (PLANKTON_LIT_R << 16) | (PLANKTON_LIT_G << 8) | PLANKTON_LIT_B;
+        float t = (float) glow / PlanktonBlock.MAX_GLOW;
+        int a = (int) (PLANKTON_DARK_A + (PLANKTON_LIT_A - PLANKTON_DARK_A) * t);
+        int r = (int) (PLANKTON_DARK_R + (PLANKTON_LIT_R - PLANKTON_DARK_R) * t);
+        int g = (int) (PLANKTON_DARK_G + (PLANKTON_LIT_G - PLANKTON_DARK_G) * t);
+        int b = (int) (PLANKTON_DARK_B + (PLANKTON_LIT_B - PLANKTON_DARK_B) * t);
+        return (a << 24) | (r << 16) | (g << 8) | b;
+    }
+
     public static final DeferredHolder<FluidType, FluidType> PLANKTON_TYPE =
-        FLUID_TYPES.register("plankton", () -> makeFluidType(
-            0xC0081830,
-            ResourceLocation.fromNamespaceAndPath(ReactiveFluids.MOD_ID, "block/plankton_still"),
-            ResourceLocation.fromNamespaceAndPath(ReactiveFluids.MOD_ID, "block/plankton_flow")
-        ));
+        FLUID_TYPES.register("plankton", () -> {
+            ResourceLocation still = ResourceLocation.fromNamespaceAndPath(ReactiveFluids.MOD_ID, "block/plankton_still");
+            ResourceLocation flow  = ResourceLocation.fromNamespaceAndPath(ReactiveFluids.MOD_ID, "block/plankton_flow");
+            return new FluidType(FluidType.Properties.create()
+                .density(1500)
+                .viscosity(3000)
+            ) {
+                @Override
+                public void initializeClient(Consumer<IClientFluidTypeExtensions> consumer) {
+                    consumer.accept(new IClientFluidTypeExtensions() {
+                        @Override public ResourceLocation getStillTexture()   { return still; }
+                        @Override public ResourceLocation getFlowingTexture() { return flow;  }
+                        @Override public int getTintColor()                   { return planktonTint(0); }
+
+                        @Override
+                        public int getTintColor(net.neoforged.neoforge.fluids.FluidStack stack) {
+                            return planktonTint(0);
+                        }
+
+                        @Override
+                        public int getTintColor(net.minecraft.world.level.material.FluidState state,
+                                                net.minecraft.world.level.BlockAndTintGetter getter,
+                                                net.minecraft.core.BlockPos pos) {
+                            if (pos != null && getter != null) {
+                                net.minecraft.world.level.block.state.BlockState blockState = getter.getBlockState(pos);
+                                if (blockState.getBlock() instanceof PlanktonBlock) {
+                                    return planktonTint(blockState.getValue(PlanktonBlock.GLOW));
+                                }
+                            }
+                            return planktonTint(0);
+                        }
+
+                        @Override
+                        public org.joml.Vector3f modifyFogColor(net.minecraft.client.Camera camera, float partialTick,
+                                net.minecraft.client.multiplayer.ClientLevel level, int renderDistance,
+                                float darkenWorldAmount, org.joml.Vector3f fluidFogColor) {
+                        int c = planktonTint(0);
+                            float r = ((c >> 16) & 0xFF) / 255.0f;
+                            float g = ((c >> 8) & 0xFF) / 255.0f;
+                            float b = (c & 0xFF) / 255.0f;
+                            return new org.joml.Vector3f(r, g, b);
+                        }
+
+                        @Override
+                        public void modifyFogRender(net.minecraft.client.Camera camera,
+                                net.minecraft.client.renderer.FogRenderer.FogMode mode, float renderDistance,
+                                float partialTick, float nearDistance, float farDistance,
+                                com.mojang.blaze3d.shaders.FogShape shape) {
+                            com.mojang.blaze3d.systems.RenderSystem.setShaderFogStart(-2.0f);
+                            com.mojang.blaze3d.systems.RenderSystem.setShaderFogEnd(6.0f);
+                            com.mojang.blaze3d.systems.RenderSystem.setShaderFogShape(com.mojang.blaze3d.shaders.FogShape.SPHERE);
+                        }
+                    });
+                }
+            };
+        });
 
     public static final DeferredHolder<Fluid, FlowingFluid> PLANKTON_SOURCE =
         FLUIDS.register("plankton", () -> new SlowSource(ModFluids.PLANKTON_PROPS));
@@ -399,6 +466,119 @@ public class ModFluids {
             .bucket(() -> ModItems.MYCELIUM_SLURRY_BUCKET.get());
 
     // =========================================================================
+    // CRYSTAL SOLUTION  (clear blue, grows crystals, crystallizes skeletons)
+    // =========================================================================
+    public static final DeferredHolder<FluidType, FluidType> CRYSTAL_SOLUTION_TYPE =
+        FLUID_TYPES.register("crystal_solution", () -> makeFluidType(
+            0xC088CCFF,
+            ResourceLocation.fromNamespaceAndPath(ReactiveFluids.MOD_ID, "block/crystal_solution_still"),
+            ResourceLocation.fromNamespaceAndPath(ReactiveFluids.MOD_ID, "block/crystal_solution_flow")
+        ));
+
+    public static final DeferredHolder<Fluid, FlowingFluid> CRYSTAL_SOLUTION_SOURCE =
+        FLUIDS.register("crystal_solution", () -> new SlowSource(ModFluids.CRYSTAL_SOLUTION_PROPS));
+
+    public static final DeferredHolder<Fluid, FlowingFluid> CRYSTAL_SOLUTION_FLOWING =
+        FLUIDS.register("crystal_solution_flowing", () -> new SlowFlowing(ModFluids.CRYSTAL_SOLUTION_PROPS));
+
+    public static final BaseFlowingFluid.Properties CRYSTAL_SOLUTION_PROPS =
+        new BaseFlowingFluid.Properties(CRYSTAL_SOLUTION_TYPE, CRYSTAL_SOLUTION_SOURCE, CRYSTAL_SOLUTION_FLOWING)
+            .slopeFindDistance(3)
+            .levelDecreasePerBlock(1)
+            .block(() -> (net.minecraft.world.level.block.LiquidBlock) ModBlocks.CRYSTAL_SOLUTION_BLOCK.get())
+            .bucket(() -> ModItems.CRYSTAL_SOLUTION_BUCKET.get());
+
+    // =========================================================================
+    // RAINBOW INDICATOR  (neutral green, shifts red↔violet with acid/base)
+    // =========================================================================
+
+    /** Rainbow pH tint colors: 0=red, 1=orange, 2=yellow, 3=green, 4=blue, 5=indigo, 6=violet */
+    private static final int[] INDICATOR_TINTS = {
+        0xC0FF2020,  // pH 0 — red (most acidic)
+        0xC0FF8820,  // pH 1 — orange
+        0xC0FFDD20,  // pH 2 — yellow
+        0xC020DD40,  // pH 3 — green (neutral)
+        0xC02080FF,  // pH 4 — blue
+        0xC04030CC,  // pH 5 — indigo
+        0xC09020DD,  // pH 6 — violet (most basic)
+    };
+
+    private static int indicatorTint(int ph) {
+        return INDICATOR_TINTS[Math.max(0, Math.min(IndicatorBlock.MAX_PH, ph))];
+    }
+
+    public static final DeferredHolder<FluidType, FluidType> INDICATOR_TYPE =
+        FLUID_TYPES.register("indicator", () -> {
+            ResourceLocation still = ResourceLocation.fromNamespaceAndPath(ReactiveFluids.MOD_ID, "block/indicator_still");
+            ResourceLocation flow  = ResourceLocation.fromNamespaceAndPath(ReactiveFluids.MOD_ID, "block/indicator_flow");
+            return new FluidType(FluidType.Properties.create()
+                .density(1000)
+                .viscosity(1000)
+            ) {
+                @Override
+                public void initializeClient(Consumer<IClientFluidTypeExtensions> consumer) {
+                    consumer.accept(new IClientFluidTypeExtensions() {
+                        @Override public ResourceLocation getStillTexture()   { return still; }
+                        @Override public ResourceLocation getFlowingTexture() { return flow;  }
+                        @Override public int getTintColor()                   { return indicatorTint(IndicatorBlock.NEUTRAL_PH); }
+
+                        @Override
+                        public int getTintColor(net.neoforged.neoforge.fluids.FluidStack stack) {
+                            return indicatorTint(IndicatorBlock.NEUTRAL_PH);
+                        }
+
+                        @Override
+                        public int getTintColor(net.minecraft.world.level.material.FluidState state,
+                                                net.minecraft.world.level.BlockAndTintGetter getter,
+                                                net.minecraft.core.BlockPos pos) {
+                            if (pos != null && getter != null) {
+                                net.minecraft.world.level.block.state.BlockState blockState = getter.getBlockState(pos);
+                                if (blockState.getBlock() instanceof IndicatorBlock) {
+                                    return indicatorTint(blockState.getValue(IndicatorBlock.PH));
+                                }
+                            }
+                            return indicatorTint(IndicatorBlock.NEUTRAL_PH);
+                        }
+
+                        @Override
+                        public org.joml.Vector3f modifyFogColor(net.minecraft.client.Camera camera, float partialTick,
+                                net.minecraft.client.multiplayer.ClientLevel level, int renderDistance,
+                                float darkenWorldAmount, org.joml.Vector3f fluidFogColor) {
+                        int c = indicatorTint(IndicatorBlock.NEUTRAL_PH);
+                            float r = ((c >> 16) & 0xFF) / 255.0f;
+                            float g = ((c >> 8) & 0xFF) / 255.0f;
+                            float b = (c & 0xFF) / 255.0f;
+                            return new org.joml.Vector3f(r, g, b);
+                        }
+
+                        @Override
+                        public void modifyFogRender(net.minecraft.client.Camera camera,
+                                net.minecraft.client.renderer.FogRenderer.FogMode mode, float renderDistance,
+                                float partialTick, float nearDistance, float farDistance,
+                                com.mojang.blaze3d.shaders.FogShape shape) {
+                            com.mojang.blaze3d.systems.RenderSystem.setShaderFogStart(-2.0f);
+                            com.mojang.blaze3d.systems.RenderSystem.setShaderFogEnd(6.0f);
+                            com.mojang.blaze3d.systems.RenderSystem.setShaderFogShape(com.mojang.blaze3d.shaders.FogShape.SPHERE);
+                        }
+                    });
+                }
+            };
+        });
+
+    public static final DeferredHolder<Fluid, FlowingFluid> INDICATOR_SOURCE =
+        FLUIDS.register("indicator", () -> new BaseFlowingFluid.Source(ModFluids.INDICATOR_PROPS));
+
+    public static final DeferredHolder<Fluid, FlowingFluid> INDICATOR_FLOWING =
+        FLUIDS.register("indicator_flowing", () -> new BaseFlowingFluid.Flowing(ModFluids.INDICATOR_PROPS));
+
+    public static final BaseFlowingFluid.Properties INDICATOR_PROPS =
+        new BaseFlowingFluid.Properties(INDICATOR_TYPE, INDICATOR_SOURCE, INDICATOR_FLOWING)
+            .slopeFindDistance(4)
+            .levelDecreasePerBlock(1)
+            .block(() -> (net.minecraft.world.level.block.LiquidBlock) ModBlocks.INDICATOR_BLOCK.get())
+            .bucket(() -> ModItems.INDICATOR_BUCKET.get());
+
+    // =========================================================================
     // Shared helper
     // =========================================================================
     private static FluidType makeFluidType(int tintColor, ResourceLocation still, ResourceLocation flow) {
@@ -412,6 +592,26 @@ public class ModFluids {
                     @Override public ResourceLocation getStillTexture()   { return still; }
                     @Override public ResourceLocation getFlowingTexture() { return flow;  }
                     @Override public int getTintColor()                   { return tintColor; }
+
+                    @Override
+                    public org.joml.Vector3f modifyFogColor(net.minecraft.client.Camera camera, float partialTick,
+                            net.minecraft.client.multiplayer.ClientLevel level, int renderDistance,
+                            float darkenWorldAmount, org.joml.Vector3f fluidFogColor) {
+                        float r = ((tintColor >> 16) & 0xFF) / 255.0f;
+                        float g = ((tintColor >> 8) & 0xFF) / 255.0f;
+                        float b = (tintColor & 0xFF) / 255.0f;
+                        return new org.joml.Vector3f(r, g, b);
+                    }
+
+                    @Override
+                    public void modifyFogRender(net.minecraft.client.Camera camera,
+                            net.minecraft.client.renderer.FogRenderer.FogMode mode, float renderDistance,
+                            float partialTick, float nearDistance, float farDistance,
+                            com.mojang.blaze3d.shaders.FogShape shape) {
+                        com.mojang.blaze3d.systems.RenderSystem.setShaderFogStart(-2.0f);
+                        com.mojang.blaze3d.systems.RenderSystem.setShaderFogEnd(6.0f);
+                        com.mojang.blaze3d.systems.RenderSystem.setShaderFogShape(com.mojang.blaze3d.shaders.FogShape.SPHERE);
+                    }
                 });
             }
         };

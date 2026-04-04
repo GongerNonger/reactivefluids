@@ -28,11 +28,10 @@ public class FoamBlock extends Block {
     public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean movedByPiston) {
         super.onPlace(state, level, pos, oldState, movedByPiston);
         if (!level.isClientSide()) {
-            // Only schedule upward growth if this block has foam or a non-air base below it
-            // (prevents sideways-spread decorative foam from starting new eruption columns)
-            boolean hasFoamBelow = level.getBlockState(pos.below()).getBlock() instanceof FoamBlock;
+            // Only schedule upward growth if this block replaced a fluid (reaction product).
+            // Player-placed foam and sideways-bloomed foam do NOT start new eruption columns.
             boolean isReactionBase = !oldState.getFluidState().isEmpty();
-            if (hasFoamBelow || isReactionBase) {
+            if (isReactionBase) {
                 int delay = MIN_GROW_TICKS + level.getRandom().nextInt(MAX_GROW_TICKS - MIN_GROW_TICKS + 1);
                 level.scheduleTick(pos, this, delay);
             }
@@ -73,6 +72,9 @@ public class FoamBlock extends Block {
         BlockState aboveState = level.getBlockState(abovePos);
         if (aboveState.isAir() || !aboveState.getFluidState().isEmpty() || aboveState.canBeReplaced()) {
             level.setBlock(abovePos, defaultBlockState(), 3);
+            // Schedule growth tick on the new block (onPlace won't do it since oldState is air)
+            int delay = MIN_GROW_TICKS + random.nextInt(MAX_GROW_TICKS - MIN_GROW_TICKS + 1);
+            level.scheduleTick(abovePos, this, delay);
 
             // Eruption particles
             double cx = abovePos.getX() + 0.5;

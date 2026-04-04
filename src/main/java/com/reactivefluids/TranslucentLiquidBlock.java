@@ -63,5 +63,11 @@ public class TranslucentLiquidBlock extends LiquidBlock {
         // Mycelium Slurry
         ItemBlockRenderTypes.setRenderLayer(ModFluids.MYCELIUM_SLURRY_SOURCE.get(),      RenderType.translucent());
         ItemBlockRenderTypes.setRenderLayer(ModFluids.MYCELIUM_SLURRY_FLOWING.get(),     RenderType.translucent());
+        // Crystal Solution
+        ItemBlockRenderTypes.setRenderLayer(ModFluids.CRYSTAL_SOLUTION_SOURCE.get(),     RenderType.translucent());
+        ItemBlockRenderTypes.setRenderLayer(ModFluids.CRYSTAL_SOLUTION_FLOWING.get(),    RenderType.translucent());
+        // Rainbow Indicator
+        ItemBlockRenderTypes.setRenderLayer(ModFluids.INDICATOR_SOURCE.get(),            RenderType.translucent());
+        ItemBlockRenderTypes.setRenderLayer(ModFluids.INDICATOR_FLOWING.get(),           RenderType.translucent());
     }
 }

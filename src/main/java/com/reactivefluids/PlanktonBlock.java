@@ -1,8 +1,6 @@
 package com.reactivefluids;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.DustParticleOptions;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
@@ -11,9 +9,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.material.FlowingFluid;
-import org.joml.Vector3f;
 
 /**
  * Bioluminescent plankton fluid — dark deep-ocean water that glows
@@ -22,33 +19,27 @@ import org.joml.Vector3f;
  */
 public class PlanktonBlock extends TranslucentLiquidBlock {
 
-    public static final BooleanProperty LIT = BooleanProperty.create("lit");
+    /** Glow intensity: 0 = off, 1 = faint edge glow, 2 = medium, 3 = bright, 4 = full */
+    public static final int MAX_GLOW = 4;
+    public static final IntegerProperty GLOW = IntegerProperty.create("glow", 0, MAX_GLOW);
     private static final int FADE_TICKS = 60;      // 3 seconds to fade
     private static final int CASCADE_RANGE = 3;
 
     public PlanktonBlock(FlowingFluid fluid, Properties properties) {
         super(fluid, properties);
-        registerDefaultState(stateDefinition.any().setValue(LIT, false));
+        registerDefaultState(stateDefinition.any().setValue(GLOW, 0));
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
-        builder.add(LIT);
+        builder.add(GLOW);
     }
 
     @Override
     public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
         if (!level.isClientSide() && entity instanceof LivingEntity && level instanceof ServerLevel serverLevel) {
-            // Light up this block and cascade to neighbors
             illuminate(serverLevel, pos, CASCADE_RANGE);
-
-            // Spawn glow particles around the entity
-            double ex = entity.getX();
-            double ey = entity.getY() + 0.3;
-            double ez = entity.getZ();
-            serverLevel.sendParticles(ParticleTypes.END_ROD,
-                    ex, ey, ez, 3, 0.3, 0.2, 0.3, 0.01);
         }
     }
 
@@ -59,14 +50,18 @@ public class PlanktonBlock extends TranslucentLiquidBlock {
                     if (dx * dx + dz * dz > radius * radius) continue;
                     BlockPos target = center.offset(dx, dy, dz);
                     BlockState targetState = level.getBlockState(target);
-                    if (targetState.getBlock() instanceof PlanktonBlock
-                            && !targetState.getValue(LIT)) {
-                        // Outer blocks get a slightly delayed light-up
-                        int dist = Math.abs(dx) + Math.abs(dz);
-                        level.setBlock(target, targetState.setValue(LIT, true), 3);
-                        // Schedule fade — further blocks fade sooner for a wave effect
-                        int fadeTicks = FADE_TICKS - dist * 6;
-                        level.scheduleTick(target, this, Math.max(20, fadeTicks));
+                    if (targetState.getBlock() instanceof PlanktonBlock) {
+                        // Glow level based on distance — closer = brighter
+                        double dist = Math.sqrt(dx * dx + dz * dz);
+                        int glow = Math.max(1, MAX_GLOW - (int) dist);
+                        int current = targetState.getValue(GLOW);
+                        if (glow > current) {
+                            level.setBlock(target, targetState.setValue(GLOW, glow), 3);
+                            // Schedule fade — further blocks fade sooner for a wave effect
+                            int manhattan = Math.abs(dx) + Math.abs(dz);
+                            int fadeTicks = FADE_TICKS - manhattan * 6;
+                            level.scheduleTick(target, this, Math.max(20, fadeTicks));
+                        }
                     }
                 }
             }
@@ -76,71 +71,15 @@ public class PlanktonBlock extends TranslucentLiquidBlock {
     @Override
     public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         super.tick(state, level, pos, random);
-        // Fade: turn off the light
-        if (state.getValue(LIT)) {
-            level.setBlock(pos, state.setValue(LIT, false), 3);
+        int glow = state.getValue(GLOW);
+        if (glow > 0) {
+            // Step down one level at a time for a gradual fade
+            level.setBlock(pos, state.setValue(GLOW, glow - 1), 3);
+            if (glow - 1 > 0) {
+                // Schedule next fade step
+                level.scheduleTick(pos, this, 10);
+            }
         }
     }
 
-    /**
-     * Client-side particle display when lit — dense bright blue/cyan plankton
-     * sparks that make the water visually transform from dark to glowing.
-     */
-    @Override
-    public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
-        super.animateTick(state, level, pos, random);
-
-        if (!state.getValue(LIT)) {
-            // Unlit: occasional faint ambient sparkle (1 in 8 chance)
-            if (random.nextInt(8) == 0) {
-                double x = pos.getX() + random.nextDouble();
-                double y = pos.getY() + random.nextDouble() * 0.8 + 0.1;
-                double z = pos.getZ() + random.nextDouble();
-                // Dim teal dust particle
-                level.addParticle(
-                    new DustParticleOptions(new Vector3f(0.05f, 0.4f, 0.5f), 0.5f),
-                    x, y, z, 0, 0.01, 0);
-            }
-            return;
-        }
-
-        // ===== LIT — bright bioluminescent eruption =====
-
-        // 4-7 bright blue plankton sparks per tick
-        int sparkCount = 4 + random.nextInt(4);
-        for (int i = 0; i < sparkCount; i++) {
-            double x = pos.getX() + random.nextDouble();
-            double y = pos.getY() + random.nextDouble() * 0.9 + 0.1;
-            double z = pos.getZ() + random.nextDouble();
-
-            // Randomize between several bright blue/cyan colors
-            float r, g, b;
-            int colorChoice = random.nextInt(5);
-            switch (colorChoice) {
-                case 0 -> { r = 0.1f; g = 0.85f; b = 1.0f; }   // electric cyan
-                case 1 -> { r = 0.15f; g = 1.0f; b = 0.82f; }   // seafoam
-                case 2 -> { r = 0.3f; g = 0.78f; b = 1.0f; }    // pale blue
-                case 3 -> { r = 0.0f; g = 0.7f; b = 0.85f; }    // deep teal
-                default -> { r = 0.25f; g = 1.0f; b = 0.7f; }   // mint green
-            }
-
-            // Larger, brighter dust particles
-            float size = 0.6f + random.nextFloat() * 0.6f;
-            level.addParticle(
-                new DustParticleOptions(new Vector3f(r, g, b), size),
-                x, y, z,
-                (random.nextDouble() - 0.5) * 0.02,
-                random.nextDouble() * 0.03,
-                (random.nextDouble() - 0.5) * 0.02);
-        }
-
-        // 1-2 END_ROD particles for extra magic
-        if (random.nextInt(2) == 0) {
-            double x = pos.getX() + random.nextDouble();
-            double y = pos.getY() + 0.5 + random.nextDouble() * 0.5;
-            double z = pos.getZ() + random.nextDouble();
-            level.addParticle(ParticleTypes.END_ROD, x, y, z,
-                    0, 0.02, 0);
-        }
-    }
 }
