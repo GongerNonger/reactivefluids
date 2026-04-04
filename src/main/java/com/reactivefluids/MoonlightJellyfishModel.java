@@ -111,8 +111,10 @@ public class MoonlightJellyfishModel<T extends MoonlightJellyfishEntity> extends
     public void setupAnim(T entity, float limbSwing, float limbSwingAmount,
                           float ageInTicks, float netHeadYaw, float headPitch) {
 
-        // Use the entity's squid-style tentacle angle for propulsion animation
-        float squeeze = Mth.lerp(ageInTicks % 1.0F, entity.oldTentacleAngle, entity.tentacleAngle);
+        // ageInTicks here is actually getBob() return — the tentacle angle
+        // (same pattern as vanilla squid).
+        float squeeze = ageInTicks;
+        float time = entity.tickCount;
 
         // Bell pulse — gentle contract during propulsion
         float bellPulse = squeeze * 0.15F; // subtle
@@ -124,27 +126,41 @@ public class MoonlightJellyfishModel<T extends MoonlightJellyfishEntity> extends
         innerBell.zScale = bell.zScale;
         innerBell.yScale = bell.yScale;
 
-        // Tentacle propulsion: curl diagonally inward toward center during squeeze
-        // Each tentacle is at a corner (-X-Z, +X-Z, -X+Z, +X+Z) so "inward"
-        // means rotating toward the opposite corner (toward center).
+        // Tentacle propulsion: curl inward toward center during squeeze.
+        //
+        // Coordinate refresher (model space, no renderer flip):
+        //   +Y = down, tentacles extend in +Y from pivot at Y=16
+        //   xRot positive = tip rotates toward +Z
+        //   zRot positive = tip rotates toward -X (for +Y-extending parts)
+        //
+        // "Inward" means each tentacle tip curls toward the model's center
+        // (the Y axis at X=0, Z=0).
         float swaySpeed = 0.08F;
         float swayAmount = 0.08F;
         float p = squeeze * 0.35F; // gentle inward curl
 
-        // Tentacle 1 at (-X, -Z): curl toward +X (+zRot) and +Z (+xRot)
-        tentacle1.xRot = p + Mth.sin(ageInTicks * swaySpeed) * swayAmount;
-        tentacle1.zRot = p + Mth.cos(ageInTicks * swaySpeed * 0.7F) * swayAmount;
+        // Tentacle 1 at (-X, -Z): inward = toward +X and +Z
+        //   +X: zRot negative (tip toward +X for a -X tentacle)
+        //   +Z: xRot positive (tip toward +Z)
+        tentacle1.xRot = p + Mth.sin(time * swaySpeed) * swayAmount;
+        tentacle1.zRot = -p + Mth.cos(time * swaySpeed * 0.7F) * swayAmount;
 
-        // Tentacle 2 at (+X, -Z): curl toward -X (-zRot) and +Z (+xRot)
-        tentacle2.xRot = p + Mth.sin(ageInTicks * swaySpeed + 1.5F) * swayAmount;
-        tentacle2.zRot = -p + Mth.cos(ageInTicks * swaySpeed * 0.7F + 1.0F) * swayAmount;
+        // Tentacle 2 at (+X, -Z): inward = toward -X and +Z
+        //   -X: zRot positive
+        //   +Z: xRot positive
+        tentacle2.xRot = p + Mth.sin(time * swaySpeed + 1.5F) * swayAmount;
+        tentacle2.zRot = p + Mth.cos(time * swaySpeed * 0.7F + 1.0F) * swayAmount;
 
-        // Tentacle 3 at (-X, +Z): curl toward +X (+zRot) and -Z (-xRot)
-        tentacle3.xRot = -p + Mth.sin(ageInTicks * swaySpeed + 3.0F) * swayAmount;
-        tentacle3.zRot = p + Mth.cos(ageInTicks * swaySpeed * 0.7F + 2.0F) * swayAmount;
+        // Tentacle 3 at (-X, +Z): inward = toward +X and -Z
+        //   +X: zRot negative
+        //   -Z: xRot negative
+        tentacle3.xRot = -p + Mth.sin(time * swaySpeed + 3.0F) * swayAmount;
+        tentacle3.zRot = -p + Mth.cos(time * swaySpeed * 0.7F + 2.0F) * swayAmount;
 
-        // Tentacle 4 at (+X, +Z): curl toward -X (-zRot) and -Z (-xRot)
-        tentacle4.xRot = -p + Mth.sin(ageInTicks * swaySpeed + 4.5F) * swayAmount;
-        tentacle4.zRot = -p + Mth.cos(ageInTicks * swaySpeed * 0.7F + 3.0F) * swayAmount;
+        // Tentacle 4 at (+X, +Z): inward = toward -X and -Z
+        //   -X: zRot positive
+        //   -Z: xRot negative
+        tentacle4.xRot = -p + Mth.sin(time * swaySpeed + 4.5F) * swayAmount;
+        tentacle4.zRot = p + Mth.cos(time * swaySpeed * 0.7F + 3.0F) * swayAmount;
     }
 }

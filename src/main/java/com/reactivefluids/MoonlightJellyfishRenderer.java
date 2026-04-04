@@ -43,23 +43,22 @@ public class MoonlightJellyfishRenderer extends MobRenderer<MoonlightJellyfishEn
     }
 
     /**
-     * Custom orientation: bell on top, tentacles below.
-     * Flip 180 on X so tentacles hang down, then apply yaw so
-     * the front faces the movement direction.
-     * Slight tilt toward movement direction for organic feel.
+     * Squid-style orientation using xBodyRot / zBodyRot from the entity.
+     *
+     * In model space, +Y is down. The bell sits near Y=10-16 and tentacles
+     * extend in +Y (downward) from Y=16. The entity's xBodyRot (set by squid
+     * AI) naturally orients the whole model so the bell leads and tentacles
+     * trail. No hard 180-degree flip is needed — the squid never uses one.
      */
     @Override
     protected void setupRotations(MoonlightJellyfishEntity entity, PoseStack poseStack,
                                    float ageInTicks, float rotationYaw, float partialTick, float scale) {
+        float xBodyRot = Mth.lerp(partialTick, entity.xBodyRotO, entity.xBodyRot);
+        float zBodyRot = Mth.lerp(partialTick, entity.zBodyRotO, entity.zBodyRot);
         poseStack.translate(0.0F, 0.5F, 0.0F);
-        // Yaw: face direction of movement
         poseStack.mulPose(Axis.YP.rotationDegrees(180.0F - rotationYaw));
-        // Flip 180 on X axis: this puts bell on top, tentacles hanging down
-        poseStack.mulPose(Axis.XP.rotationDegrees(180.0F));
-        // Slight tilt based on vertical movement — nose up when rising, down when sinking
-        float verticalTilt = (float) (entity.getDeltaMovement().y * -30.0);
-        verticalTilt = Mth.clamp(verticalTilt, -15.0F, 15.0F);
-        poseStack.mulPose(Axis.XP.rotationDegrees(verticalTilt));
+        poseStack.mulPose(Axis.XP.rotationDegrees(xBodyRot));
+        poseStack.mulPose(Axis.YP.rotationDegrees(zBodyRot));
         poseStack.translate(0.0F, -1.2F, 0.0F);
     }
 
@@ -78,6 +77,13 @@ public class MoonlightJellyfishRenderer extends MobRenderer<MoonlightJellyfishEn
     @Override
     public void render(MoonlightJellyfishEntity entity, float entityYaw, float partialTick,
                        PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
+        // super.render() returns null from getRenderType, so it does setupAnim + setupRotations
+        // but skips the default body render. However, it pushes/pops poseStack internally,
+        // so we cannot renderToBuffer after super returns — the transforms are gone.
+        // Instead, we do everything ourselves inside a properly transformed poseStack.
+
+        // Let super handle setupAnim, name tag rendering, etc.
+        // getRenderType returns null so it won't draw the body — we draw it below.
         super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
 
         boolean green = entity.isGreenVariant();
@@ -88,6 +94,14 @@ public class MoonlightJellyfishRenderer extends MobRenderer<MoonlightJellyfishEn
         int overlay = OverlayTexture.pack(
                 OverlayTexture.u(0),
                 OverlayTexture.v(entity.hurtTime > 0 || entity.deathTime > 0));
+
+        // Re-apply transforms for our custom render passes
+        poseStack.pushPose();
+        this.setupRotations(entity, poseStack, entity.tickCount + partialTick, entityYaw, partialTick,
+                this.getModel().root().xScale);
+        poseStack.scale(-1.0F, -1.0F, 1.0F);
+        this.scale(entity, poseStack, partialTick);
+        poseStack.translate(0.0F, -1.501F, 0.0F);
 
         // Pass 1: Translucent base body
         VertexConsumer baseBuffer = bufferSource.getBuffer(
@@ -109,5 +123,7 @@ public class MoonlightJellyfishRenderer extends MobRenderer<MoonlightJellyfishEn
                 RenderType.entityTranslucentEmissive(glowTex));
         this.getModel().renderToBuffer(poseStack, glowBuffer, LightTexture.FULL_BRIGHT,
                 overlay, glowColor);
+
+        poseStack.popPose();
     }
 }
