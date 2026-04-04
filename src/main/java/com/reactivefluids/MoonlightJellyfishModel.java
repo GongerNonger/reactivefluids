@@ -11,9 +11,14 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
 /**
- * Moonlight Jellyfish model — dome-shaped bell with 4 trailing tentacles.
- * 64x64 texture. Bell pulses open/closed with swim animation.
- * Tentacles trail behind and sway gently.
+ * Moonlight Jellyfish model — bell dome on top, tentacles hanging below.
+ *
+ * Orientation: bell at the top, tentacles trail downward. When swimming,
+ * tentacles squeeze inward (toward center) to simulate propulsion thrust,
+ * then relax outward during the glide phase — matching real jellyfish movement.
+ *
+ * The tentacle squeeze is driven by the entity's tentacleAngle field
+ * (synced from the squid-style AI pulse cycle).
  */
 @OnlyIn(Dist.CLIENT)
 public class MoonlightJellyfishModel<T extends MoonlightJellyfishEntity> extends HierarchicalModel<T> {
@@ -50,51 +55,54 @@ public class MoonlightJellyfishModel<T extends MoonlightJellyfishEntity> extends
         MeshDefinition meshDef = new MeshDefinition();
         PartDefinition partDef = meshDef.getRoot();
 
-        // Bell (dome) — flattened sphere, 10x6x10
+        // Bell (dome) sits at the TOP of the model
+        // Y=14 means the bottom of the bell is at pixel 14 from top of bounding box
+        // Bell extends upward (-Y) by 6 pixels
         partDef.addOrReplaceChild("bell",
                 CubeListBuilder.create()
                         .texOffs(0, 0)
                         .addBox(-5.0F, -6.0F, -5.0F, 10.0F, 6.0F, 10.0F,
                                 new CubeDeformation(0.0F)),
-                PartPose.offset(0.0F, 18.0F, 0.0F));
+                PartPose.offset(0.0F, 16.0F, 0.0F));
 
-        // Inner bell — slightly smaller, translucent membrane
+        // Inner bell — inside the dome, slightly smaller
         partDef.addOrReplaceChild("inner_bell",
                 CubeListBuilder.create()
                         .texOffs(0, 16)
                         .addBox(-4.0F, -4.5F, -4.0F, 8.0F, 4.0F, 8.0F,
                                 new CubeDeformation(0.0F)),
-                PartPose.offset(0.0F, 18.0F, 0.0F));
+                PartPose.offset(0.0F, 16.0F, 0.0F));
 
-        // 4 Tentacles — thin trailing strands
-        float tentacleLen = 8.0F;
+        // Tentacles hang BELOW the bell (at Y=16, extending downward into +Y)
+        // Pivot is at the bottom rim of the bell so they swing naturally
+        float tentacleLen = 10.0F;
         partDef.addOrReplaceChild("tentacle1",
                 CubeListBuilder.create()
                         .texOffs(0, 28)
                         .addBox(-0.5F, 0.0F, -0.5F, 1.0F, tentacleLen, 1.0F,
                                 new CubeDeformation(0.0F)),
-                PartPose.offset(-2.5F, 18.0F, -2.5F));
+                PartPose.offset(-2.5F, 16.0F, -2.5F));
 
         partDef.addOrReplaceChild("tentacle2",
                 CubeListBuilder.create()
                         .texOffs(4, 28)
                         .addBox(-0.5F, 0.0F, -0.5F, 1.0F, tentacleLen, 1.0F,
                                 new CubeDeformation(0.0F)),
-                PartPose.offset(2.5F, 18.0F, -2.5F));
+                PartPose.offset(2.5F, 16.0F, -2.5F));
 
         partDef.addOrReplaceChild("tentacle3",
                 CubeListBuilder.create()
                         .texOffs(8, 28)
                         .addBox(-0.5F, 0.0F, -0.5F, 1.0F, tentacleLen, 1.0F,
                                 new CubeDeformation(0.0F)),
-                PartPose.offset(-2.5F, 18.0F, 2.5F));
+                PartPose.offset(-2.5F, 16.0F, 2.5F));
 
         partDef.addOrReplaceChild("tentacle4",
                 CubeListBuilder.create()
                         .texOffs(12, 28)
                         .addBox(-0.5F, 0.0F, -0.5F, 1.0F, tentacleLen, 1.0F,
                                 new CubeDeformation(0.0F)),
-                PartPose.offset(2.5F, 18.0F, 2.5F));
+                PartPose.offset(2.5F, 16.0F, 2.5F));
 
         return LayerDefinition.create(meshDef, 64, 64);
     }
@@ -102,29 +110,51 @@ public class MoonlightJellyfishModel<T extends MoonlightJellyfishEntity> extends
     @Override
     public void setupAnim(T entity, float limbSwing, float limbSwingAmount,
                           float ageInTicks, float netHeadYaw, float headPitch) {
-        // Bell pulse — gentle squeeze animation
-        float pulse = Mth.sin(ageInTicks * 0.15F) * 0.08F;
-        bell.xScale = 1.0F + pulse;
-        bell.zScale = 1.0F + pulse;
-        bell.yScale = 1.0F - pulse * 0.5F;
+
+        // Use the entity's squid-style tentacle angle for propulsion animation
+        // tentacleAngle goes from 0 (relaxed) to ~PI/4 (contracted)
+        // Lerp between old and current for smooth animation
+        float squeeze = Mth.lerp(ageInTicks % 1.0F, entity.oldTentacleAngle, entity.tentacleAngle);
+
+        // Bell pulse — contracts when tentacles squeeze (propulsion phase)
+        float bellPulse = squeeze * 0.3F;
+        bell.xScale = 1.0F - bellPulse;
+        bell.zScale = 1.0F - bellPulse;
+        bell.yScale = 1.0F + bellPulse * 0.5F; // elongates slightly when contracting
 
         innerBell.xScale = bell.xScale;
         innerBell.zScale = bell.zScale;
         innerBell.yScale = bell.yScale;
 
-        // Tentacles sway — each offset slightly in phase
-        float swaySpeed = 0.12F;
-        float swayAmount = 0.15F;
-        tentacle1.xRot = Mth.sin(ageInTicks * swaySpeed) * swayAmount;
-        tentacle1.zRot = Mth.cos(ageInTicks * swaySpeed * 0.7F) * swayAmount * 0.5F;
+        // Tentacle propulsion animation:
+        // During squeeze (high tentacleAngle): tentacles swing INWARD toward center
+        // During relax (low tentacleAngle): tentacles hang naturally with gentle sway
+        //
+        // xRot positive = tips swing toward +Z (backward if facing +Z)
+        // zRot = lateral splay
 
-        tentacle2.xRot = Mth.sin(ageInTicks * swaySpeed + 1.5F) * swayAmount;
-        tentacle2.zRot = Mth.cos(ageInTicks * swaySpeed * 0.7F + 1.0F) * swayAmount * 0.5F;
+        // Base idle sway (always present, subtle)
+        float swaySpeed = 0.08F;
+        float swayAmount = 0.1F;
 
-        tentacle3.xRot = Mth.sin(ageInTicks * swaySpeed + 3.0F) * swayAmount;
-        tentacle3.zRot = Mth.cos(ageInTicks * swaySpeed * 0.7F + 2.0F) * swayAmount * 0.5F;
+        // Propulsion squeeze — tentacles curl inward
+        // Each tentacle needs to rotate toward center based on its position
+        float propulsion = squeeze * 1.2F; // amplify for visible effect
 
-        tentacle4.xRot = Mth.sin(ageInTicks * swaySpeed + 4.5F) * swayAmount;
-        tentacle4.zRot = Mth.cos(ageInTicks * swaySpeed * 0.7F + 3.0F) * swayAmount * 0.5F;
+        // Tentacle 1: front-left — squeeze pulls it toward +X, +Z (inward)
+        tentacle1.xRot = propulsion + Mth.sin(ageInTicks * swaySpeed) * swayAmount;
+        tentacle1.zRot = propulsion * 0.5F + Mth.cos(ageInTicks * swaySpeed * 0.7F) * swayAmount * 0.3F;
+
+        // Tentacle 2: front-right — squeeze pulls it toward -X, +Z
+        tentacle2.xRot = propulsion + Mth.sin(ageInTicks * swaySpeed + 1.5F) * swayAmount;
+        tentacle2.zRot = -propulsion * 0.5F + Mth.cos(ageInTicks * swaySpeed * 0.7F + 1.0F) * swayAmount * 0.3F;
+
+        // Tentacle 3: back-left — squeeze pulls toward +X, -Z
+        tentacle3.xRot = -propulsion + Mth.sin(ageInTicks * swaySpeed + 3.0F) * swayAmount;
+        tentacle3.zRot = propulsion * 0.5F + Mth.cos(ageInTicks * swaySpeed * 0.7F + 2.0F) * swayAmount * 0.3F;
+
+        // Tentacle 4: back-right — squeeze pulls toward -X, -Z
+        tentacle4.xRot = -propulsion + Mth.sin(ageInTicks * swaySpeed + 4.5F) * swayAmount;
+        tentacle4.zRot = -propulsion * 0.5F + Mth.cos(ageInTicks * swaySpeed * 0.7F + 3.0F) * swayAmount * 0.3F;
     }
 }

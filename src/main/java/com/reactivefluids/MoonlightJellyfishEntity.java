@@ -5,25 +5,31 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.MoverType;
+import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.animal.WaterAnimal;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Moonlight Jellyfish — ambient bioluminescent water creature.
@@ -34,7 +40,13 @@ public class MoonlightJellyfishEntity extends WaterAnimal {
 
     private static final int GLOW_CYCLE_LENGTH = 80;
 
+    // 0 = blue (default, 90%), 1 = green (rare, 10%)
+    public static final int VARIANT_BLUE = 0;
+    public static final int VARIANT_GREEN = 1;
+
     private static final EntityDataAccessor<Integer> DATA_GLOW_TICK =
+            SynchedEntityData.defineId(MoonlightJellyfishEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> DATA_VARIANT =
             SynchedEntityData.defineId(MoonlightJellyfishEntity.class, EntityDataSerializers.INT);
 
     // Squid-style movement fields
@@ -63,6 +75,30 @@ public class MoonlightJellyfishEntity extends WaterAnimal {
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
         super.defineSynchedData(builder);
         builder.define(DATA_GLOW_TICK, 0);
+        builder.define(DATA_VARIANT, VARIANT_BLUE);
+    }
+
+    public int getVariant() {
+        return entityData.get(DATA_VARIANT);
+    }
+
+    public void setVariant(int variant) {
+        entityData.set(DATA_VARIANT, variant);
+    }
+
+    public boolean isGreenVariant() {
+        return getVariant() == VARIANT_GREEN;
+    }
+
+    @Nullable
+    @Override
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty,
+                                         MobSpawnType spawnType, @Nullable SpawnGroupData groupData) {
+        // 10% chance to spawn as rare green variant
+        if (this.random.nextFloat() < 0.1F) {
+            this.setVariant(VARIANT_GREEN);
+        }
+        return super.finalizeSpawn(level, difficulty, spawnType, groupData);
     }
 
     @Override
@@ -212,6 +248,7 @@ public class MoonlightJellyfishEntity extends WaterAnimal {
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         tag.putInt("GlowTick", entityData.get(DATA_GLOW_TICK));
+        tag.putInt("Variant", entityData.get(DATA_VARIANT));
     }
 
     @Override
@@ -219,6 +256,9 @@ public class MoonlightJellyfishEntity extends WaterAnimal {
         super.readAdditionalSaveData(tag);
         if (tag.contains("GlowTick")) {
             entityData.set(DATA_GLOW_TICK, tag.getInt("GlowTick"));
+        }
+        if (tag.contains("Variant")) {
+            entityData.set(DATA_VARIANT, tag.getInt("Variant"));
         }
     }
 
