@@ -292,6 +292,19 @@ public class ModPinataEntities {
             ENTITY_TYPES.register("dragonache", () -> EntityType.Builder.<DragonacheEntity>of(DragonacheEntity::new, MobCategory.CREATURE)
                     .sized(1.6F, 1.8F).clientTrackingRange(16).fireImmune().build("dragonache"));
 
+    // === NPCs ===
+    public static final DeferredHolder<EntityType<?>, EntityType<StorkosEntity>> STORKOS =
+            ENTITY_TYPES.register("storkos", () -> EntityType.Builder.<StorkosEntity>of(StorkosEntity::new, MobCategory.CREATURE)
+                    .sized(0.6F, 1.2F).clientTrackingRange(16).build("storkos"));
+    public static final DeferredHolder<EntityType<?>, EntityType<DocPatchingoEntity>> DOC_PATCHINGO =
+            ENTITY_TYPES.register("doc_patchingo", () -> EntityType.Builder.<DocPatchingoEntity>of(DocPatchingoEntity::new, MobCategory.CREATURE)
+                    .sized(0.6F, 1.8F).clientTrackingRange(10).build("doc_patchingo"));
+
+    // === Boss ===
+    public static final DeferredHolder<EntityType<?>, EntityType<ProfessorPesterEntity>> PROFESSOR_PESTER =
+            ENTITY_TYPES.register("professor_pester", () -> EntityType.Builder.<ProfessorPesterEntity>of(ProfessorPesterEntity::new, MobCategory.MONSTER)
+                    .sized(0.7F, 2.0F).clientTrackingRange(16).build("professor_pester"));
+
     // === Threats ===
     public static final DeferredHolder<EntityType<?>, EntityType<RuffianEntity>> RUFFIAN =
             ENTITY_TYPES.register("ruffian", () ->

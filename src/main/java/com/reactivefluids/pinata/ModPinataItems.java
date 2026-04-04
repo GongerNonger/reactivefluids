@@ -208,6 +208,15 @@ public class ModPinataItems {
             ITEMS.register("seedos_spawn_egg", () ->
                     new DeferredSpawnEggItem(ModPinataEntities.SEEDOS,
                             0x4CAF50, 0x8BC34A, new Item.Properties()));
+    public static final DeferredHolder<Item, DeferredSpawnEggItem> STORKOS_SPAWN_EGG =
+            ITEMS.register("storkos_spawn_egg", () ->
+                    new DeferredSpawnEggItem(ModPinataEntities.STORKOS, 0xFFFFFF, 0xFF6060, new Item.Properties()));
+    public static final DeferredHolder<Item, DeferredSpawnEggItem> DOC_PATCHINGO_SPAWN_EGG =
+            ITEMS.register("doc_patchingo_spawn_egg", () ->
+                    new DeferredSpawnEggItem(ModPinataEntities.DOC_PATCHINGO, 0xFFFFFF, 0x40C040, new Item.Properties()));
+    public static final DeferredHolder<Item, DeferredSpawnEggItem> PROFESSOR_PESTER_SPAWN_EGG =
+            ITEMS.register("professor_pester_spawn_egg", () ->
+                    new DeferredSpawnEggItem(ModPinataEntities.PROFESSOR_PESTER, 0x400040, 0xFF0000, new Item.Properties()));
     public static final DeferredHolder<Item, DeferredSpawnEggItem> RUFFIAN_SPAWN_EGG =
             ITEMS.register("ruffian_spawn_egg", () ->
                     new DeferredSpawnEggItem(ModPinataEntities.RUFFIAN,

@@ -101,6 +101,28 @@ public class ClientEvents {
         event.registerEntityRenderer(ModPinataEntities.MALLOWOLF.get(), MallowolfRenderer::new);
         event.registerEntityRenderer(ModPinataEntities.COCOADILE.get(), CocoadileRenderer::new);
         event.registerEntityRenderer(ModPinataEntities.DRAGONACHE.get(), DragonacheRenderer::new);
+        // Storkos, Doc Patchingo, Professor Pester — use villager models
+        event.registerEntityRenderer(ModPinataEntities.STORKOS.get(),
+                ctx -> new net.minecraft.client.renderer.entity.MobRenderer<StorkosEntity, VillagerModel<StorkosEntity>>(
+                        ctx, new VillagerModel<>(ctx.bakeLayer(ModelLayers.VILLAGER)), 0.4F) {
+                    @Override public net.minecraft.resources.ResourceLocation getTextureLocation(StorkosEntity e) {
+                        return net.minecraft.resources.ResourceLocation.withDefaultNamespace("textures/entity/villager/villager.png");
+                    }
+                });
+        event.registerEntityRenderer(ModPinataEntities.DOC_PATCHINGO.get(),
+                ctx -> new net.minecraft.client.renderer.entity.MobRenderer<DocPatchingoEntity, VillagerModel<DocPatchingoEntity>>(
+                        ctx, new VillagerModel<>(ctx.bakeLayer(ModelLayers.VILLAGER)), 0.5F) {
+                    @Override public net.minecraft.resources.ResourceLocation getTextureLocation(DocPatchingoEntity e) {
+                        return net.minecraft.resources.ResourceLocation.withDefaultNamespace("textures/entity/villager/villager.png");
+                    }
+                });
+        event.registerEntityRenderer(ModPinataEntities.PROFESSOR_PESTER.get(),
+                ctx -> new net.minecraft.client.renderer.entity.MobRenderer<ProfessorPesterEntity, VillagerModel<ProfessorPesterEntity>>(
+                        ctx, new VillagerModel<>(ctx.bakeLayer(ModelLayers.VILLAGER)), 0.6F) {
+                    @Override public net.minecraft.resources.ResourceLocation getTextureLocation(ProfessorPesterEntity e) {
+                        return net.minecraft.resources.ResourceLocation.withDefaultNamespace("textures/entity/illager/evoker.png");
+                    }
+                });
         // NPCs and threats — use villager model as placeholder
         event.registerEntityRenderer(ModPinataEntities.RUFFIAN.get(),
                 ctx -> new net.minecraft.client.renderer.entity.MobRenderer<RuffianEntity, VillagerModel<RuffianEntity>>(

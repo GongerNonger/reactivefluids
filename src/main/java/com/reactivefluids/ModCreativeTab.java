@@ -109,6 +109,9 @@ public class ModCreativeTab {
                     output.accept(ModPinataItems.BUZZLEGUM_HOUSE.get());
                     // --- Viva Piñata: NPCs & Threats ---
                     output.accept(ModPinataItems.SEEDOS_SPAWN_EGG.get());
+                    output.accept(ModPinataItems.STORKOS_SPAWN_EGG.get());
+                    output.accept(ModPinataItems.DOC_PATCHINGO_SPAWN_EGG.get());
+                    output.accept(ModPinataItems.PROFESSOR_PESTER_SPAWN_EGG.get());
                     output.accept(ModPinataItems.RUFFIAN_SPAWN_EGG.get());
                     output.accept(ModPinataItems.DASTARDOS_SPAWN_EGG.get());
                     // --- Viva Piñata: Spawn Eggs ---

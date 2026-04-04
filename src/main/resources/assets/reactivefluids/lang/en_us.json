@@ -395,6 +395,13 @@
   "item.reactivefluids.cherrapin_spawn_egg": "Cherrapin Spawn Egg",
   "item.reactivefluids.cherrapin_candy": "Cherrapin Candy",
 
+  "entity.reactivefluids.storkos":                               "Storkos",
+  "item.reactivefluids.storkos_spawn_egg":                       "Storkos Spawn Egg",
+  "entity.reactivefluids.doc_patchingo":                         "Doc Patchingo",
+  "item.reactivefluids.doc_patchingo_spawn_egg":                 "Doc Patchingo Spawn Egg",
+  "entity.reactivefluids.professor_pester":                      "Professor Pester",
+  "item.reactivefluids.professor_pester_spawn_egg":              "Professor Pester Spawn Egg",
+
   "entity.reactivefluids.ruffian":                               "Ruffian",
   "item.reactivefluids.ruffian_spawn_egg":                       "Ruffian Spawn Egg",
   "entity.reactivefluids.dastardos":                             "Dastardos",

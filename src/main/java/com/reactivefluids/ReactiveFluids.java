@@ -187,6 +187,9 @@ public class ReactiveFluids {
                 CocoadileEntity.createAttributes().build());
         event.put(ModPinataEntities.DRAGONACHE.get(),
                 DragonacheEntity.createAttributes().build());
+        event.put(ModPinataEntities.STORKOS.get(), StorkosEntity.createAttributes().build());
+        event.put(ModPinataEntities.DOC_PATCHINGO.get(), DocPatchingoEntity.createAttributes().build());
+        event.put(ModPinataEntities.PROFESSOR_PESTER.get(), ProfessorPesterEntity.createAttributes().build());
         event.put(ModPinataEntities.RUFFIAN.get(),
                 RuffianEntity.createAttributes().build());
         event.put(ModPinataEntities.DASTARDOS.get(),

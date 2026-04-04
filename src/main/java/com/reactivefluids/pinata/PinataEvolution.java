@@ -26,23 +26,18 @@ public class PinataEvolution {
     private static final List<EvolutionRule> RULES = new ArrayList<>();
 
     static {
-        // Sparrowmint → Candary (feed dandelion)
-        // Note: Candary entity not yet implemented, placeholder for future
-        // RULES.add(new EvolutionRule(
-        //     () -> ModPinataEntities.SPARROWMINT.get(),
-        //     Items.DANDELION,
-        //     () -> ModPinataEntities.CANDARY.get()));
-
-        // These rules will be activated as the evolved species are implemented:
-        // Fudgehog → Parmadillo (feed cocoa beans / coconut equivalent)
-        // Horstachio → Zumbug (feed daisy + blackberry / sweet berries)
-        // Pretztail → Pieena (feed bone)
-        // Quackberry → Juicygoose (feed gooseberry / sweet berries)
-        // Newtgat → Salamango (feed blaze powder / chili equivalent)
-        // Cluckles → Chocstrich (feed cactus / prickly pear)
-        // Doenut → Moojoo (feed spruce sapling / fir seed)
-        // Fizzlybear → Polollybear (feed lapis / blue gem)
-        // Lickatoad → Lackatoad (complex: feed nightshade + shovel hit)
+        // All 9 VP evolution paths — now activated!
+        RULES.add(new EvolutionRule(() -> ModPinataEntities.SPARROWMINT.get(), Items.DANDELION, () -> ModPinataEntities.CANDARY.get()));
+        RULES.add(new EvolutionRule(() -> ModPinataEntities.FUDGEHOG.get(), Items.COCOA_BEANS, () -> ModPinataEntities.PARMADILLO.get()));
+        RULES.add(new EvolutionRule(() -> ModPinataEntities.HORSTACHIO.get(), Items.SWEET_BERRIES, () -> ModPinataEntities.ZUMBUG.get()));
+        RULES.add(new EvolutionRule(() -> ModPinataEntities.PRETZTAIL.get(), Items.BONE, () -> ModPinataEntities.PIEENA.get()));
+        RULES.add(new EvolutionRule(() -> ModPinataEntities.QUACKBERRY.get(), Items.SWEET_BERRIES, () -> ModPinataEntities.JUICYGOOSE.get()));
+        RULES.add(new EvolutionRule(() -> ModPinataEntities.NEWTGAT.get(), Items.BLAZE_POWDER, () -> ModPinataEntities.SALAMANGO.get()));
+        RULES.add(new EvolutionRule(() -> ModPinataEntities.CLUCKLES.get(), Items.CACTUS, () -> ModPinataEntities.CHOCSTRICH.get()));
+        RULES.add(new EvolutionRule(() -> ModPinataEntities.DOENUT.get(), Items.SPRUCE_SAPLING, () -> ModPinataEntities.MOOJOO.get()));
+        RULES.add(new EvolutionRule(() -> ModPinataEntities.FIZZLYBEAR.get(), Items.LAPIS_LAZULI, () -> ModPinataEntities.POLOLLYBEAR.get()));
+        // Taffly → Reddhott (complex: must be on fire + extinguished — handled separately)
+        // Lickatoad → Lackatoad (complex: feed nightshade + shovel hit — not yet implemented)
     }
 
     /**
