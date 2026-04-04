@@ -176,4 +176,34 @@ public class ModPinataItems {
     public static final DeferredHolder<Item, BlockItem> GARDEN_PLOT =
             ITEMS.register("garden_plot", () ->
                     new BlockItem(ModBlocks.GARDEN_PLOT.get(), new Item.Properties()));
+
+    // === Tools ===
+    public static final DeferredHolder<Item, GardenShovelItem> GARDEN_SHOVEL =
+            ITEMS.register("garden_shovel", () ->
+                    new GardenShovelItem(new Item.Properties().durability(500).stacksTo(1)));
+
+    public static final DeferredHolder<Item, WateringCanItem> WATERING_CAN =
+            ITEMS.register("watering_can", () ->
+                    new WateringCanItem(new Item.Properties().stacksTo(1)));
+
+    // === Surface Packets (infinite use terrain painters) ===
+    public static final DeferredHolder<Item, SurfacePacketItem> GRASS_PACKET =
+            ITEMS.register("grass_packet", () ->
+                    new SurfacePacketItem(new Item.Properties(),
+                            SurfacePacketItem.SurfaceType.GRASS));
+
+    public static final DeferredHolder<Item, SurfacePacketItem> LONG_GRASS_PACKET =
+            ITEMS.register("long_grass_packet", () ->
+                    new SurfacePacketItem(new Item.Properties(),
+                            SurfacePacketItem.SurfaceType.LONG_GRASS));
+
+    public static final DeferredHolder<Item, SurfacePacketItem> SAND_PACKET =
+            ITEMS.register("sand_packet", () ->
+                    new SurfacePacketItem(new Item.Properties(),
+                            SurfacePacketItem.SurfaceType.SAND));
+
+    public static final DeferredHolder<Item, SurfacePacketItem> SNOW_PACKET =
+            ITEMS.register("snow_packet", () ->
+                    new SurfacePacketItem(new Item.Properties(),
+                            SurfacePacketItem.SurfaceType.SNOW));
 }

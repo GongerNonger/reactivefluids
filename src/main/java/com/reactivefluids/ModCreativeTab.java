@@ -81,8 +81,14 @@ public class ModCreativeTab {
                     output.accept(ModItems.RAISE_DEAD_SCROLL.get());         // 3rd level
                     // Undead crafting blocks
                     output.accept(ModItems.ROTTEN_FLESH_BLOCK_ITEM.get());
-                    // --- Viva Piñata: Garden ---
+                    // --- Viva Piñata: Garden & Tools ---
                     output.accept(ModPinataItems.GARDEN_PLOT.get());
+                    output.accept(ModPinataItems.GARDEN_SHOVEL.get());
+                    output.accept(ModPinataItems.WATERING_CAN.get());
+                    output.accept(ModPinataItems.GRASS_PACKET.get());
+                    output.accept(ModPinataItems.LONG_GRASS_PACKET.get());
+                    output.accept(ModPinataItems.SAND_PACKET.get());
+                    output.accept(ModPinataItems.SNOW_PACKET.get());
                     // --- Viva Piñata: Spawn Eggs ---
                     output.accept(ModPinataItems.WHIRLM_SPAWN_EGG.get());
                     output.accept(ModPinataItems.SPARROWMINT_SPAWN_EGG.get());

@@ -210,5 +210,11 @@
   "item.reactivefluids.horstachio_candy":                        "Horstachio Candy",
 
   "block.reactivefluids.garden_plot":                            "Garden Plot",
-  "item.reactivefluids.garden_plot":                             "Garden Plot"
+  "item.reactivefluids.garden_plot":                             "Garden Plot",
+  "item.reactivefluids.garden_shovel":                           "Garden Shovel",
+  "item.reactivefluids.watering_can":                            "Watering Can",
+  "item.reactivefluids.grass_packet":                            "Grass Surface Packet",
+  "item.reactivefluids.long_grass_packet":                       "Long Grass Surface Packet",
+  "item.reactivefluids.sand_packet":                             "Sand Surface Packet",
+  "item.reactivefluids.snow_packet":                             "Snow Surface Packet"
 }
