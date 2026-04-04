@@ -2,6 +2,7 @@ package com.reactivefluids;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -9,30 +10,26 @@ import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.client.renderer.LightTexture;
+import net.minecraft.util.Mth;
 import org.jetbrains.annotations.Nullable;
 
 /**
  * Moonlight Jellyfish Renderer — translucent base with pulsing emissive glow overlay.
- * Supports two variants: blue (default) and green (rare 10%).
+ * Uses squid-style setupRotations for proper water orientation (bell on top, tentacles below).
  */
 public class MoonlightJellyfishRenderer extends MobRenderer<MoonlightJellyfishEntity, MoonlightJellyfishModel<MoonlightJellyfishEntity>> {
 
-    // Blue variant textures (default)
     private static final ResourceLocation BLUE_BASE =
             ResourceLocation.fromNamespaceAndPath(ReactiveFluids.MOD_ID, "textures/entity/moonlight_jellyfish.png");
     private static final ResourceLocation BLUE_GLOW =
             ResourceLocation.fromNamespaceAndPath(ReactiveFluids.MOD_ID, "textures/entity/moonlight_jellyfish_glow.png");
-
-    // Green variant textures (rare)
     private static final ResourceLocation GREEN_BASE =
             ResourceLocation.fromNamespaceAndPath(ReactiveFluids.MOD_ID, "textures/entity/moonlight_jellyfish_green.png");
     private static final ResourceLocation GREEN_GLOW =
             ResourceLocation.fromNamespaceAndPath(ReactiveFluids.MOD_ID, "textures/entity/moonlight_jellyfish_green_glow.png");
 
-    // Blue tint: semi-transparent pale blue-white
-    private static final int BLUE_BASE_COLOR = 0xB0C8DDFF; // ARGB
-    // Green tint: semi-transparent pale green-white
-    private static final int GREEN_BASE_COLOR = 0xB0C8FFDD; // ARGB
+    private static final int BLUE_BASE_COLOR = 0xB0C8DDFF;
+    private static final int GREEN_BASE_COLOR = 0xB0C8FFDD;
 
     public MoonlightJellyfishRenderer(EntityRendererProvider.Context context) {
         super(context,
@@ -45,11 +42,33 @@ public class MoonlightJellyfishRenderer extends MobRenderer<MoonlightJellyfishEn
         return entity.isGreenVariant() ? GREEN_BASE : BLUE_BASE;
     }
 
+    /**
+     * Squid-style body rotation setup — orients the jellyfish based on
+     * movement direction so the bell faces the direction of travel with
+     * tentacles trailing behind.
+     */
+    @Override
+    protected void setupRotations(MoonlightJellyfishEntity entity, PoseStack poseStack,
+                                   float ageInTicks, float rotationYaw, float partialTick, float scale) {
+        float xRot = Mth.lerp(partialTick, entity.xBodyRotO, entity.xBodyRot);
+        float zRot = Mth.lerp(partialTick, entity.zBodyRotO, entity.zBodyRot);
+        poseStack.translate(0.0F, 0.5F, 0.0F);
+        poseStack.mulPose(Axis.YP.rotationDegrees(180.0F - rotationYaw));
+        poseStack.mulPose(Axis.XP.rotationDegrees(xRot));
+        poseStack.mulPose(Axis.YP.rotationDegrees(zRot));
+        poseStack.translate(0.0F, -1.2F, 0.0F);
+    }
+
+    @Override
+    protected float getBob(MoonlightJellyfishEntity entity, float partialTick) {
+        return Mth.lerp(partialTick, entity.oldTentacleAngle, entity.tentacleAngle);
+    }
+
     @Nullable
     @Override
     protected RenderType getRenderType(MoonlightJellyfishEntity entity, boolean bodyVisible,
                                         boolean translucent, boolean glowing) {
-        return null; // custom rendering only
+        return null;
     }
 
     @Override
@@ -77,10 +96,8 @@ public class MoonlightJellyfishRenderer extends MobRenderer<MoonlightJellyfishEn
         int glowAlpha = (int) (glowIntensity * 200);
         int glowColor;
         if (green) {
-            // Bioluminescent green glow: RGB(100, 255, 140)
             glowColor = (glowAlpha << 24) | 0x64FF8C;
         } else {
-            // Moonlight blue-white glow: RGB(170, 220, 255)
             glowColor = (glowAlpha << 24) | 0xAADCFF;
         }
 

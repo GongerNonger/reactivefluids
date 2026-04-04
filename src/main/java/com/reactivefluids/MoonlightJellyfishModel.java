@@ -112,49 +112,34 @@ public class MoonlightJellyfishModel<T extends MoonlightJellyfishEntity> extends
                           float ageInTicks, float netHeadYaw, float headPitch) {
 
         // Use the entity's squid-style tentacle angle for propulsion animation
-        // tentacleAngle goes from 0 (relaxed) to ~PI/4 (contracted)
-        // Lerp between old and current for smooth animation
         float squeeze = Mth.lerp(ageInTicks % 1.0F, entity.oldTentacleAngle, entity.tentacleAngle);
 
-        // Bell pulse — contracts when tentacles squeeze (propulsion phase)
-        float bellPulse = squeeze * 0.3F;
+        // Bell pulse — gentle contract during propulsion
+        float bellPulse = squeeze * 0.15F; // subtle
         bell.xScale = 1.0F - bellPulse;
         bell.zScale = 1.0F - bellPulse;
-        bell.yScale = 1.0F + bellPulse * 0.5F; // elongates slightly when contracting
+        bell.yScale = 1.0F + bellPulse * 0.3F;
 
         innerBell.xScale = bell.xScale;
         innerBell.zScale = bell.zScale;
         innerBell.yScale = bell.yScale;
 
-        // Tentacle propulsion animation:
-        // During squeeze (high tentacleAngle): tentacles swing INWARD toward center
-        // During relax (low tentacleAngle): tentacles hang naturally with gentle sway
-        //
-        // xRot positive = tips swing toward +Z (backward if facing +Z)
-        // zRot = lateral splay
-
-        // Base idle sway (always present, subtle)
+        // Tentacle propulsion: gentle inward curl during squeeze, idle sway otherwise
         float swaySpeed = 0.08F;
         float swayAmount = 0.1F;
+        float propulsion = squeeze * 0.4F; // gentle — not too far inward
 
-        // Propulsion squeeze — tentacles curl inward
-        // Each tentacle needs to rotate toward center based on its position
-        float propulsion = squeeze * 1.2F; // amplify for visible effect
-
-        // Tentacle 1: front-left — squeeze pulls it toward +X, +Z (inward)
+        // All tentacles: slight inward rotation during squeeze + idle sway
         tentacle1.xRot = propulsion + Mth.sin(ageInTicks * swaySpeed) * swayAmount;
-        tentacle1.zRot = propulsion * 0.5F + Mth.cos(ageInTicks * swaySpeed * 0.7F) * swayAmount * 0.3F;
+        tentacle1.zRot = propulsion * 0.3F + Mth.cos(ageInTicks * swaySpeed * 0.7F) * swayAmount * 0.3F;
 
-        // Tentacle 2: front-right — squeeze pulls it toward -X, +Z
         tentacle2.xRot = propulsion + Mth.sin(ageInTicks * swaySpeed + 1.5F) * swayAmount;
-        tentacle2.zRot = -propulsion * 0.5F + Mth.cos(ageInTicks * swaySpeed * 0.7F + 1.0F) * swayAmount * 0.3F;
+        tentacle2.zRot = -propulsion * 0.3F + Mth.cos(ageInTicks * swaySpeed * 0.7F + 1.0F) * swayAmount * 0.3F;
 
-        // Tentacle 3: back-left — squeeze pulls toward +X, -Z
         tentacle3.xRot = -propulsion + Mth.sin(ageInTicks * swaySpeed + 3.0F) * swayAmount;
-        tentacle3.zRot = propulsion * 0.5F + Mth.cos(ageInTicks * swaySpeed * 0.7F + 2.0F) * swayAmount * 0.3F;
+        tentacle3.zRot = propulsion * 0.3F + Mth.cos(ageInTicks * swaySpeed * 0.7F + 2.0F) * swayAmount * 0.3F;
 
-        // Tentacle 4: back-right — squeeze pulls toward -X, -Z
         tentacle4.xRot = -propulsion + Mth.sin(ageInTicks * swaySpeed + 4.5F) * swayAmount;
-        tentacle4.zRot = -propulsion * 0.5F + Mth.cos(ageInTicks * swaySpeed * 0.7F + 3.0F) * swayAmount * 0.3F;
+        tentacle4.zRot = -propulsion * 0.3F + Mth.cos(ageInTicks * swaySpeed * 0.7F + 3.0F) * swayAmount * 0.3F;
     }
 }

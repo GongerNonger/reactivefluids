@@ -113,7 +113,7 @@ public class ModEntities {
     public static final DeferredHolder<EntityType<?>, EntityType<MoonlightJellyfishEntity>> MOONLIGHT_JELLYFISH =
             ENTITY_TYPES.register("moonlight_jellyfish", () ->
                     EntityType.Builder.<MoonlightJellyfishEntity>of(MoonlightJellyfishEntity::new, MobCategory.WATER_AMBIENT)
-                            .sized(0.7F, 0.5F)
+                            .sized(0.6F, 1.0F) // bell width ~0.6, total height ~1.0 (bell + tentacles)
                             .clientTrackingRange(10)
                             .build("moonlight_jellyfish"));
 }

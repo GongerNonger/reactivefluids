@@ -49,13 +49,18 @@ public class MoonlightJellyfishEntity extends WaterAnimal {
     private static final EntityDataAccessor<Integer> DATA_VARIANT =
             SynchedEntityData.defineId(MoonlightJellyfishEntity.class, EntityDataSerializers.INT);
 
-    // Squid-style movement fields
+    // Squid-style movement and body rotation fields
+    public float xBodyRot;
+    public float xBodyRotO;
+    public float zBodyRot;
+    public float zBodyRotO;
     public float tentacleMovement;
     public float oldTentacleMovement;
     public float tentacleAngle;
     public float oldTentacleAngle;
     private float speed;
     private float tentacleSpeed;
+    private float rotateSpeed;
     private float tx;
     private float ty;
     private float tz;
@@ -122,6 +127,10 @@ public class MoonlightJellyfishEntity extends WaterAnimal {
             entityData.set(DATA_GLOW_TICK, glowTick);
         }
 
+        // Body rotation tracking (for renderer)
+        this.xBodyRotO = this.xBodyRot;
+        this.zBodyRotO = this.zBodyRot;
+
         // Squid-style pulsing movement
         this.oldTentacleMovement = this.tentacleMovement;
         this.oldTentacleAngle = this.tentacleAngle;
@@ -144,13 +153,15 @@ public class MoonlightJellyfishEntity extends WaterAnimal {
                 float f = this.tentacleMovement / (float) Math.PI;
                 this.tentacleAngle = Mth.sin(f * f * (float) Math.PI) * (float) Math.PI * 0.25F;
                 if ((double) f > 0.75) {
-                    this.speed = 0.7F; // slower than squid
+                    this.speed = 0.7F;
+                    this.rotateSpeed = 1.0F;
                 } else {
-                    this.speed *= 0.8F;
+                    this.rotateSpeed *= 0.8F;
                 }
             } else {
                 this.tentacleAngle = 0.0F;
-                this.speed *= 0.85F; // more drag — jellyfish drift
+                this.speed *= 0.85F;
+                this.rotateSpeed *= 0.99F;
             }
 
             if (!this.level().isClientSide) {
@@ -164,6 +175,8 @@ public class MoonlightJellyfishEntity extends WaterAnimal {
             double hDist = vel.horizontalDistance();
             this.yBodyRot += (-((float) Mth.atan2(vel.x, vel.z)) * (180F / (float) Math.PI) - this.yBodyRot) * 0.1F;
             this.setYRot(this.yBodyRot);
+            this.zBodyRot += (float) Math.PI * this.rotateSpeed * 1.5F;
+            this.xBodyRot += (-((float) Mth.atan2(hDist, vel.y)) * (180F / (float) Math.PI) - this.xBodyRot) * 0.1F;
         } else {
             // Out of water — fall with tentacles spread
             this.tentacleAngle = Mth.abs(Mth.sin(this.tentacleMovement)) * (float) Math.PI * 0.25F;
