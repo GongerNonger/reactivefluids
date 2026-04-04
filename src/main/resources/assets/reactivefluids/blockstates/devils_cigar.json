@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "open=false": { "model": "reactivefluids:block/devils_cigar" },
+    "open=true": { "model": "reactivefluids:block/devils_cigar_open" }
+  }
+}

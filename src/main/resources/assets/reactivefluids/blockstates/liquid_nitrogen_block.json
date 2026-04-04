@@ -1,0 +1,5 @@
+{
+  "variants": {
+    "": { "model": "reactivefluids:block/liquid_nitrogen_block" }
+  }
+}

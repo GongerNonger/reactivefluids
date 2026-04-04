@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "reactivefluids:block/ghost_fungus"
+  }
+}

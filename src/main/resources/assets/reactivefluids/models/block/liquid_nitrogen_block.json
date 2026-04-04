@@ -1,0 +1,6 @@
+{
+  "parent": "block/water",
+  "textures": {
+    "particle": "reactivefluids:block/liquid_nitrogen_still"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "block/water",
+  "textures": {
+    "particle": "reactivefluids:block/mycelium_slurry_still"
+  }
+}
