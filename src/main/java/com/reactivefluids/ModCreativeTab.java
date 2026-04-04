@@ -88,6 +88,15 @@ public class ModCreativeTab {
                     output.accept(ModPinataItems.MOUSEMALLOW_SPAWN_EGG.get());
                     output.accept(ModPinataItems.SYRUPENT_SPAWN_EGG.get());
                     output.accept(ModPinataItems.TAFFLY_SPAWN_EGG.get());
+                    output.accept(ModPinataItems.BUNNYCOMB_SPAWN_EGG.get());
+                    output.accept(ModPinataItems.QUACKBERRY_SPAWN_EGG.get());
+                    output.accept(ModPinataItems.SHELLYBEAN_SPAWN_EGG.get());
+                    output.accept(ModPinataItems.NEWTGAT_SPAWN_EGG.get());
+                    output.accept(ModPinataItems.LICKATOAD_SPAWN_EGG.get());
+                    output.accept(ModPinataItems.PRETZTAIL_SPAWN_EGG.get());
+                    output.accept(ModPinataItems.BUZZLEGUM_SPAWN_EGG.get());
+                    output.accept(ModPinataItems.CLUCKLES_SPAWN_EGG.get());
+                    output.accept(ModPinataItems.HORSTACHIO_SPAWN_EGG.get());
                     // --- Viva Piñata: Candy ---
                     output.accept(ModPinataItems.WHIRLM_CANDY.get());
                     output.accept(ModPinataItems.SPARROWMINT_CANDY.get());
@@ -95,6 +104,15 @@ public class ModCreativeTab {
                     output.accept(ModPinataItems.MOUSEMALLOW_CANDY.get());
                     output.accept(ModPinataItems.SYRUPENT_CANDY.get());
                     output.accept(ModPinataItems.TAFFLY_CANDY.get());
+                    output.accept(ModPinataItems.BUNNYCOMB_CANDY.get());
+                    output.accept(ModPinataItems.QUACKBERRY_CANDY.get());
+                    output.accept(ModPinataItems.SHELLYBEAN_CANDY.get());
+                    output.accept(ModPinataItems.NEWTGAT_CANDY.get());
+                    output.accept(ModPinataItems.LICKATOAD_CANDY.get());
+                    output.accept(ModPinataItems.PRETZTAIL_CANDY.get());
+                    output.accept(ModPinataItems.BUZZLEGUM_CANDY.get());
+                    output.accept(ModPinataItems.CLUCKLES_CANDY.get());
+                    output.accept(ModPinataItems.HORSTACHIO_CANDY.get());
                 })
                 .build()
         );

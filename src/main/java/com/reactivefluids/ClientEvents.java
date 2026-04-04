@@ -37,6 +37,15 @@ public class ClientEvents {
         event.registerEntityRenderer(ModPinataEntities.MOUSEMALLOW.get(), MousemallowRenderer::new);
         event.registerEntityRenderer(ModPinataEntities.SYRUPENT.get(), SyrupentRenderer::new);
         event.registerEntityRenderer(ModPinataEntities.TAFFLY.get(), TafflyRenderer::new);
+        event.registerEntityRenderer(ModPinataEntities.BUNNYCOMB.get(), BunnycombRenderer::new);
+        event.registerEntityRenderer(ModPinataEntities.QUACKBERRY.get(), QuackberryRenderer::new);
+        event.registerEntityRenderer(ModPinataEntities.SHELLYBEAN.get(), ShellybeanRenderer::new);
+        event.registerEntityRenderer(ModPinataEntities.NEWTGAT.get(), NewtgatRenderer::new);
+        event.registerEntityRenderer(ModPinataEntities.LICKATOAD.get(), LickatoadRenderer::new);
+        event.registerEntityRenderer(ModPinataEntities.PRETZTAIL.get(), PretztailRenderer::new);
+        event.registerEntityRenderer(ModPinataEntities.BUZZLEGUM.get(), BuzzlegumRenderer::new);
+        event.registerEntityRenderer(ModPinataEntities.CLUCKLES.get(), ClucklesRenderer::new);
+        event.registerEntityRenderer(ModPinataEntities.HORSTACHIO.get(), HorstachioRenderer::new);
     }
 
     @SubscribeEvent
@@ -47,6 +56,15 @@ public class ClientEvents {
         event.registerLayerDefinition(MousemallowModel.LAYER, MousemallowModel::createBodyLayer);
         event.registerLayerDefinition(SyrupentModel.LAYER, SyrupentModel::createBodyLayer);
         event.registerLayerDefinition(TafflyModel.LAYER, TafflyModel::createBodyLayer);
+        event.registerLayerDefinition(BunnycombModel.LAYER, BunnycombModel::createBodyLayer);
+        event.registerLayerDefinition(QuackberryModel.LAYER, QuackberryModel::createBodyLayer);
+        event.registerLayerDefinition(ShellybeanModel.LAYER, ShellybeanModel::createBodyLayer);
+        event.registerLayerDefinition(NewtgatModel.LAYER, NewtgatModel::createBodyLayer);
+        event.registerLayerDefinition(LickatoadModel.LAYER, LickatoadModel::createBodyLayer);
+        event.registerLayerDefinition(PretztailModel.LAYER, PretztailModel::createBodyLayer);
+        event.registerLayerDefinition(BuzzlegumModel.LAYER, BuzzlegumModel::createBodyLayer);
+        event.registerLayerDefinition(ClucklesModel.LAYER, ClucklesModel::createBodyLayer);
+        event.registerLayerDefinition(HorstachioModel.LAYER, HorstachioModel::createBodyLayer);
     }
 
     @SubscribeEvent

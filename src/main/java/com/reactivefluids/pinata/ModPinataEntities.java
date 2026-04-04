@@ -64,6 +64,57 @@ public class ModPinataEntities {
                             .clientTrackingRange(8)
                             .build("taffly"));
 
-    // Future: PRETZTAIL, BUNNYCOMB, QUACKBERRY, SHELLYBEAN, NEWTGAT,
-    // LICKATOAD, BUZZLEGUM, CLUCKLES, HORSTACHIO, etc.
+    // === Bunnycomb (rabbit) — small, fast breeder ===
+    public static final DeferredHolder<EntityType<?>, EntityType<BunnycombEntity>> BUNNYCOMB =
+            ENTITY_TYPES.register("bunnycomb", () ->
+                    EntityType.Builder.<BunnycombEntity>of(BunnycombEntity::new, MobCategory.CREATURE)
+                            .sized(0.5F, 0.5F).clientTrackingRange(8).build("bunnycomb"));
+
+    // === Quackberry (duck) — aquatic ===
+    public static final DeferredHolder<EntityType<?>, EntityType<QuackberryEntity>> QUACKBERRY =
+            ENTITY_TYPES.register("quackberry", () ->
+                    EntityType.Builder.<QuackberryEntity>of(QuackberryEntity::new, MobCategory.CREATURE)
+                            .sized(0.55F, 0.5F).clientTrackingRange(8).build("quackberry"));
+
+    // === Shellybean (snail) — very slow, armored ===
+    public static final DeferredHolder<EntityType<?>, EntityType<ShellybeanEntity>> SHELLYBEAN =
+            ENTITY_TYPES.register("shellybean", () ->
+                    EntityType.Builder.<ShellybeanEntity>of(ShellybeanEntity::new, MobCategory.CREATURE)
+                            .sized(0.5F, 0.4F).clientTrackingRange(8).build("shellybean"));
+
+    // === Newtgat (newt) — semi-aquatic ===
+    public static final DeferredHolder<EntityType<?>, EntityType<NewtgatEntity>> NEWTGAT =
+            ENTITY_TYPES.register("newtgat", () ->
+                    EntityType.Builder.<NewtgatEntity>of(NewtgatEntity::new, MobCategory.CREATURE)
+                            .sized(0.5F, 0.3F).clientTrackingRange(8).build("newtgat"));
+
+    // === Lickatoad (frog) — eats Tafflies ===
+    public static final DeferredHolder<EntityType<?>, EntityType<LickatoadEntity>> LICKATOAD =
+            ENTITY_TYPES.register("lickatoad", () ->
+                    EntityType.Builder.<LickatoadEntity>of(LickatoadEntity::new, MobCategory.CREATURE)
+                            .sized(0.6F, 0.45F).clientTrackingRange(8).build("lickatoad"));
+
+    // === Pretztail (fox) — eats Bunnycombs ===
+    public static final DeferredHolder<EntityType<?>, EntityType<PretztailEntity>> PRETZTAIL =
+            ENTITY_TYPES.register("pretztail", () ->
+                    EntityType.Builder.<PretztailEntity>of(PretztailEntity::new, MobCategory.CREATURE)
+                            .sized(0.6F, 0.7F).clientTrackingRange(10).build("pretztail"));
+
+    // === Buzzlegum (bee) — produces honey ===
+    public static final DeferredHolder<EntityType<?>, EntityType<BuzzlegumEntity>> BUZZLEGUM =
+            ENTITY_TYPES.register("buzzlegum", () ->
+                    EntityType.Builder.<BuzzlegumEntity>of(BuzzlegumEntity::new, MobCategory.CREATURE)
+                            .sized(0.5F, 0.5F).clientTrackingRange(8).build("buzzlegum"));
+
+    // === Cluckles (chicken) — lays eggs ===
+    public static final DeferredHolder<EntityType<?>, EntityType<ClucklesEntity>> CLUCKLES =
+            ENTITY_TYPES.register("cluckles", () ->
+                    EntityType.Builder.<ClucklesEntity>of(ClucklesEntity::new, MobCategory.CREATURE)
+                            .sized(0.5F, 0.6F).clientTrackingRange(8).build("cluckles"));
+
+    // === Horstachio (horse) — large, majestic ===
+    public static final DeferredHolder<EntityType<?>, EntityType<HorstachioEntity>> HORSTACHIO =
+            ENTITY_TYPES.register("horstachio", () ->
+                    EntityType.Builder.<HorstachioEntity>of(HorstachioEntity::new, MobCategory.CREATURE)
+                            .sized(1.4F, 1.6F).clientTrackingRange(10).build("horstachio"));
 }

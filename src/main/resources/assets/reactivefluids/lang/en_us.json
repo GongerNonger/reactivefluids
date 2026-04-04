@@ -171,5 +171,41 @@
 
   "entity.reactivefluids.taffly":                                "Taffly",
   "item.reactivefluids.taffly_spawn_egg":                        "Taffly Spawn Egg",
-  "item.reactivefluids.taffly_candy":                            "Taffly Candy"
+  "item.reactivefluids.taffly_candy":                            "Taffly Candy",
+
+  "entity.reactivefluids.bunnycomb":                             "Bunnycomb",
+  "item.reactivefluids.bunnycomb_spawn_egg":                     "Bunnycomb Spawn Egg",
+  "item.reactivefluids.bunnycomb_candy":                         "Bunnycomb Candy",
+
+  "entity.reactivefluids.quackberry":                            "Quackberry",
+  "item.reactivefluids.quackberry_spawn_egg":                    "Quackberry Spawn Egg",
+  "item.reactivefluids.quackberry_candy":                        "Quackberry Candy",
+
+  "entity.reactivefluids.shellybean":                            "Shellybean",
+  "item.reactivefluids.shellybean_spawn_egg":                    "Shellybean Spawn Egg",
+  "item.reactivefluids.shellybean_candy":                        "Shellybean Candy",
+
+  "entity.reactivefluids.newtgat":                               "Newtgat",
+  "item.reactivefluids.newtgat_spawn_egg":                       "Newtgat Spawn Egg",
+  "item.reactivefluids.newtgat_candy":                           "Newtgat Candy",
+
+  "entity.reactivefluids.lickatoad":                             "Lickatoad",
+  "item.reactivefluids.lickatoad_spawn_egg":                     "Lickatoad Spawn Egg",
+  "item.reactivefluids.lickatoad_candy":                         "Lickatoad Candy",
+
+  "entity.reactivefluids.pretztail":                             "Pretztail",
+  "item.reactivefluids.pretztail_spawn_egg":                     "Pretztail Spawn Egg",
+  "item.reactivefluids.pretztail_candy":                         "Pretztail Candy",
+
+  "entity.reactivefluids.buzzlegum":                             "Buzzlegum",
+  "item.reactivefluids.buzzlegum_spawn_egg":                     "Buzzlegum Spawn Egg",
+  "item.reactivefluids.buzzlegum_candy":                         "Buzzlegum Candy",
+
+  "entity.reactivefluids.cluckles":                              "Cluckles",
+  "item.reactivefluids.cluckles_spawn_egg":                      "Cluckles Spawn Egg",
+  "item.reactivefluids.cluckles_candy":                          "Cluckles Candy",
+
+  "entity.reactivefluids.horstachio":                            "Horstachio",
+  "item.reactivefluids.horstachio_spawn_egg":                    "Horstachio Spawn Egg",
+  "item.reactivefluids.horstachio_candy":                        "Horstachio Candy"
 }

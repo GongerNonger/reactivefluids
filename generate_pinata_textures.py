@@ -416,6 +416,69 @@ SPECIES = {
         "dark": (140, 80, 20, 255),     # Dark toffee
         "accent": (220, 180, 100, 255), # Amber stripe
     },
+    "bunnycomb": {
+        "w": 32, "h": 32,
+        "main": (232, 200, 80, 255),    # Warm honeycomb yellow
+        "light": (250, 230, 140, 255),  # Light yellow
+        "dark": (180, 140, 40, 255),    # Dark honey
+        "accent": (240, 160, 48, 255),  # Orange accent
+    },
+    "quackberry": {
+        "w": 32, "h": 32,
+        "main": (64, 96, 208, 255),     # Blueberry blue
+        "light": (120, 150, 230, 255),  # Light blue
+        "dark": (40, 60, 150, 255),     # Dark blue
+        "accent": (128, 96, 192, 255),  # Purple accent
+    },
+    "shellybean": {
+        "w": 32, "h": 16,
+        "main": (144, 216, 160, 255),   # Pastel green
+        "light": (200, 240, 210, 255),  # Light mint
+        "dark": (90, 160, 110, 255),    # Darker green
+        "accent": (240, 192, 208, 255), # Pastel pink (jellybean)
+    },
+    "newtgat": {
+        "w": 32, "h": 16,
+        "main": (192, 128, 64, 255),    # Nougat brown-orange
+        "light": (224, 176, 96, 255),   # Light nougat
+        "dark": (140, 90, 40, 255),     # Dark nougat
+        "accent": (200, 100, 40, 255),  # Orange spot
+    },
+    "lickatoad": {
+        "w": 32, "h": 16,
+        "main": (64, 192, 64, 255),     # Lollipop green
+        "light": (128, 224, 96, 255),   # Light green
+        "dark": (32, 128, 32, 255),     # Dark green
+        "accent": (200, 230, 80, 255),  # Yellow-green spot
+    },
+    "pretztail": {
+        "w": 32, "h": 32,
+        "main": (208, 96, 32, 255),     # Pretzel orange-red
+        "light": (240, 160, 80, 255),   # Light orange
+        "dark": (139, 69, 19, 255),     # Saddle brown
+        "accent": (180, 120, 60, 255),  # Pretzel brown stripe
+    },
+    "buzzlegum": {
+        "w": 32, "h": 32,
+        "main": (240, 208, 64, 255),    # Bubblegum yellow
+        "light": (255, 240, 120, 255),  # Light yellow
+        "dark": (32, 32, 32, 255),      # Black stripes
+        "accent": (255, 180, 200, 255), # Bubblegum pink
+    },
+    "cluckles": {
+        "w": 32, "h": 32,
+        "main": (208, 160, 112, 255),   # Cookie brown
+        "light": (232, 200, 160, 255),  # Light cookie
+        "dark": (140, 100, 60, 255),    # Dark choc chip
+        "accent": (192, 48, 32, 255),   # Red comb
+    },
+    "horstachio": {
+        "w": 64, "h": 32,
+        "main": (128, 176, 96, 255),    # Pistachio green
+        "light": (200, 224, 160, 255),  # Light pistachio
+        "dark": (80, 120, 56, 255),     # Dark green
+        "accent": (216, 200, 160, 255), # Cream/tan accent
+    },
 }
 
 if __name__ == "__main__":

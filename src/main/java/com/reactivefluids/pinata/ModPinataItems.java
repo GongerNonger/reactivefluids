@@ -86,4 +86,87 @@ public class ModPinataItems {
     public static final DeferredHolder<Item, Item> TAFFLY_CANDY =
             ITEMS.register("taffly_candy", () ->
                     new Item(new Item.Properties().food(candyFood(2, 0.3F))));
+
+    // === Batch 3: Spawn Eggs ===
+    public static final DeferredHolder<Item, DeferredSpawnEggItem> BUNNYCOMB_SPAWN_EGG =
+            ITEMS.register("bunnycomb_spawn_egg", () ->
+                    new DeferredSpawnEggItem(ModPinataEntities.BUNNYCOMB,
+                            0xE8C850, 0xF0A030, new Item.Properties()));
+
+    public static final DeferredHolder<Item, DeferredSpawnEggItem> QUACKBERRY_SPAWN_EGG =
+            ITEMS.register("quackberry_spawn_egg", () ->
+                    new DeferredSpawnEggItem(ModPinataEntities.QUACKBERRY,
+                            0x4060D0, 0x8060C0, new Item.Properties()));
+
+    public static final DeferredHolder<Item, DeferredSpawnEggItem> SHELLYBEAN_SPAWN_EGG =
+            ITEMS.register("shellybean_spawn_egg", () ->
+                    new DeferredSpawnEggItem(ModPinataEntities.SHELLYBEAN,
+                            0x90D8A0, 0xF0C0D0, new Item.Properties()));
+
+    public static final DeferredHolder<Item, DeferredSpawnEggItem> NEWTGAT_SPAWN_EGG =
+            ITEMS.register("newtgat_spawn_egg", () ->
+                    new DeferredSpawnEggItem(ModPinataEntities.NEWTGAT,
+                            0xC08040, 0xE0A060, new Item.Properties()));
+
+    public static final DeferredHolder<Item, DeferredSpawnEggItem> LICKATOAD_SPAWN_EGG =
+            ITEMS.register("lickatoad_spawn_egg", () ->
+                    new DeferredSpawnEggItem(ModPinataEntities.LICKATOAD,
+                            0x40C040, 0x80E060, new Item.Properties()));
+
+    public static final DeferredHolder<Item, DeferredSpawnEggItem> PRETZTAIL_SPAWN_EGG =
+            ITEMS.register("pretztail_spawn_egg", () ->
+                    new DeferredSpawnEggItem(ModPinataEntities.PRETZTAIL,
+                            0xD06020, 0x8B4513, new Item.Properties()));
+
+    public static final DeferredHolder<Item, DeferredSpawnEggItem> BUZZLEGUM_SPAWN_EGG =
+            ITEMS.register("buzzlegum_spawn_egg", () ->
+                    new DeferredSpawnEggItem(ModPinataEntities.BUZZLEGUM,
+                            0xF0D040, 0x202020, new Item.Properties()));
+
+    public static final DeferredHolder<Item, DeferredSpawnEggItem> CLUCKLES_SPAWN_EGG =
+            ITEMS.register("cluckles_spawn_egg", () ->
+                    new DeferredSpawnEggItem(ModPinataEntities.CLUCKLES,
+                            0xD0A070, 0xC03020, new Item.Properties()));
+
+    public static final DeferredHolder<Item, DeferredSpawnEggItem> HORSTACHIO_SPAWN_EGG =
+            ITEMS.register("horstachio_spawn_egg", () ->
+                    new DeferredSpawnEggItem(ModPinataEntities.HORSTACHIO,
+                            0x80B060, 0xC8E0A0, new Item.Properties()));
+
+    // === Batch 3: Candy ===
+    public static final DeferredHolder<Item, Item> BUNNYCOMB_CANDY =
+            ITEMS.register("bunnycomb_candy", () ->
+                    new Item(new Item.Properties().food(candyFood(4, 0.5F))));
+
+    public static final DeferredHolder<Item, Item> QUACKBERRY_CANDY =
+            ITEMS.register("quackberry_candy", () ->
+                    new Item(new Item.Properties().food(candyFood(4, 0.4F))));
+
+    public static final DeferredHolder<Item, Item> SHELLYBEAN_CANDY =
+            ITEMS.register("shellybean_candy", () ->
+                    new Item(new Item.Properties().food(candyFood(3, 0.4F))));
+
+    public static final DeferredHolder<Item, Item> NEWTGAT_CANDY =
+            ITEMS.register("newtgat_candy", () ->
+                    new Item(new Item.Properties().food(candyFood(3, 0.4F))));
+
+    public static final DeferredHolder<Item, Item> LICKATOAD_CANDY =
+            ITEMS.register("lickatoad_candy", () ->
+                    new Item(new Item.Properties().food(candyFood(4, 0.5F))));
+
+    public static final DeferredHolder<Item, Item> PRETZTAIL_CANDY =
+            ITEMS.register("pretztail_candy", () ->
+                    new Item(new Item.Properties().food(candyFood(5, 0.6F))));
+
+    public static final DeferredHolder<Item, Item> BUZZLEGUM_CANDY =
+            ITEMS.register("buzzlegum_candy", () ->
+                    new Item(new Item.Properties().food(candyFood(4, 0.5F))));
+
+    public static final DeferredHolder<Item, Item> CLUCKLES_CANDY =
+            ITEMS.register("cluckles_candy", () ->
+                    new Item(new Item.Properties().food(candyFood(3, 0.4F))));
+
+    public static final DeferredHolder<Item, Item> HORSTACHIO_CANDY =
+            ITEMS.register("horstachio_candy", () ->
+                    new Item(new Item.Properties().food(candyFood(6, 0.7F))));
 }

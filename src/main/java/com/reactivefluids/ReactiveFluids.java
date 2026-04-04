@@ -105,6 +105,24 @@ public class ReactiveFluids {
                 SyrupentEntity.createAttributes().build());
         event.put(ModPinataEntities.TAFFLY.get(),
                 TafflyEntity.createAttributes().build());
+        event.put(ModPinataEntities.BUNNYCOMB.get(),
+                BunnycombEntity.createAttributes().build());
+        event.put(ModPinataEntities.QUACKBERRY.get(),
+                QuackberryEntity.createAttributes().build());
+        event.put(ModPinataEntities.SHELLYBEAN.get(),
+                ShellybeanEntity.createAttributes().build());
+        event.put(ModPinataEntities.NEWTGAT.get(),
+                NewtgatEntity.createAttributes().build());
+        event.put(ModPinataEntities.LICKATOAD.get(),
+                LickatoadEntity.createAttributes().build());
+        event.put(ModPinataEntities.PRETZTAIL.get(),
+                PretztailEntity.createAttributes().build());
+        event.put(ModPinataEntities.BUZZLEGUM.get(),
+                BuzzlegumEntity.createAttributes().build());
+        event.put(ModPinataEntities.CLUCKLES.get(),
+                ClucklesEntity.createAttributes().build());
+        event.put(ModPinataEntities.HORSTACHIO.get(),
+                HorstachioEntity.createAttributes().build());
     }
 
     private void onServerTick(ServerTickEvent.Post event) {
