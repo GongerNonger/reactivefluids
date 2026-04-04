@@ -2,6 +2,7 @@ package com.reactivefluids.pinata;
 
 import com.reactivefluids.pinata.ai.AttractedToBlockGoal;
 import com.reactivefluids.pinata.ai.EatItemEntityGoal;
+import com.reactivefluids.pinata.ai.SpeciesConflictGoal;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.EntityType;
@@ -70,9 +71,9 @@ public class NewtgatEntity extends BasePinataEntity {
 
     @Override
     protected void registerPinataGoals() {
-        // Conflicts with Lickatoad
-        goalSelector.addGoal(2, new AvoidEntityGoal<>(this,
-                LickatoadEntity.class, 8.0F, 1.2, 1.4));
+        // Conflicts with Lickatoad — they fight when near
+        goalSelector.addGoal(2, new SpeciesConflictGoal(this,
+                () -> ModPinataEntities.LICKATOAD.get(), 8.0));
         // Attracted to water (semi-aquatic)
         goalSelector.addGoal(3, new AttractedToBlockGoal(this,
                 () -> Blocks.WATER, 0.9, 16));

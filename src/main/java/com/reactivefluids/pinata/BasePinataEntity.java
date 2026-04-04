@@ -209,6 +209,25 @@ public abstract class BasePinataEntity extends Animal {
 
         // Feeding logic
         if (!stack.isEmpty() && !level().isClientSide()) {
+            // Check evolution first
+            var evolvedType = PinataEvolution.checkEvolution(this, stack);
+            if (evolvedType != null) {
+                consumeItem(player, hand, stack);
+                PinataEvolution.evolve(this, evolvedType);
+                return InteractionResult.SUCCESS;
+            }
+
+            // Check sour taming (feeding taming item to sour piñata)
+            if (isSour() && isMatchingFood(stack, getResidentFoods())) {
+                consumeItem(player, hand, stack);
+                setSour(false);
+                setLifecycle(LIFECYCLE_RESIDENT);
+                setHappiness(60);
+                spawnHappyParticles();
+                playSound(net.minecraft.sounds.SoundEvents.PLAYER_LEVELUP, 1.0F, 1.2F);
+                return InteractionResult.SUCCESS;
+            }
+
             // Check visit foods
             if (isWild() && isMatchingFood(stack, getVisitFoods())) {
                 consumeItem(player, hand, stack);
