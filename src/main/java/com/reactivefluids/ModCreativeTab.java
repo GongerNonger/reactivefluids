@@ -147,6 +147,36 @@ public class ModCreativeTab {
                     output.accept(ModPinataItems.BADGESICLE_SPAWN_EGG.get());
                     output.accept(ModPinataItems.HOOTYFRUITY_SPAWN_EGG.get());
                     output.accept(ModPinataItems.DRAGUMFLY_SPAWN_EGG.get());
+                    // Batches 7-9 spawn eggs
+                    output.accept(ModPinataItems.CANDARY_SPAWN_EGG.get());
+                    output.accept(ModPinataItems.PARMADILLO_SPAWN_EGG.get());
+                    output.accept(ModPinataItems.ZUMBUG_SPAWN_EGG.get());
+                    output.accept(ModPinataItems.PIEENA_SPAWN_EGG.get());
+                    output.accept(ModPinataItems.JUICYGOOSE_SPAWN_EGG.get());
+                    output.accept(ModPinataItems.SALAMANGO_SPAWN_EGG.get());
+                    output.accept(ModPinataItems.REDDHOTT_SPAWN_EGG.get());
+                    output.accept(ModPinataItems.CHOCSTRICH_SPAWN_EGG.get());
+                    output.accept(ModPinataItems.MOOJOO_SPAWN_EGG.get());
+                    output.accept(ModPinataItems.CINNAMONKEY_SPAWN_EGG.get());
+                    output.accept(ModPinataItems.SARSGORILLA_SPAWN_EGG.get());
+                    output.accept(ModPinataItems.CAMELLO_SPAWN_EGG.get());
+                    output.accept(ModPinataItems.PENGUM_SPAWN_EGG.get());
+                    output.accept(ModPinataItems.WALRUSK_SPAWN_EGG.get());
+                    output.accept(ModPinataItems.POLOLLYBEAR_SPAWN_EGG.get());
+                    output.accept(ModPinataItems.FIZZLYBEAR_SPAWN_EGG.get());
+                    output.accept(ModPinataItems.LIMEOCEROS_SPAWN_EGG.get());
+                    output.accept(ModPinataItems.PIGXIE_SPAWN_EGG.get());
+                    output.accept(ModPinataItems.FOURHEADS_SPAWN_EGG.get());
+                    output.accept(ModPinataItems.TWINGERSNAP_SPAWN_EGG.get());
+                    output.accept(ModPinataItems.CHOCLODOCUS_SPAWN_EGG.get());
+                    output.accept(ModPinataItems.JAMELEON_SPAWN_EGG.get());
+                    output.accept(ModPinataItems.GECKIE_SPAWN_EGG.get());
+                    output.accept(ModPinataItems.JELI_SPAWN_EGG.get());
+                    output.accept(ModPinataItems.CUSTACEAN_SPAWN_EGG.get());
+                    output.accept(ModPinataItems.MOTHDROP_SPAWN_EGG.get());
+                    output.accept(ModPinataItems.SWEETLE_SPAWN_EGG.get());
+                    output.accept(ModPinataItems.RAISANT_SPAWN_EGG.get());
+                    output.accept(ModPinataItems.CHERRAPIN_SPAWN_EGG.get());
                     // --- Viva Piñata: Candy ---
                     output.accept(ModPinataItems.WHIRLM_CANDY.get());
                     output.accept(ModPinataItems.SPARROWMINT_CANDY.get());
@@ -183,6 +213,36 @@ public class ModCreativeTab {
                     output.accept(ModPinataItems.BADGESICLE_CANDY.get());
                     output.accept(ModPinataItems.HOOTYFRUITY_CANDY.get());
                     output.accept(ModPinataItems.DRAGUMFLY_CANDY.get());
+                    // Batches 7-9 candy
+                    output.accept(ModPinataItems.CANDARY_CANDY.get());
+                    output.accept(ModPinataItems.PARMADILLO_CANDY.get());
+                    output.accept(ModPinataItems.ZUMBUG_CANDY.get());
+                    output.accept(ModPinataItems.PIEENA_CANDY.get());
+                    output.accept(ModPinataItems.JUICYGOOSE_CANDY.get());
+                    output.accept(ModPinataItems.SALAMANGO_CANDY.get());
+                    output.accept(ModPinataItems.REDDHOTT_CANDY.get());
+                    output.accept(ModPinataItems.CHOCSTRICH_CANDY.get());
+                    output.accept(ModPinataItems.MOOJOO_CANDY.get());
+                    output.accept(ModPinataItems.CINNAMONKEY_CANDY.get());
+                    output.accept(ModPinataItems.SARSGORILLA_CANDY.get());
+                    output.accept(ModPinataItems.CAMELLO_CANDY.get());
+                    output.accept(ModPinataItems.PENGUM_CANDY.get());
+                    output.accept(ModPinataItems.WALRUSK_CANDY.get());
+                    output.accept(ModPinataItems.POLOLLYBEAR_CANDY.get());
+                    output.accept(ModPinataItems.FIZZLYBEAR_CANDY.get());
+                    output.accept(ModPinataItems.LIMEOCEROS_CANDY.get());
+                    output.accept(ModPinataItems.PIGXIE_CANDY.get());
+                    output.accept(ModPinataItems.FOURHEADS_CANDY.get());
+                    output.accept(ModPinataItems.TWINGERSNAP_CANDY.get());
+                    output.accept(ModPinataItems.CHOCLODOCUS_CANDY.get());
+                    output.accept(ModPinataItems.JAMELEON_CANDY.get());
+                    output.accept(ModPinataItems.GECKIE_CANDY.get());
+                    output.accept(ModPinataItems.JELI_CANDY.get());
+                    output.accept(ModPinataItems.CUSTACEAN_CANDY.get());
+                    output.accept(ModPinataItems.MOTHDROP_CANDY.get());
+                    output.accept(ModPinataItems.SWEETLE_CANDY.get());
+                    output.accept(ModPinataItems.RAISANT_CANDY.get());
+                    output.accept(ModPinataItems.CHERRAPIN_CANDY.get());
                 })
                 .build()
         );

@@ -136,6 +136,36 @@ public class ReactiveFluids {
                 DoenutEntity.createAttributes().build());
         event.put(ModPinataEntities.SEEDOS.get(),
                 SeedosEntity.createAttributes().build());
+        // Batches 7-9
+        event.put(ModPinataEntities.CANDARY.get(), CandaryEntity.createAttributes().build());
+        event.put(ModPinataEntities.PARMADILLO.get(), ParmadilloEntity.createAttributes().build());
+        event.put(ModPinataEntities.ZUMBUG.get(), ZumbugEntity.createAttributes().build());
+        event.put(ModPinataEntities.PIEENA.get(), PieenaEntity.createAttributes().build());
+        event.put(ModPinataEntities.JUICYGOOSE.get(), JuicygooseEntity.createAttributes().build());
+        event.put(ModPinataEntities.SALAMANGO.get(), SalamangoEntity.createAttributes().build());
+        event.put(ModPinataEntities.REDDHOTT.get(), ReddhottEntity.createAttributes().build());
+        event.put(ModPinataEntities.CHOCSTRICH.get(), ChocstrichEntity.createAttributes().build());
+        event.put(ModPinataEntities.MOOJOO.get(), MoojooEntity.createAttributes().build());
+        event.put(ModPinataEntities.CINNAMONKEY.get(), CinnamonkeyEntity.createAttributes().build());
+        event.put(ModPinataEntities.SARSGORILLA.get(), SarsgorillaEntity.createAttributes().build());
+        event.put(ModPinataEntities.CAMELLO.get(), CamelloEntity.createAttributes().build());
+        event.put(ModPinataEntities.PENGUM.get(), PengumEntity.createAttributes().build());
+        event.put(ModPinataEntities.WALRUSK.get(), WalruskEntity.createAttributes().build());
+        event.put(ModPinataEntities.POLOLLYBEAR.get(), PolollybearEntity.createAttributes().build());
+        event.put(ModPinataEntities.FIZZLYBEAR.get(), FizzlybearEntity.createAttributes().build());
+        event.put(ModPinataEntities.LIMEOCEROS.get(), LimeocerosEntity.createAttributes().build());
+        event.put(ModPinataEntities.PIGXIE.get(), PigxieEntity.createAttributes().build());
+        event.put(ModPinataEntities.FOURHEADS.get(), FourheadsEntity.createAttributes().build());
+        event.put(ModPinataEntities.TWINGERSNAP.get(), TwingersnapEntity.createAttributes().build());
+        event.put(ModPinataEntities.CHOCLODOCUS.get(), ChoclodocusEntity.createAttributes().build());
+        event.put(ModPinataEntities.JAMELEON.get(), JameleonEntity.createAttributes().build());
+        event.put(ModPinataEntities.GECKIE.get(), GeckieEntity.createAttributes().build());
+        event.put(ModPinataEntities.JELI.get(), JeliEntity.createAttributes().build());
+        event.put(ModPinataEntities.CUSTACEAN.get(), CustaceanEntity.createAttributes().build());
+        event.put(ModPinataEntities.MOTHDROP.get(), MothdropEntity.createAttributes().build());
+        event.put(ModPinataEntities.SWEETLE.get(), SweetleEntity.createAttributes().build());
+        event.put(ModPinataEntities.RAISANT.get(), RaisantEntity.createAttributes().build());
+        event.put(ModPinataEntities.CHERRAPIN.get(), CherrapinEntity.createAttributes().build());
         // Batch 6
         event.put(ModPinataEntities.ELEPHANILLA.get(), ElephanillaEntity.createAttributes().build());
         event.put(ModPinataEntities.CHEWNICORN.get(), ChewnicornEntity.createAttributes().build());

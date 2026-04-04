@@ -148,6 +148,95 @@ public class ModPinataEntities {
                     EntityType.Builder.<DoenutEntity>of(DoenutEntity::new, MobCategory.CREATURE)
                             .sized(0.8F, 1.0F).clientTrackingRange(10).build("doenut"));
 
+    // === Batches 7-9: 29 species ===
+    public static final DeferredHolder<EntityType<?>, EntityType<CandaryEntity>> CANDARY =
+            ENTITY_TYPES.register("candary", () -> EntityType.Builder.<CandaryEntity>of(CandaryEntity::new, MobCategory.CREATURE)
+                    .sized(0.45F, 0.5F).clientTrackingRange(10).build("candary"));
+    public static final DeferredHolder<EntityType<?>, EntityType<ParmadilloEntity>> PARMADILLO =
+            ENTITY_TYPES.register("parmadillo", () -> EntityType.Builder.<ParmadilloEntity>of(ParmadilloEntity::new, MobCategory.CREATURE)
+                    .sized(0.6F, 0.4F).clientTrackingRange(10).build("parmadillo"));
+    public static final DeferredHolder<EntityType<?>, EntityType<ZumbugEntity>> ZUMBUG =
+            ENTITY_TYPES.register("zumbug", () -> EntityType.Builder.<ZumbugEntity>of(ZumbugEntity::new, MobCategory.CREATURE)
+                    .sized(1.3F, 1.5F).clientTrackingRange(10).build("zumbug"));
+    public static final DeferredHolder<EntityType<?>, EntityType<PieenaEntity>> PIEENA =
+            ENTITY_TYPES.register("pieena", () -> EntityType.Builder.<PieenaEntity>of(PieenaEntity::new, MobCategory.CREATURE)
+                    .sized(0.7F, 0.7F).clientTrackingRange(10).build("pieena"));
+    public static final DeferredHolder<EntityType<?>, EntityType<JuicygooseEntity>> JUICYGOOSE =
+            ENTITY_TYPES.register("juicygoose", () -> EntityType.Builder.<JuicygooseEntity>of(JuicygooseEntity::new, MobCategory.CREATURE)
+                    .sized(0.65F, 0.75F).clientTrackingRange(10).build("juicygoose"));
+    public static final DeferredHolder<EntityType<?>, EntityType<SalamangoEntity>> SALAMANGO =
+            ENTITY_TYPES.register("salamango", () -> EntityType.Builder.<SalamangoEntity>of(SalamangoEntity::new, MobCategory.CREATURE)
+                    .sized(0.5F, 0.3F).clientTrackingRange(10).build("salamango"));
+    public static final DeferredHolder<EntityType<?>, EntityType<ReddhottEntity>> REDDHOTT =
+            ENTITY_TYPES.register("reddhott", () -> EntityType.Builder.<ReddhottEntity>of(ReddhottEntity::new, MobCategory.CREATURE)
+                    .sized(0.3F, 0.3F).clientTrackingRange(10).build("reddhott"));
+    public static final DeferredHolder<EntityType<?>, EntityType<ChocstrichEntity>> CHOCSTRICH =
+            ENTITY_TYPES.register("chocstrich", () -> EntityType.Builder.<ChocstrichEntity>of(ChocstrichEntity::new, MobCategory.CREATURE)
+                    .sized(0.6F, 1.0F).clientTrackingRange(10).build("chocstrich"));
+    public static final DeferredHolder<EntityType<?>, EntityType<MoojooEntity>> MOOJOO =
+            ENTITY_TYPES.register("moojoo", () -> EntityType.Builder.<MoojooEntity>of(MoojooEntity::new, MobCategory.CREATURE)
+                    .sized(0.8F, 0.7F).clientTrackingRange(10).build("moojoo"));
+    public static final DeferredHolder<EntityType<?>, EntityType<CinnamonkeyEntity>> CINNAMONKEY =
+            ENTITY_TYPES.register("cinnamonkey", () -> EntityType.Builder.<CinnamonkeyEntity>of(CinnamonkeyEntity::new, MobCategory.CREATURE)
+                    .sized(0.5F, 0.6F).clientTrackingRange(10).build("cinnamonkey"));
+    public static final DeferredHolder<EntityType<?>, EntityType<SarsgorillaEntity>> SARSGORILLA =
+            ENTITY_TYPES.register("sarsgorilla", () -> EntityType.Builder.<SarsgorillaEntity>of(SarsgorillaEntity::new, MobCategory.CREATURE)
+                    .sized(1.0F, 1.0F).clientTrackingRange(10).build("sarsgorilla"));
+    public static final DeferredHolder<EntityType<?>, EntityType<CamelloEntity>> CAMELLO =
+            ENTITY_TYPES.register("camello", () -> EntityType.Builder.<CamelloEntity>of(CamelloEntity::new, MobCategory.CREATURE)
+                    .sized(1.2F, 1.5F).clientTrackingRange(10).build("camello"));
+    public static final DeferredHolder<EntityType<?>, EntityType<PengumEntity>> PENGUM =
+            ENTITY_TYPES.register("pengum", () -> EntityType.Builder.<PengumEntity>of(PengumEntity::new, MobCategory.CREATURE)
+                    .sized(0.45F, 0.6F).clientTrackingRange(10).build("pengum"));
+    public static final DeferredHolder<EntityType<?>, EntityType<WalruskEntity>> WALRUSK =
+            ENTITY_TYPES.register("walrusk", () -> EntityType.Builder.<WalruskEntity>of(WalruskEntity::new, MobCategory.CREATURE)
+                    .sized(0.9F, 0.7F).clientTrackingRange(10).build("walrusk"));
+    public static final DeferredHolder<EntityType<?>, EntityType<PolollybearEntity>> POLOLLYBEAR =
+            ENTITY_TYPES.register("polollybear", () -> EntityType.Builder.<PolollybearEntity>of(PolollybearEntity::new, MobCategory.CREATURE)
+                    .sized(1.0F, 0.9F).clientTrackingRange(10).build("polollybear"));
+    public static final DeferredHolder<EntityType<?>, EntityType<FizzlybearEntity>> FIZZLYBEAR =
+            ENTITY_TYPES.register("fizzlybear", () -> EntityType.Builder.<FizzlybearEntity>of(FizzlybearEntity::new, MobCategory.CREATURE)
+                    .sized(0.9F, 0.85F).clientTrackingRange(10).build("fizzlybear"));
+    public static final DeferredHolder<EntityType<?>, EntityType<LimeocerosEntity>> LIMEOCEROS =
+            ENTITY_TYPES.register("limeoceros", () -> EntityType.Builder.<LimeocerosEntity>of(LimeocerosEntity::new, MobCategory.CREATURE)
+                    .sized(1.2F, 0.9F).clientTrackingRange(10).build("limeoceros"));
+    public static final DeferredHolder<EntityType<?>, EntityType<PigxieEntity>> PIGXIE =
+            ENTITY_TYPES.register("pigxie", () -> EntityType.Builder.<PigxieEntity>of(PigxieEntity::new, MobCategory.CREATURE)
+                    .sized(0.5F, 0.5F).clientTrackingRange(10).build("pigxie"));
+    public static final DeferredHolder<EntityType<?>, EntityType<FourheadsEntity>> FOURHEADS =
+            ENTITY_TYPES.register("fourheads", () -> EntityType.Builder.<FourheadsEntity>of(FourheadsEntity::new, MobCategory.CREATURE)
+                    .sized(1.0F, 1.0F).clientTrackingRange(10).build("fourheads"));
+    public static final DeferredHolder<EntityType<?>, EntityType<TwingersnapEntity>> TWINGERSNAP =
+            ENTITY_TYPES.register("twingersnap", () -> EntityType.Builder.<TwingersnapEntity>of(TwingersnapEntity::new, MobCategory.CREATURE)
+                    .sized(0.6F, 0.5F).clientTrackingRange(10).build("twingersnap"));
+    public static final DeferredHolder<EntityType<?>, EntityType<ChoclodocusEntity>> CHOCLODOCUS =
+            ENTITY_TYPES.register("choclodocus", () -> EntityType.Builder.<ChoclodocusEntity>of(ChoclodocusEntity::new, MobCategory.CREATURE)
+                    .sized(1.8F, 2.0F).clientTrackingRange(10).build("choclodocus"));
+    public static final DeferredHolder<EntityType<?>, EntityType<JameleonEntity>> JAMELEON =
+            ENTITY_TYPES.register("jameleon", () -> EntityType.Builder.<JameleonEntity>of(JameleonEntity::new, MobCategory.CREATURE)
+                    .sized(0.5F, 0.3F).clientTrackingRange(10).build("jameleon"));
+    public static final DeferredHolder<EntityType<?>, EntityType<GeckieEntity>> GECKIE =
+            ENTITY_TYPES.register("geckie", () -> EntityType.Builder.<GeckieEntity>of(GeckieEntity::new, MobCategory.CREATURE)
+                    .sized(0.4F, 0.25F).clientTrackingRange(10).build("geckie"));
+    public static final DeferredHolder<EntityType<?>, EntityType<JeliEntity>> JELI =
+            ENTITY_TYPES.register("jeli", () -> EntityType.Builder.<JeliEntity>of(JeliEntity::new, MobCategory.CREATURE)
+                    .sized(0.5F, 0.6F).clientTrackingRange(10).build("jeli"));
+    public static final DeferredHolder<EntityType<?>, EntityType<CustaceanEntity>> CUSTACEAN =
+            ENTITY_TYPES.register("custacean", () -> EntityType.Builder.<CustaceanEntity>of(CustaceanEntity::new, MobCategory.CREATURE)
+                    .sized(0.5F, 0.35F).clientTrackingRange(10).build("custacean"));
+    public static final DeferredHolder<EntityType<?>, EntityType<MothdropEntity>> MOTHDROP =
+            ENTITY_TYPES.register("mothdrop", () -> EntityType.Builder.<MothdropEntity>of(MothdropEntity::new, MobCategory.CREATURE)
+                    .sized(0.35F, 0.3F).clientTrackingRange(10).build("mothdrop"));
+    public static final DeferredHolder<EntityType<?>, EntityType<SweetleEntity>> SWEETLE =
+            ENTITY_TYPES.register("sweetle", () -> EntityType.Builder.<SweetleEntity>of(SweetleEntity::new, MobCategory.CREATURE)
+                    .sized(0.4F, 0.3F).clientTrackingRange(10).build("sweetle"));
+    public static final DeferredHolder<EntityType<?>, EntityType<RaisantEntity>> RAISANT =
+            ENTITY_TYPES.register("raisant", () -> EntityType.Builder.<RaisantEntity>of(RaisantEntity::new, MobCategory.CREATURE)
+                    .sized(0.25F, 0.2F).clientTrackingRange(10).build("raisant"));
+    public static final DeferredHolder<EntityType<?>, EntityType<CherrapinEntity>> CHERRAPIN =
+            ENTITY_TYPES.register("cherrapin", () -> EntityType.Builder.<CherrapinEntity>of(CherrapinEntity::new, MobCategory.CREATURE)
+                    .sized(0.6F, 0.4F).clientTrackingRange(10).build("cherrapin"));
+
     // === NPCs ===
     public static final DeferredHolder<EntityType<?>, EntityType<SeedosEntity>> SEEDOS =
             ENTITY_TYPES.register("seedos", () ->
