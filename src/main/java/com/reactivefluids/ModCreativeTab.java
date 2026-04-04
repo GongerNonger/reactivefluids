@@ -97,6 +97,8 @@ public class ModCreativeTab {
                     output.accept(ModItems.RAISE_DEAD_SCROLL.get());         // 3rd level
                     // Undead crafting blocks
                     output.accept(ModItems.ROTTEN_FLESH_BLOCK_ITEM.get());
+                    // Mobs
+                    output.accept(ModItems.MOONLIGHT_JELLYFISH_SPAWN_EGG.get());
                 })
                 .build()
         );

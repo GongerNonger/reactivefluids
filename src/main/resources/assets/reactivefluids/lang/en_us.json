@@ -169,5 +169,8 @@
   "message.reactivefluids.raise_dead_fail":                      "Must target two stacked rotten flesh blocks or bone blocks!",
   "block.reactivefluids.rotten_flesh_block":                     "Rotten Flesh Block",
   "entity.reactivefluids.raised_zombie":                         "Raised Zombie",
-  "entity.reactivefluids.raised_skeleton":                       "Raised Skeleton"
+  "entity.reactivefluids.raised_skeleton":                       "Raised Skeleton",
+
+  "entity.reactivefluids.moonlight_jellyfish":                   "Moonlight Jellyfish",
+  "item.reactivefluids.moonlight_jellyfish_spawn_egg":           "Moonlight Jellyfish Spawn Egg"
 }

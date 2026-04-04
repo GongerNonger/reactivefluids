@@ -28,6 +28,13 @@ public class ClientEvents {
         event.registerEntityRenderer(ModEntities.METEOR.get(), MeteorRenderer::new);
         event.registerEntityRenderer(ModEntities.RAISED_ZOMBIE.get(), RaisedZombieRenderer::new);
         event.registerEntityRenderer(ModEntities.RAISED_SKELETON.get(), RaisedSkeletonRenderer::new);
+        event.registerEntityRenderer(ModEntities.MOONLIGHT_JELLYFISH.get(), MoonlightJellyfishRenderer::new);
+    }
+
+    @SubscribeEvent
+    public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
+        event.registerLayerDefinition(MoonlightJellyfishModel.LAYER_LOCATION,
+                MoonlightJellyfishModel::createBodyLayer);
     }
 
     @SubscribeEvent

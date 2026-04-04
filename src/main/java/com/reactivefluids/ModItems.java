@@ -4,6 +4,7 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.neoforged.neoforge.common.DeferredSpawnEggItem;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -302,4 +303,14 @@ public class ModItems {
 
     public static final DeferredItem<RaiseDeadScrollItem> RAISE_DEAD_SCROLL =
         ITEMS.register("raise_dead_scroll", () -> new RaiseDeadScrollItem(new Item.Properties().stacksTo(1)));
+
+    // =========================================================================
+    // Moonlight Jellyfish Spawn Egg
+    // =========================================================================
+    public static final DeferredItem<DeferredSpawnEggItem> MOONLIGHT_JELLYFISH_SPAWN_EGG =
+        ITEMS.register("moonlight_jellyfish_spawn_egg", () ->
+            new DeferredSpawnEggItem(ModEntities.MOONLIGHT_JELLYFISH,
+                0x142850, // dark ocean blue base
+                0x64DCFF, // glowing cyan spots
+                new Item.Properties()));
 }

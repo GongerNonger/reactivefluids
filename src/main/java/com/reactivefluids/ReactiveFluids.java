@@ -84,6 +84,8 @@ public class ReactiveFluids {
                 RaisedZombieEntity.createAttributes().build());
         event.put(ModEntities.RAISED_SKELETON.get(),
                 RaisedSkeletonEntity.createAttributes().build());
+        event.put(ModEntities.MOONLIGHT_JELLYFISH.get(),
+                MoonlightJellyfishEntity.createAttributes().build());
     }
 
     private void onServerTick(ServerTickEvent.Post event) {
