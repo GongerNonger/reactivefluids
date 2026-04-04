@@ -216,5 +216,23 @@
   "item.reactivefluids.grass_packet":                            "Grass Surface Packet",
   "item.reactivefluids.long_grass_packet":                       "Long Grass Surface Packet",
   "item.reactivefluids.sand_packet":                             "Sand Surface Packet",
-  "item.reactivefluids.snow_packet":                             "Snow Surface Packet"
+  "item.reactivefluids.snow_packet":                             "Snow Surface Packet",
+
+  "item.reactivefluids.chocolate_coin":                          "Chocolate Coin",
+  "item.reactivefluids.top_hat":                                 "Top Hat",
+  "item.reactivefluids.crown":                                   "Crown",
+  "item.reactivefluids.halo_of_hardness":                        "Halo of Hardness",
+  "item.reactivefluids.keeper_hat":                              "Keeper Hat",
+  "item.reactivefluids.running_shoes":                           "Running Shoes",
+  "item.reactivefluids.bow_tie":                                 "Bow Tie",
+
+  "block.reactivefluids.honey_hive":                             "Honey Hive",
+  "item.reactivefluids.honey_hive":                              "Honey Hive",
+  "block.reactivefluids.milking_shed":                           "Milking Shed",
+  "item.reactivefluids.milking_shed":                            "Milking Shed",
+  "block.reactivefluids.shearing_shed":                          "Shearing Shed",
+  "item.reactivefluids.shearing_shed":                           "Shearing Shed",
+
+  "entity.reactivefluids.seedos":                                "Seedos",
+  "item.reactivefluids.seedos_spawn_egg":                        "Seedos Spawn Egg"
 }

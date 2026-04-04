@@ -64,6 +64,9 @@ public abstract class BasePinataEntity extends Animal {
     // Candy drop config
     protected int baseCandyCount = 3;
 
+    // Accessories
+    private java.util.Map<PinataAccessory.Slot, String> equippedAccessories = new java.util.EnumMap<>(PinataAccessory.Slot.class);
+
     public BasePinataEntity(EntityType<? extends Animal> type, Level level) {
         super(type, level);
     }
@@ -256,6 +259,22 @@ public abstract class BasePinataEntity extends Animal {
                 return InteractionResult.SUCCESS;
             }
 
+            // Check accessory equipping
+            if (stack.getItem() instanceof AccessoryItem accessoryItem) {
+                PinataAccessory acc = accessoryItem.getAccessory();
+                if (acc != null) {
+                    equippedAccessories.put(acc.getSlot(), acc.getId());
+                    addHappiness(acc.getHappinessBonus());
+                    consumeItem(player, hand, stack);
+                    spawnHappyParticles();
+                    if (player instanceof net.minecraft.server.level.ServerPlayer sp) {
+                        sp.sendSystemMessage(net.minecraft.network.chat.Component.literal(
+                                getPinataSpeciesName() + " equipped " + acc.getDisplayName() + "!"));
+                    }
+                    return InteractionResult.SUCCESS;
+                }
+            }
+
             // Generic feeding — any food item increases happiness slightly
             if (isFood(stack)) {
                 consumeItem(player, hand, stack);
@@ -374,6 +393,7 @@ public abstract class BasePinataEntity extends Animal {
         tag.putInt("PinataVariant", getPinataVariant());
         tag.putBoolean("PinataRomancing", isRomancing());
         tag.putInt("RomanceCooldown", romanceCooldown);
+        tag.put("Accessories", PinataAccessory.saveAccessories(equippedAccessories));
     }
 
     @Override
@@ -385,5 +405,10 @@ public abstract class BasePinataEntity extends Animal {
         if (tag.contains("PinataVariant")) setPinataVariant(tag.getInt("PinataVariant"));
         if (tag.contains("PinataRomancing")) setRomancing(tag.getBoolean("PinataRomancing"));
         if (tag.contains("RomanceCooldown")) romanceCooldown = tag.getInt("RomanceCooldown");
+        if (tag.contains("Accessories")) equippedAccessories = PinataAccessory.loadAccessories(tag.getCompound("Accessories"));
+    }
+
+    public java.util.Map<PinataAccessory.Slot, String> getEquippedAccessories() {
+        return equippedAccessories;
     }
 }

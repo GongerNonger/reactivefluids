@@ -83,12 +83,25 @@ public class ModCreativeTab {
                     output.accept(ModItems.ROTTEN_FLESH_BLOCK_ITEM.get());
                     // --- Viva Piñata: Garden & Tools ---
                     output.accept(ModPinataItems.GARDEN_PLOT.get());
+                    output.accept(ModPinataItems.HONEY_HIVE.get());
+                    output.accept(ModPinataItems.MILKING_SHED.get());
+                    output.accept(ModPinataItems.SHEARING_SHED.get());
                     output.accept(ModPinataItems.GARDEN_SHOVEL.get());
                     output.accept(ModPinataItems.WATERING_CAN.get());
                     output.accept(ModPinataItems.GRASS_PACKET.get());
                     output.accept(ModPinataItems.LONG_GRASS_PACKET.get());
                     output.accept(ModPinataItems.SAND_PACKET.get());
                     output.accept(ModPinataItems.SNOW_PACKET.get());
+                    output.accept(ModPinataItems.CHOCOLATE_COIN.get());
+                    // --- Viva Piñata: Accessories ---
+                    output.accept(ModPinataItems.TOP_HAT.get());
+                    output.accept(ModPinataItems.CROWN.get());
+                    output.accept(ModPinataItems.HALO_OF_HARDNESS.get());
+                    output.accept(ModPinataItems.KEEPER_HAT.get());
+                    output.accept(ModPinataItems.RUNNING_SHOES.get());
+                    output.accept(ModPinataItems.BOW_TIE.get());
+                    // --- Viva Piñata: NPCs ---
+                    output.accept(ModPinataItems.SEEDOS_SPAWN_EGG.get());
                     // --- Viva Piñata: Spawn Eggs ---
                     output.accept(ModPinataItems.WHIRLM_SPAWN_EGG.get());
                     output.accept(ModPinataItems.SPARROWMINT_SPAWN_EGG.get());

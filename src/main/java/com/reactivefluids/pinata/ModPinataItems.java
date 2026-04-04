@@ -177,6 +177,24 @@ public class ModPinataItems {
             ITEMS.register("garden_plot", () ->
                     new BlockItem(ModBlocks.GARDEN_PLOT.get(), new Item.Properties()));
 
+    public static final DeferredHolder<Item, BlockItem> HONEY_HIVE =
+            ITEMS.register("honey_hive", () ->
+                    new BlockItem(ModBlocks.HONEY_HIVE.get(), new Item.Properties()));
+
+    public static final DeferredHolder<Item, BlockItem> MILKING_SHED =
+            ITEMS.register("milking_shed", () ->
+                    new BlockItem(ModBlocks.MILKING_SHED.get(), new Item.Properties()));
+
+    public static final DeferredHolder<Item, BlockItem> SHEARING_SHED =
+            ITEMS.register("shearing_shed", () ->
+                    new BlockItem(ModBlocks.SHEARING_SHED.get(), new Item.Properties()));
+
+    // === NPC Spawn Eggs ===
+    public static final DeferredHolder<Item, DeferredSpawnEggItem> SEEDOS_SPAWN_EGG =
+            ITEMS.register("seedos_spawn_egg", () ->
+                    new DeferredSpawnEggItem(ModPinataEntities.SEEDOS,
+                            0x4CAF50, 0x8BC34A, new Item.Properties()));
+
     // === Tools ===
     public static final DeferredHolder<Item, GardenShovelItem> GARDEN_SHOVEL =
             ITEMS.register("garden_shovel", () ->
@@ -185,6 +203,31 @@ public class ModPinataItems {
     public static final DeferredHolder<Item, WateringCanItem> WATERING_CAN =
             ITEMS.register("watering_can", () ->
                     new WateringCanItem(new Item.Properties().stacksTo(1)));
+
+    // === Currency ===
+    public static final DeferredHolder<Item, ChocolateCoinItem> CHOCOLATE_COIN =
+            ITEMS.register("chocolate_coin", () ->
+                    new ChocolateCoinItem(new Item.Properties().stacksTo(64)));
+
+    // === Accessories (a selection — more can be added) ===
+    public static final DeferredHolder<Item, AccessoryItem> TOP_HAT =
+            ITEMS.register("top_hat", () ->
+                    new AccessoryItem(new Item.Properties().stacksTo(1), "top_hat"));
+    public static final DeferredHolder<Item, AccessoryItem> CROWN =
+            ITEMS.register("crown", () ->
+                    new AccessoryItem(new Item.Properties().stacksTo(1), "crown"));
+    public static final DeferredHolder<Item, AccessoryItem> HALO_OF_HARDNESS =
+            ITEMS.register("halo_of_hardness", () ->
+                    new AccessoryItem(new Item.Properties().stacksTo(1), "halo_of_hardness"));
+    public static final DeferredHolder<Item, AccessoryItem> KEEPER_HAT =
+            ITEMS.register("keeper_hat", () ->
+                    new AccessoryItem(new Item.Properties().stacksTo(1), "keeper_hat"));
+    public static final DeferredHolder<Item, AccessoryItem> RUNNING_SHOES =
+            ITEMS.register("running_shoes", () ->
+                    new AccessoryItem(new Item.Properties().stacksTo(1), "running_shoes"));
+    public static final DeferredHolder<Item, AccessoryItem> BOW_TIE =
+            ITEMS.register("bow_tie", () ->
+                    new AccessoryItem(new Item.Properties().stacksTo(1), "bow_tie"));
 
     // === Surface Packets (infinite use terrain painters) ===
     public static final DeferredHolder<Item, SurfacePacketItem> GRASS_PACKET =

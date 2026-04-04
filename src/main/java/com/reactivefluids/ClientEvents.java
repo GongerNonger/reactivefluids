@@ -1,6 +1,8 @@
 package com.reactivefluids;
 
 import com.reactivefluids.pinata.*;
+import net.minecraft.client.model.VillagerModel;
+import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
@@ -46,6 +48,15 @@ public class ClientEvents {
         event.registerEntityRenderer(ModPinataEntities.BUZZLEGUM.get(), BuzzlegumRenderer::new);
         event.registerEntityRenderer(ModPinataEntities.CLUCKLES.get(), ClucklesRenderer::new);
         event.registerEntityRenderer(ModPinataEntities.HORSTACHIO.get(), HorstachioRenderer::new);
+        // Seedos NPC — uses villager model as placeholder
+        event.registerEntityRenderer(ModPinataEntities.SEEDOS.get(),
+                ctx -> new net.minecraft.client.renderer.entity.MobRenderer<SeedosEntity, VillagerModel<SeedosEntity>>(
+                        ctx, new VillagerModel<>(ctx.bakeLayer(ModelLayers.VILLAGER)), 0.5F) {
+                    @Override
+                    public net.minecraft.resources.ResourceLocation getTextureLocation(SeedosEntity entity) {
+                        return net.minecraft.resources.ResourceLocation.withDefaultNamespace("textures/entity/villager/villager.png");
+                    }
+                });
     }
 
     @SubscribeEvent

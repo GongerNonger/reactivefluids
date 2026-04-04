@@ -117,4 +117,10 @@ public class ModPinataEntities {
             ENTITY_TYPES.register("horstachio", () ->
                     EntityType.Builder.<HorstachioEntity>of(HorstachioEntity::new, MobCategory.CREATURE)
                             .sized(1.4F, 1.6F).clientTrackingRange(10).build("horstachio"));
+
+    // === Seedos NPC — seed-giving gardener ===
+    public static final DeferredHolder<EntityType<?>, EntityType<SeedosEntity>> SEEDOS =
+            ENTITY_TYPES.register("seedos", () ->
+                    EntityType.Builder.<SeedosEntity>of(SeedosEntity::new, MobCategory.CREATURE)
+                            .sized(0.6F, 1.8F).clientTrackingRange(10).build("seedos"));
 }

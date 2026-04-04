@@ -1,6 +1,7 @@
 package com.reactivefluids;
 
 import com.reactivefluids.pinata.garden.GardenPlotBlock;
+import com.reactivefluids.pinata.garden.ProduceBuildingBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.SoundType;
@@ -226,4 +227,26 @@ public class ModBlocks {
             new GardenPlotBlock(BlockBehaviour.Properties.of()
                 .strength(1.0f, 3.0f).sound(SoundType.WOOD)
                 .mapColor(MapColor.COLOR_GREEN)));
+
+    // === Produce Buildings ===
+    public static final DeferredBlock<ProduceBuildingBlock> HONEY_HIVE =
+        BLOCKS.register("honey_hive", () ->
+            new ProduceBuildingBlock(BlockBehaviour.Properties.of()
+                .strength(2.0f, 4.0f).sound(SoundType.WOOD)
+                .mapColor(MapColor.COLOR_YELLOW),
+                ProduceBuildingBlock.ProduceType.HONEY_HIVE));
+
+    public static final DeferredBlock<ProduceBuildingBlock> MILKING_SHED =
+        BLOCKS.register("milking_shed", () ->
+            new ProduceBuildingBlock(BlockBehaviour.Properties.of()
+                .strength(2.0f, 4.0f).sound(SoundType.WOOD)
+                .mapColor(MapColor.TERRACOTTA_WHITE),
+                ProduceBuildingBlock.ProduceType.MILKING_SHED));
+
+    public static final DeferredBlock<ProduceBuildingBlock> SHEARING_SHED =
+        BLOCKS.register("shearing_shed", () ->
+            new ProduceBuildingBlock(BlockBehaviour.Properties.of()
+                .strength(2.0f, 4.0f).sound(SoundType.WOOD)
+                .mapColor(MapColor.TERRACOTTA_BROWN),
+                ProduceBuildingBlock.ProduceType.SHEARING_SHED));
 }

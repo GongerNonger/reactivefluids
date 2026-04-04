@@ -124,6 +124,8 @@ public class ReactiveFluids {
                 ClucklesEntity.createAttributes().build());
         event.put(ModPinataEntities.HORSTACHIO.get(),
                 HorstachioEntity.createAttributes().build());
+        event.put(ModPinataEntities.SEEDOS.get(),
+                SeedosEntity.createAttributes().build());
     }
 
     private void onServerTick(ServerTickEvent.Post event) {
