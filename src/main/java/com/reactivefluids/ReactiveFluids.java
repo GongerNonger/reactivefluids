@@ -4,6 +4,7 @@ import com.mojang.logging.LogUtils;
 import com.reactivefluids.pinata.*;
 import com.reactivefluids.pinata.ModPinataEntities;
 import com.reactivefluids.pinata.ModPinataItems;
+import com.reactivefluids.pinata.garden.GardenTickHandler;
 import net.minecraft.core.dispenser.ProjectileDispenseBehavior;
 import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.server.level.ServerLevel;
@@ -136,6 +137,8 @@ public class ReactiveFluids {
                 PasswallData.get(level).tick(level);
                 TinyHutData.get(level).tick(level);
                 ControlWaterData.get(level).tick(level);
+                // Piñata garden system — scan gardens and spawn attracted piñatas
+                GardenTickHandler.tickGardens(level);
             }
         }
 

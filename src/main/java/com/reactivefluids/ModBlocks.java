@@ -1,5 +1,6 @@
 package com.reactivefluids;
 
+import com.reactivefluids.pinata.garden.GardenPlotBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.SoundType;
@@ -216,4 +217,13 @@ public class ModBlocks {
         BLOCKS.register("indicator_block", () ->
             new IndicatorBlock((FlowingFluid) ModFluids.INDICATOR_SOURCE.get(),
                 fluidProps(MapColor.COLOR_GREEN)));
+
+    // =========================================================================
+    // Garden Plot — Viva Piñata garden center marker
+    // =========================================================================
+    public static final DeferredBlock<GardenPlotBlock> GARDEN_PLOT =
+        BLOCKS.register("garden_plot", () ->
+            new GardenPlotBlock(BlockBehaviour.Properties.of()
+                .strength(1.0f, 3.0f).sound(SoundType.WOOD)
+                .mapColor(MapColor.COLOR_GREEN)));
 }

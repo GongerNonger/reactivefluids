@@ -17,6 +17,7 @@ import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import com.reactivefluids.pinata.ai.PinataRomanceGoal;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
@@ -136,9 +137,10 @@ public abstract class BasePinataEntity extends Animal {
     protected void registerGoals() {
         goalSelector.addGoal(0, new FloatGoal(this));
         goalSelector.addGoal(1, new PanicGoal(this, 1.4));
-        goalSelector.addGoal(2, new WaterAvoidingRandomStrollGoal(this, 1.0));
-        goalSelector.addGoal(3, new LookAtPlayerGoal(this, Player.class, 6.0F));
-        goalSelector.addGoal(4, new RandomLookAroundGoal(this));
+        goalSelector.addGoal(2, new PinataRomanceGoal(this, 1.0)); // Romance has high priority
+        goalSelector.addGoal(6, new WaterAvoidingRandomStrollGoal(this, 1.0));
+        goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 6.0F));
+        goalSelector.addGoal(8, new RandomLookAroundGoal(this));
 
         registerPinataGoals();
     }

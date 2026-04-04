@@ -207,5 +207,8 @@
 
   "entity.reactivefluids.horstachio":                            "Horstachio",
   "item.reactivefluids.horstachio_spawn_egg":                    "Horstachio Spawn Egg",
-  "item.reactivefluids.horstachio_candy":                        "Horstachio Candy"
+  "item.reactivefluids.horstachio_candy":                        "Horstachio Candy",
+
+  "block.reactivefluids.garden_plot":                            "Garden Plot",
+  "item.reactivefluids.garden_plot":                             "Garden Plot"
 }

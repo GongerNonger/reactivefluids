@@ -1,8 +1,10 @@
 package com.reactivefluids.pinata;
 
+import com.reactivefluids.ModBlocks;
 import com.reactivefluids.ReactiveFluids;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.neoforged.neoforge.common.DeferredSpawnEggItem;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -169,4 +171,9 @@ public class ModPinataItems {
     public static final DeferredHolder<Item, Item> HORSTACHIO_CANDY =
             ITEMS.register("horstachio_candy", () ->
                     new Item(new Item.Properties().food(candyFood(6, 0.7F))));
+
+    // === Garden Items ===
+    public static final DeferredHolder<Item, BlockItem> GARDEN_PLOT =
+            ITEMS.register("garden_plot", () ->
+                    new BlockItem(ModBlocks.GARDEN_PLOT.get(), new Item.Properties()));
 }
