@@ -148,9 +148,20 @@ public class ModPinataEntities {
                     EntityType.Builder.<DoenutEntity>of(DoenutEntity::new, MobCategory.CREATURE)
                             .sized(0.8F, 1.0F).clientTrackingRange(10).build("doenut"));
 
-    // === Seedos NPC — seed-giving gardener ===
+    // === NPCs ===
     public static final DeferredHolder<EntityType<?>, EntityType<SeedosEntity>> SEEDOS =
             ENTITY_TYPES.register("seedos", () ->
                     EntityType.Builder.<SeedosEntity>of(SeedosEntity::new, MobCategory.CREATURE)
                             .sized(0.6F, 1.8F).clientTrackingRange(10).build("seedos"));
+
+    // === Threats ===
+    public static final DeferredHolder<EntityType<?>, EntityType<RuffianEntity>> RUFFIAN =
+            ENTITY_TYPES.register("ruffian", () ->
+                    EntityType.Builder.<RuffianEntity>of(RuffianEntity::new, MobCategory.MONSTER)
+                            .sized(0.6F, 1.9F).clientTrackingRange(10).build("ruffian"));
+
+    public static final DeferredHolder<EntityType<?>, EntityType<DastardosEntity>> DASTARDOS =
+            ENTITY_TYPES.register("dastardos", () ->
+                    EntityType.Builder.<DastardosEntity>of(DastardosEntity::new, MobCategory.MONSTER)
+                            .sized(0.6F, 1.9F).clientTrackingRange(16).build("dastardos"));
 }

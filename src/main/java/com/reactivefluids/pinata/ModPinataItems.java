@@ -189,11 +189,33 @@ public class ModPinataItems {
             ITEMS.register("shearing_shed", () ->
                     new BlockItem(ModBlocks.SHEARING_SHED.get(), new Item.Properties()));
 
-    // === NPC Spawn Eggs ===
+    // === Piñata Houses ===
+    public static final DeferredHolder<Item, BlockItem> WHIRLM_HOUSE =
+            ITEMS.register("whirlm_house", () -> new BlockItem(ModBlocks.WHIRLM_HOUSE.get(), new Item.Properties()));
+    public static final DeferredHolder<Item, BlockItem> SPARROWMINT_HOUSE =
+            ITEMS.register("sparrowmint_house", () -> new BlockItem(ModBlocks.SPARROWMINT_HOUSE.get(), new Item.Properties()));
+    public static final DeferredHolder<Item, BlockItem> FUDGEHOG_HOUSE =
+            ITEMS.register("fudgehog_house", () -> new BlockItem(ModBlocks.FUDGEHOG_HOUSE.get(), new Item.Properties()));
+    public static final DeferredHolder<Item, BlockItem> BUNNYCOMB_HOUSE =
+            ITEMS.register("bunnycomb_house", () -> new BlockItem(ModBlocks.BUNNYCOMB_HOUSE.get(), new Item.Properties()));
+    public static final DeferredHolder<Item, BlockItem> HORSTACHIO_HOUSE =
+            ITEMS.register("horstachio_house", () -> new BlockItem(ModBlocks.HORSTACHIO_HOUSE.get(), new Item.Properties()));
+    public static final DeferredHolder<Item, BlockItem> BUZZLEGUM_HOUSE =
+            ITEMS.register("buzzlegum_house", () -> new BlockItem(ModBlocks.BUZZLEGUM_HOUSE.get(), new Item.Properties()));
+
+    // === NPC & Threat Spawn Eggs ===
     public static final DeferredHolder<Item, DeferredSpawnEggItem> SEEDOS_SPAWN_EGG =
             ITEMS.register("seedos_spawn_egg", () ->
                     new DeferredSpawnEggItem(ModPinataEntities.SEEDOS,
                             0x4CAF50, 0x8BC34A, new Item.Properties()));
+    public static final DeferredHolder<Item, DeferredSpawnEggItem> RUFFIAN_SPAWN_EGG =
+            ITEMS.register("ruffian_spawn_egg", () ->
+                    new DeferredSpawnEggItem(ModPinataEntities.RUFFIAN,
+                            0x505050, 0x8B0000, new Item.Properties()));
+    public static final DeferredHolder<Item, DeferredSpawnEggItem> DASTARDOS_SPAWN_EGG =
+            ITEMS.register("dastardos_spawn_egg", () ->
+                    new DeferredSpawnEggItem(ModPinataEntities.DASTARDOS,
+                            0x200020, 0x800080, new Item.Properties()));
 
     // === Tools ===
     public static final DeferredHolder<Item, GardenShovelItem> GARDEN_SHOVEL =

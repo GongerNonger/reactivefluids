@@ -54,7 +54,23 @@ public class ClientEvents {
         event.registerEntityRenderer(ModPinataEntities.GOOBAA.get(), GoobaaRenderer::new);
         event.registerEntityRenderer(ModPinataEntities.RASHBERRY.get(), RashberryRenderer::new);
         event.registerEntityRenderer(ModPinataEntities.DOENUT.get(), DoenutRenderer::new);
-        // Seedos NPC — uses villager model as placeholder
+        // NPCs and threats — use villager model as placeholder
+        event.registerEntityRenderer(ModPinataEntities.RUFFIAN.get(),
+                ctx -> new net.minecraft.client.renderer.entity.MobRenderer<RuffianEntity, VillagerModel<RuffianEntity>>(
+                        ctx, new VillagerModel<>(ctx.bakeLayer(ModelLayers.VILLAGER)), 0.5F) {
+                    @Override
+                    public net.minecraft.resources.ResourceLocation getTextureLocation(RuffianEntity entity) {
+                        return net.minecraft.resources.ResourceLocation.withDefaultNamespace("textures/entity/illager/pillager.png");
+                    }
+                });
+        event.registerEntityRenderer(ModPinataEntities.DASTARDOS.get(),
+                ctx -> new net.minecraft.client.renderer.entity.MobRenderer<DastardosEntity, VillagerModel<DastardosEntity>>(
+                        ctx, new VillagerModel<>(ctx.bakeLayer(ModelLayers.VILLAGER)), 0.5F) {
+                    @Override
+                    public net.minecraft.resources.ResourceLocation getTextureLocation(DastardosEntity entity) {
+                        return net.minecraft.resources.ResourceLocation.withDefaultNamespace("textures/entity/illager/evoker.png");
+                    }
+                });
         event.registerEntityRenderer(ModPinataEntities.SEEDOS.get(),
                 ctx -> new net.minecraft.client.renderer.entity.MobRenderer<SeedosEntity, VillagerModel<SeedosEntity>>(
                         ctx, new VillagerModel<>(ctx.bakeLayer(ModelLayers.VILLAGER)), 0.5F) {

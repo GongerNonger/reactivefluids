@@ -254,5 +254,23 @@
   "item.reactivefluids.doenut_candy":                            "Doenut Candy",
 
   "entity.reactivefluids.seedos":                                "Seedos",
-  "item.reactivefluids.seedos_spawn_egg":                        "Seedos Spawn Egg"
+  "item.reactivefluids.seedos_spawn_egg":                        "Seedos Spawn Egg",
+
+  "entity.reactivefluids.ruffian":                               "Ruffian",
+  "item.reactivefluids.ruffian_spawn_egg":                       "Ruffian Spawn Egg",
+  "entity.reactivefluids.dastardos":                             "Dastardos",
+  "item.reactivefluids.dastardos_spawn_egg":                     "Dastardos Spawn Egg",
+
+  "block.reactivefluids.whirlm_house":                           "Whirlm House",
+  "item.reactivefluids.whirlm_house":                            "Whirlm House",
+  "block.reactivefluids.sparrowmint_house":                      "Sparrowmint House",
+  "item.reactivefluids.sparrowmint_house":                       "Sparrowmint House",
+  "block.reactivefluids.fudgehog_house":                         "Fudgehog House",
+  "item.reactivefluids.fudgehog_house":                          "Fudgehog House",
+  "block.reactivefluids.bunnycomb_house":                        "Bunnycomb House",
+  "item.reactivefluids.bunnycomb_house":                         "Bunnycomb House",
+  "block.reactivefluids.horstachio_house":                       "Horstachio House",
+  "item.reactivefluids.horstachio_house":                        "Horstachio House",
+  "block.reactivefluids.buzzlegum_house":                        "Buzzlegum House",
+  "item.reactivefluids.buzzlegum_house":                         "Buzzlegum House"
 }

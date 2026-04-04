@@ -67,6 +67,9 @@ public abstract class BasePinataEntity extends Animal {
     // Accessories
     private java.util.Map<PinataAccessory.Slot, String> equippedAccessories = new java.util.EnumMap<>(PinataAccessory.Slot.class);
 
+    // Sickness timer (ticks at happiness <= 10)
+    private int sickTimer = 0;
+
     public BasePinataEntity(EntityType<? extends Animal> type, Level level) {
         super(type, level);
     }
@@ -177,7 +180,28 @@ public abstract class BasePinataEntity extends Animal {
         if (isSour()) {
             tickSourBehavior();
         }
+
+        // Sickness: happiness <= 10 means sick
+        if (isResident() && getHappiness() <= 10) {
+            sickTimer++;
+            // Sick particles
+            if (sickTimer % 40 == 0 && level() instanceof ServerLevel sl) {
+                sl.sendParticles(net.minecraft.core.particles.ParticleTypes.ENTITY_EFFECT,
+                        getX(), getY() + getBbHeight() + 0.3, getZ(),
+                        3, 0.2, 0.1, 0.2, 0);
+            }
+            // Auto-heal if accessory provides it
+            if (PinataAccessory.hasEffect(equippedAccessories, PinataAccessory.SpecialEffect.AUTO_HEAL)) {
+                addHappiness(5);
+                sickTimer = 0;
+            }
+        } else {
+            sickTimer = 0;
+        }
     }
+
+    /** Ticks this piñata has been sick (happiness <= 10). Used by GardenTickHandler for Dastardos spawning. */
+    public int getSickTimer() { return sickTimer; }
 
     /** Override for sour piñata behavior */
     protected void tickSourBehavior() {

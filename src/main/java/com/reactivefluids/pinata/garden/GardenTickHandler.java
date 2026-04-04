@@ -46,6 +46,45 @@ public class GardenTickHandler {
                     spawnVisitor(level, garden, rule.entityType);
                 }
             }
+
+            // Threat spawning — Ruffians (random invasion, ~2% chance per check)
+            if (level.random.nextInt(50) == 0 && garden.level >= 2) {
+                spawnVisitor(level, garden, () -> ModPinataEntities.RUFFIAN.get());
+            }
+
+            // Dastardos spawning — appears when a piñata has been sick for 60+ seconds
+            for (BasePinataEntity pinata : currentPinatas) {
+                if (pinata.getSickTimer() > 1200) { // 60 seconds sick
+                    // Check no Dastardos already in garden
+                    boolean hasDastardos = level.getEntitiesOfClass(
+                            com.reactivefluids.pinata.DastardosEntity.class,
+                            garden.getBoundingBox()).size() > 0;
+                    if (!hasDastardos) {
+                        spawnVisitor(level, garden, () -> ModPinataEntities.DASTARDOS.get());
+                    }
+                    break; // Only one Dastardos per garden
+                }
+            }
+
+            // Passive house happiness boost — every 10s, +2 happiness to piñatas near their house
+            tickHouseBonus(level, garden, currentPinatas);
+        }
+    }
+
+    private static void tickHouseBonus(ServerLevel level, GardenManager.GardenData garden,
+                                       List<BasePinataEntity> pinatas) {
+        for (BasePinataEntity pinata : pinatas) {
+            if (!pinata.isResident()) continue;
+            // Check for a matching house block nearby
+            BlockPos pos = pinata.blockPosition();
+            for (BlockPos p : BlockPos.betweenClosed(pos.offset(-10, -3, -10), pos.offset(10, 3, 10))) {
+                if (level.getBlockState(p).getBlock() instanceof PinataHouseBlock house) {
+                    if (house.getSpeciesName().equals(pinata.getPinataSpeciesName())) {
+                        pinata.addHappiness(2);
+                        break;
+                    }
+                }
+            }
         }
     }
 

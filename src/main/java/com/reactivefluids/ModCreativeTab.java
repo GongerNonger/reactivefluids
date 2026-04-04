@@ -100,8 +100,17 @@ public class ModCreativeTab {
                     output.accept(ModPinataItems.KEEPER_HAT.get());
                     output.accept(ModPinataItems.RUNNING_SHOES.get());
                     output.accept(ModPinataItems.BOW_TIE.get());
-                    // --- Viva Piñata: NPCs ---
+                    // --- Viva Piñata: Houses ---
+                    output.accept(ModPinataItems.WHIRLM_HOUSE.get());
+                    output.accept(ModPinataItems.SPARROWMINT_HOUSE.get());
+                    output.accept(ModPinataItems.FUDGEHOG_HOUSE.get());
+                    output.accept(ModPinataItems.BUNNYCOMB_HOUSE.get());
+                    output.accept(ModPinataItems.HORSTACHIO_HOUSE.get());
+                    output.accept(ModPinataItems.BUZZLEGUM_HOUSE.get());
+                    // --- Viva Piñata: NPCs & Threats ---
                     output.accept(ModPinataItems.SEEDOS_SPAWN_EGG.get());
+                    output.accept(ModPinataItems.RUFFIAN_SPAWN_EGG.get());
+                    output.accept(ModPinataItems.DASTARDOS_SPAWN_EGG.get());
                     // --- Viva Piñata: Spawn Eggs ---
                     output.accept(ModPinataItems.WHIRLM_SPAWN_EGG.get());
                     output.accept(ModPinataItems.SPARROWMINT_SPAWN_EGG.get());

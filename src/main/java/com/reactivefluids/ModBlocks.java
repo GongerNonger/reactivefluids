@@ -1,6 +1,7 @@
 package com.reactivefluids;
 
 import com.reactivefluids.pinata.garden.GardenPlotBlock;
+import com.reactivefluids.pinata.garden.PinataHouseBlock;
 import com.reactivefluids.pinata.garden.ProduceBuildingBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.LiquidBlock;
@@ -249,4 +250,23 @@ public class ModBlocks {
                 .strength(2.0f, 4.0f).sound(SoundType.WOOD)
                 .mapColor(MapColor.TERRACOTTA_BROWN),
                 ProduceBuildingBlock.ProduceType.SHEARING_SHED));
+
+    // === Piñata Houses ===
+    private static BlockBehaviour.Properties houseProps() {
+        return BlockBehaviour.Properties.of().strength(1.5f, 3.0f).sound(SoundType.WOOD)
+                .mapColor(MapColor.COLOR_ORANGE);
+    }
+
+    public static final DeferredBlock<PinataHouseBlock> WHIRLM_HOUSE =
+        BLOCKS.register("whirlm_house", () -> new PinataHouseBlock(houseProps(), "Whirlm"));
+    public static final DeferredBlock<PinataHouseBlock> SPARROWMINT_HOUSE =
+        BLOCKS.register("sparrowmint_house", () -> new PinataHouseBlock(houseProps(), "Sparrowmint"));
+    public static final DeferredBlock<PinataHouseBlock> FUDGEHOG_HOUSE =
+        BLOCKS.register("fudgehog_house", () -> new PinataHouseBlock(houseProps(), "Fudgehog"));
+    public static final DeferredBlock<PinataHouseBlock> BUNNYCOMB_HOUSE =
+        BLOCKS.register("bunnycomb_house", () -> new PinataHouseBlock(houseProps(), "Bunnycomb"));
+    public static final DeferredBlock<PinataHouseBlock> HORSTACHIO_HOUSE =
+        BLOCKS.register("horstachio_house", () -> new PinataHouseBlock(houseProps(), "Horstachio"));
+    public static final DeferredBlock<PinataHouseBlock> BUZZLEGUM_HOUSE =
+        BLOCKS.register("buzzlegum_house", () -> new PinataHouseBlock(houseProps(), "Buzzlegum"));
 }
