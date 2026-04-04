@@ -137,6 +137,16 @@ public class ModCreativeTab {
                     output.accept(ModPinataItems.MALLOWOLF_SPAWN_EGG.get());
                     output.accept(ModPinataItems.COCOADILE_SPAWN_EGG.get());
                     output.accept(ModPinataItems.DRAGONACHE_SPAWN_EGG.get());
+                    output.accept(ModPinataItems.ELEPHANILLA_SPAWN_EGG.get());
+                    output.accept(ModPinataItems.CHEWNICORN_SPAWN_EGG.get());
+                    output.accept(ModPinataItems.ROARIO_SPAWN_EGG.get());
+                    output.accept(ModPinataItems.TIGERMISU_SPAWN_EGG.get());
+                    output.accept(ModPinataItems.PARRYBO_SPAWN_EGG.get());
+                    output.accept(ModPinataItems.SWANANA_SPAWN_EGG.get());
+                    output.accept(ModPinataItems.EAGLAIR_SPAWN_EGG.get());
+                    output.accept(ModPinataItems.BADGESICLE_SPAWN_EGG.get());
+                    output.accept(ModPinataItems.HOOTYFRUITY_SPAWN_EGG.get());
+                    output.accept(ModPinataItems.DRAGUMFLY_SPAWN_EGG.get());
                     // --- Viva Piñata: Candy ---
                     output.accept(ModPinataItems.WHIRLM_CANDY.get());
                     output.accept(ModPinataItems.SPARROWMINT_CANDY.get());
@@ -163,6 +173,16 @@ public class ModCreativeTab {
                     output.accept(ModPinataItems.MALLOWOLF_CANDY.get());
                     output.accept(ModPinataItems.COCOADILE_CANDY.get());
                     output.accept(ModPinataItems.DRAGONACHE_CANDY.get());
+                    output.accept(ModPinataItems.ELEPHANILLA_CANDY.get());
+                    output.accept(ModPinataItems.CHEWNICORN_CANDY.get());
+                    output.accept(ModPinataItems.ROARIO_CANDY.get());
+                    output.accept(ModPinataItems.TIGERMISU_CANDY.get());
+                    output.accept(ModPinataItems.PARRYBO_CANDY.get());
+                    output.accept(ModPinataItems.SWANANA_CANDY.get());
+                    output.accept(ModPinataItems.EAGLAIR_CANDY.get());
+                    output.accept(ModPinataItems.BADGESICLE_CANDY.get());
+                    output.accept(ModPinataItems.HOOTYFRUITY_CANDY.get());
+                    output.accept(ModPinataItems.DRAGUMFLY_CANDY.get());
                 })
                 .build()
         );

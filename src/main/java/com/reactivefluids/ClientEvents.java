@@ -54,6 +54,17 @@ public class ClientEvents {
         event.registerEntityRenderer(ModPinataEntities.GOOBAA.get(), GoobaaRenderer::new);
         event.registerEntityRenderer(ModPinataEntities.RASHBERRY.get(), RashberryRenderer::new);
         event.registerEntityRenderer(ModPinataEntities.DOENUT.get(), DoenutRenderer::new);
+        // Batch 6
+        event.registerEntityRenderer(ModPinataEntities.ELEPHANILLA.get(), ElephanillaRenderer::new);
+        event.registerEntityRenderer(ModPinataEntities.CHEWNICORN.get(), ChewnicornRenderer::new);
+        event.registerEntityRenderer(ModPinataEntities.ROARIO.get(), RoarioRenderer::new);
+        event.registerEntityRenderer(ModPinataEntities.TIGERMISU.get(), TigermisuRenderer::new);
+        event.registerEntityRenderer(ModPinataEntities.PARRYBO.get(), ParryboRenderer::new);
+        event.registerEntityRenderer(ModPinataEntities.SWANANA.get(), SwananaRenderer::new);
+        event.registerEntityRenderer(ModPinataEntities.EAGLAIR.get(), EaglairRenderer::new);
+        event.registerEntityRenderer(ModPinataEntities.BADGESICLE.get(), BadgesicleRenderer::new);
+        event.registerEntityRenderer(ModPinataEntities.HOOTYFRUITY.get(), HootyfruityRenderer::new);
+        event.registerEntityRenderer(ModPinataEntities.DRAGUMFLY.get(), DragumflyRenderer::new);
         // Batch 5
         event.registerEntityRenderer(ModPinataEntities.SQUAZZIL.get(), SquazzilRenderer::new);
         event.registerEntityRenderer(ModPinataEntities.SWEETOOTH.get(), SweetoothRenderer::new);
