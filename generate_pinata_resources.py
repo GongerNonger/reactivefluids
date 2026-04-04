@@ -388,22 +388,81 @@ def generate_all():
             save_png(f"{BASE}/textures/block/{block}.png", rows)
 
     # ---- Entity textures (placeholder colored rectangles for pinata species) ----
+    # Texture size must match the model's LayerDefinition.create(mesh, W, H)
+    # Species → model mapping determines required texture size
+    MODEL_TEX_SIZES = {
+        'WhirlmModel': (64, 32),
+        'SparrowmintModel': (32, 32),
+        'FudgehogModel': (48, 32),
+        'HorstachioModel': (64, 32),
+        'PretztailModel': (32, 32),
+        'NewtgatModel': (32, 16),
+        'MousemallowModel': (32, 16),
+        'BunnycombModel': (32, 32),
+        'BuzzlegumModel': (32, 32),
+        'ClucklesModel': (32, 32),
+        'LickatoadModel': (32, 16),
+        'QuackberryModel': (32, 32),
+        'ShellybeanModel': (32, 16),
+        'SyrupentModel': (32, 32),
+        'TafflyModel': (32, 16),
+    }
+    SPECIES_MODEL = {
+        'whirlm': 'WhirlmModel',
+        'sparrowmint': 'SparrowmintModel', 'candary': 'SparrowmintModel',
+        'chocstrich': 'SparrowmintModel', 'eaglair': 'SparrowmintModel',
+        'hootyfruity': 'SparrowmintModel', 'parrybo': 'SparrowmintModel',
+        'pengum': 'SparrowmintModel',
+        'fudgehog': 'FudgehogModel', 'badgesicle': 'FudgehogModel',
+        'fizzlybear': 'FudgehogModel', 'goobaa': 'FudgehogModel',
+        'limeoceros': 'FudgehogModel', 'moojoo': 'FudgehogModel',
+        'parmadillo': 'FudgehogModel', 'polollybear': 'FudgehogModel',
+        'rashberry': 'FudgehogModel', 'sarsgorilla': 'FudgehogModel',
+        'sweetooth': 'FudgehogModel', 'walrusk': 'FudgehogModel',
+        'horstachio': 'HorstachioModel', 'camello': 'HorstachioModel',
+        'chewnicorn': 'HorstachioModel', 'choclodocus': 'HorstachioModel',
+        'dragonache': 'HorstachioModel', 'elephanilla': 'HorstachioModel',
+        'zumbug': 'HorstachioModel',
+        'pretztail': 'PretztailModel', 'barkbark': 'PretztailModel',
+        'doenut': 'PretztailModel', 'kittyfloss': 'PretztailModel',
+        'mallowolf': 'PretztailModel', 'pieena': 'PretztailModel',
+        'roario': 'PretztailModel', 'tigermisu': 'PretztailModel',
+        'newtgat': 'NewtgatModel', 'geckie': 'NewtgatModel',
+        'jameleon': 'NewtgatModel', 'salamango': 'NewtgatModel',
+        'mousemallow': 'MousemallowModel', 'cinnamonkey': 'MousemallowModel',
+        'pigxie': 'MousemallowModel', 'raisant': 'MousemallowModel',
+        'squazzil': 'MousemallowModel',
+        'bunnycomb': 'BunnycombModel',
+        'buzzlegum': 'BuzzlegumModel',
+        'cluckles': 'ClucklesModel',
+        'lickatoad': 'LickatoadModel',
+        'quackberry': 'QuackberryModel', 'juicygoose': 'QuackberryModel',
+        'swanana': 'QuackberryModel',
+        'shellybean': 'ShellybeanModel', 'cherrapin': 'ShellybeanModel',
+        'custacean': 'ShellybeanModel', 'jeli': 'ShellybeanModel',
+        'sweetle': 'ShellybeanModel',
+        'syrupent': 'SyrupentModel', 'cocoadile': 'SyrupentModel',
+        'fourheads': 'SyrupentModel', 'twingersnap': 'SyrupentModel',
+        'taffly': 'TafflyModel', 'dragumfly': 'TafflyModel',
+        'mothdrop': 'TafflyModel', 'reddhott': 'TafflyModel',
+        'limoceros': 'FudgehogModel',
+    }
     print("=== Entity textures ===")
     entity_dir = f"{BASE}/textures/entity/pinata"
     os.makedirs(entity_dir, exist_ok=True)
-    # Get all species that have renderers
     species_list = list(CANDY_COLORS.keys())
     for species in species_list:
         tex_path = f"{entity_dir}/{species}.png"
         if not os.path.exists(tex_path):
             color = CANDY_COLORS.get(species, (160, 160, 160))
-            # 32x16 entity texture (simple body color fill)
+            model = SPECIES_MODEL.get(species, 'FudgehogModel')
+            tw, th = MODEL_TEX_SIZES.get(model, (32, 16))
             rng = random.Random(hash(species) & 0xFFFFFFFF)
             r, g, b = color
             rows = []
-            for y in range(16):
+            for y in range(th):
                 row = []
-                for x in range(32):
+                for x in range(tw):
                     n = rng.randint(-10, 10)
                     row.append((cl(r + n), cl(g + n), cl(b + n), 255))
                 rows.append(row)

@@ -1,3 +1,6 @@
 {
-  "parent": "reactivefluids:block/honey_hive"
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "reactivefluids:item/honey_hive"
+  }
 }
