@@ -35,7 +35,7 @@ public class GardenManager extends SavedData {
 
     public GardenManager() {}
 
-    public GardenManager(CompoundTag tag) {
+    public GardenManager(CompoundTag tag, net.minecraft.core.HolderLookup.Provider registries) {
         ListTag list = tag.getList("Gardens", Tag.TAG_COMPOUND);
         for (int i = 0; i < list.size(); i++) {
             CompoundTag gardenTag = list.getCompound(i);
@@ -45,7 +45,7 @@ public class GardenManager extends SavedData {
     }
 
     @Override
-    public CompoundTag save(CompoundTag tag) {
+    public CompoundTag save(CompoundTag tag, net.minecraft.core.HolderLookup.Provider registries) {
         ListTag list = new ListTag();
         for (GardenData data : gardens.values()) {
             list.add(data.save());
@@ -56,7 +56,8 @@ public class GardenManager extends SavedData {
 
     public static GardenManager get(ServerLevel level) {
         return level.getDataStorage().computeIfAbsent(
-                new SavedData.Factory<>(GardenManager::new, GardenManager::new),
+                new SavedData.Factory<>(GardenManager::new, GardenManager::new,
+                        net.minecraft.util.datafix.DataFixTypes.SAVED_DATA_MAP_DATA),
                 DATA_NAME);
     }
 
@@ -174,7 +175,7 @@ public class GardenManager extends SavedData {
 
     public static class GardenData {
         public final BlockPos center;
-        public final UUID ownerUUID;
+        public UUID ownerUUID;
         public int radius = 16; // Default 16-block radius (32x32 area)
         public int level = 1;
         public int xp = 0;

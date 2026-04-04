@@ -34,7 +34,6 @@ public class JeliEntity extends BasePinataEntity {
         goalSelector.addGoal(5, new TemptGoal(this, 1.1, s -> s.is(Items.GLOW_INK_SAC), false));
     }
 
-    @Override public boolean canBreatheUnderwater() { return true; }
 
     @Nullable @Override public AgeableMob getBreedOffspring(ServerLevel level, AgeableMob other) {
         JeliEntity baby = ModPinataEntities.JELI.get().create(level);

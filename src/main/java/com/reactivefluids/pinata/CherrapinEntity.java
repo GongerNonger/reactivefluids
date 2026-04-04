@@ -34,8 +34,6 @@ public class CherrapinEntity extends BasePinataEntity {
         goalSelector.addGoal(5, new TemptGoal(this, 1.1, s -> s.is(Items.SEAGRASS), false));
     }
 
-    @Override public boolean canBreatheUnderwater() { return true; }
-
     @Nullable @Override public AgeableMob getBreedOffspring(ServerLevel level, AgeableMob other) {
         CherrapinEntity baby = ModPinataEntities.CHERRAPIN.get().create(level);
         if (baby != null) { baby.setLifecycle(LIFECYCLE_RESIDENT); baby.setHappiness(75); }

@@ -117,7 +117,9 @@ public class SyrupentEntity extends BasePinataEntity {
         super.tickClientParticles();
         // Slither trail — subtle ground particles
         if (getDeltaMovement().horizontalDistanceSqr() > 0.001 && random.nextInt(6) == 0) {
-            level().addParticle(net.minecraft.core.particles.ParticleTypes.FALLING_DUST,
+            level().addParticle(new net.minecraft.core.particles.BlockParticleOption(
+                            net.minecraft.core.particles.ParticleTypes.FALLING_DUST,
+                            net.minecraft.world.level.block.Blocks.DIRT.defaultBlockState()),
                     getX(), getY(), getZ(), 0, 0, 0);
         }
     }

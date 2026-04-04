@@ -149,8 +149,4 @@ public class TafflyEntity extends BasePinataEntity {
         }
     }
 
-    @Override
-    public float getEyeHeight(net.minecraft.world.entity.Pose pose, net.minecraft.world.entity.EntityDimensions dimensions) {
-        return 0.25F;
-    }
 }

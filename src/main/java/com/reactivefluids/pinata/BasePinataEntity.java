@@ -59,7 +59,7 @@ public abstract class BasePinataEntity extends Animal {
     public static final int DEFAULT_HAPPINESS = 50;
 
     // Romance cooldown
-    protected int romanceCooldown = 0;
+    public int romanceCooldown = 0;
 
     // Candy drop config
     protected int baseCandyCount = 3;
@@ -186,7 +186,8 @@ public abstract class BasePinataEntity extends Animal {
             sickTimer++;
             // Sick particles
             if (sickTimer % 40 == 0 && level() instanceof ServerLevel sl) {
-                sl.sendParticles(net.minecraft.core.particles.ParticleTypes.ENTITY_EFFECT,
+                sl.sendParticles(net.minecraft.core.particles.ColorParticleOption.create(
+                                net.minecraft.core.particles.ParticleTypes.ENTITY_EFFECT, 0.4F, 0.8F, 0.2F),
                         getX(), getY() + getBbHeight() + 0.3, getZ(),
                         3, 0.2, 0.1, 0.2, 0);
             }

@@ -34,7 +34,6 @@ public class SwananaEntity extends BasePinataEntity {
         goalSelector.addGoal(5, new TemptGoal(this, 1.1, s -> s.is(Items.WHEAT_SEEDS), false));
     }
 
-    @Override public boolean canBreatheUnderwater() { return true; }
 
     @Nullable @Override public AgeableMob getBreedOffspring(ServerLevel level, AgeableMob other) {
         SwananaEntity baby = ModPinataEntities.SWANANA.get().create(level);

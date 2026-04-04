@@ -205,7 +205,7 @@ public class ProfessorPesterEntity extends PathfinderMob {
             sl.sendParticles(ParticleTypes.SMOKE,
                     targetPinata.getX(), targetPinata.getY(), targetPinata.getZ(),
                     20, 0.5, 0.5, 0.5, 0.05);
-            playSound(SoundEvents.GENERIC_EXPLODE, 1.0F, 0.8F);
+            playSound(SoundEvents.GENERIC_EXPLODE.value(), 1.0F, 0.8F);
 
             // Evil dialogue
             for (Player player : sl.players()) {

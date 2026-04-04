@@ -42,7 +42,6 @@ public class CocoadileEntity extends BasePinataEntity {
         goalSelector.addGoal(5, new TemptGoal(this, 1.0, s -> s.is(Items.COD) || s.is(Items.TROPICAL_FISH), false));
     }
 
-    @Override public boolean canBreatheUnderwater() { return true; }
 
     @Nullable @Override public AgeableMob getBreedOffspring(ServerLevel level, AgeableMob other) {
         CocoadileEntity baby = ModPinataEntities.COCOADILE.get().create(level);

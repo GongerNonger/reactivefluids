@@ -81,9 +81,6 @@ public class QuackberryEntity extends BasePinataEntity {
                 stack.is(Items.SWEET_BERRIES) || stack.is(Items.BLUE_ORCHID), false));
     }
 
-    @Override
-    public boolean canBreatheUnderwater() { return true; }
-
     @Nullable
     @Override
     public AgeableMob getBreedOffspring(ServerLevel level, AgeableMob other) {

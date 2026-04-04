@@ -34,7 +34,6 @@ public class CustaceanEntity extends BasePinataEntity {
         goalSelector.addGoal(5, new TemptGoal(this, 1.1, s -> s.is(Items.COD), false));
     }
 
-    @Override public boolean canBreatheUnderwater() { return true; }
 
     @Nullable @Override public AgeableMob getBreedOffspring(ServerLevel level, AgeableMob other) {
         CustaceanEntity baby = ModPinataEntities.CUSTACEAN.get().create(level);

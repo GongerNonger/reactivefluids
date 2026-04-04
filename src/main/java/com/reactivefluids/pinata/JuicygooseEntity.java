@@ -34,7 +34,6 @@ public class JuicygooseEntity extends BasePinataEntity {
         goalSelector.addGoal(5, new TemptGoal(this, 1.1, s -> s.is(Items.SWEET_BERRIES), false));
     }
 
-    @Override public boolean canBreatheUnderwater() { return true; }
 
     @Nullable @Override public AgeableMob getBreedOffspring(ServerLevel level, AgeableMob other) {
         JuicygooseEntity baby = ModPinataEntities.JUICYGOOSE.get().create(level);

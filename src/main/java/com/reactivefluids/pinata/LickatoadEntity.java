@@ -87,9 +87,6 @@ public class LickatoadEntity extends BasePinataEntity {
     }
 
     @Override
-    public boolean canBreatheUnderwater() { return true; }
-
-    @Override
     public void tick() {
         super.tick();
         // Periodic hopping movement

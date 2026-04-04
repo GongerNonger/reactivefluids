@@ -123,14 +123,12 @@ public class WhirlmEntity extends BasePinataEntity {
 
         // Whirlms leave small dirt particles as they move
         if (getDeltaMovement().horizontalDistanceSqr() > 0.001 && random.nextInt(5) == 0) {
-            level().addParticle(net.minecraft.core.particles.ParticleTypes.FALLING_DUST,
+            level().addParticle(new net.minecraft.core.particles.BlockParticleOption(
+                            net.minecraft.core.particles.ParticleTypes.FALLING_DUST,
+                            net.minecraft.world.level.block.Blocks.DIRT.defaultBlockState()),
                     getX(), getY(), getZ(),
                     0, 0, 0);
         }
     }
 
-    @Override
-    public float getEyeHeight(net.minecraft.world.entity.Pose pose, net.minecraft.world.entity.EntityDimensions dimensions) {
-        return 0.2F; // Low to the ground
-    }
 }

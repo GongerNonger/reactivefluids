@@ -84,9 +84,6 @@ public class NewtgatEntity extends BasePinataEntity {
                 stack.is(Items.TROPICAL_FISH), false));
     }
 
-    @Override
-    public boolean canBreatheUnderwater() { return true; }
-
     @Nullable
     @Override
     public AgeableMob getBreedOffspring(ServerLevel level, AgeableMob other) {
