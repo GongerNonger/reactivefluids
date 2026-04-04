@@ -5,7 +5,8 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 
-public class SparrowmintRenderer extends MobRenderer<SparrowmintEntity, SparrowmintModel> {
+@SuppressWarnings({"unchecked", "rawtypes"})
+public class SparrowmintRenderer extends MobRenderer {
 
     private static final ResourceLocation TEXTURE =
             ResourceLocation.fromNamespaceAndPath(ReactiveFluids.MOD_ID, "textures/entity/pinata/sparrowmint.png");
@@ -17,7 +18,7 @@ public class SparrowmintRenderer extends MobRenderer<SparrowmintEntity, Sparrowm
     }
 
     @Override
-    public ResourceLocation getTextureLocation(SparrowmintEntity entity) {
-        return entity.isSour() ? SOUR_TEXTURE : TEXTURE;
+    public ResourceLocation getTextureLocation(net.minecraft.world.entity.Entity entity) {
+        return ((BasePinataEntity)entity).isSour() ? SOUR_TEXTURE : TEXTURE;
     }
 }

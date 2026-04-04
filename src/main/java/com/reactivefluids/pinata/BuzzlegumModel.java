@@ -11,7 +11,7 @@ import net.minecraft.resources.ResourceLocation;
 import com.reactivefluids.ReactiveFluids;
 
 /** Buzzlegum — rotund striped bee body, small wings, friendly face. Bubblegum-pink/yellow. */
-public class BuzzlegumModel extends EntityModel<BuzzlegumEntity> {
+public class BuzzlegumModel extends EntityModel<BasePinataEntity> {
     public static final ModelLayerLocation LAYER =
             new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(ReactiveFluids.MOD_ID, "buzzlegum"), "main");
     private final ModelPart body, head, wingL, wingR, legL, legR, stinger;
@@ -47,7 +47,7 @@ public class BuzzlegumModel extends EntityModel<BuzzlegumEntity> {
     }
 
     @Override
-    public void setupAnim(BuzzlegumEntity e, float ls, float la, float age, float hy, float hp) {
+    public void setupAnim(BasePinataEntity e, float ls, float la, float age, float hy, float hp) {
         head.yRot = hy * 0.017F;
         // Fast wing buzz
         float buzz = (float) Math.sin(age * 2.5F) * 0.7F;

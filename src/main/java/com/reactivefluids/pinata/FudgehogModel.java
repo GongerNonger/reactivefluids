@@ -16,7 +16,7 @@ import com.reactivefluids.ReactiveFluids;
  * smooth belly, small snout with beady eyes. Short stubby legs.
  * Chocolate-brown base with caramel/fudge spines.
  */
-public class FudgehogModel extends EntityModel<FudgehogEntity> {
+public class FudgehogModel extends EntityModel<BasePinataEntity> {
 
     public static final ModelLayerLocation LAYER =
             new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(ReactiveFluids.MOD_ID, "fudgehog"), "main");
@@ -96,7 +96,7 @@ public class FudgehogModel extends EntityModel<FudgehogEntity> {
     }
 
     @Override
-    public void setupAnim(FudgehogEntity entity, float limbSwing, float limbSwingAmount,
+    public void setupAnim(BasePinataEntity entity, float limbSwing, float limbSwingAmount,
                           float ageInTicks, float headYaw, float headPitch) {
         head.yRot = headYaw * ((float) Math.PI / 180F) * 0.6F;
         head.xRot = headPitch * ((float) Math.PI / 180F) * 0.3F;

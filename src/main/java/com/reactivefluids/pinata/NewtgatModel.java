@@ -11,7 +11,7 @@ import net.minecraft.resources.ResourceLocation;
 import com.reactivefluids.ReactiveFluids;
 
 /** Newtgat — flat lizard body, paddle tail, 4 splayed legs. Nougat-brown/orange. */
-public class NewtgatModel extends EntityModel<NewtgatEntity> {
+public class NewtgatModel extends EntityModel<BasePinataEntity> {
     public static final ModelLayerLocation LAYER =
             new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(ReactiveFluids.MOD_ID, "newtgat"), "main");
     private final ModelPart body, head, tail, legFL, legFR, legBL, legBR;
@@ -42,7 +42,7 @@ public class NewtgatModel extends EntityModel<NewtgatEntity> {
     }
 
     @Override
-    public void setupAnim(NewtgatEntity e, float ls, float la, float age, float hy, float hp) {
+    public void setupAnim(BasePinataEntity e, float ls, float la, float age, float hy, float hp) {
         head.yRot = hy * 0.017F;
         float walk = (float) Math.sin(ls * 0.8F) * la * 0.6F;
         legFL.yRot = walk; legFR.yRot = -walk; legBL.yRot = -walk; legBR.yRot = walk;

@@ -11,7 +11,7 @@ import net.minecraft.resources.ResourceLocation;
 import com.reactivefluids.ReactiveFluids;
 
 /** Pretztail — sleek fox body, pointy ears, long snout, bushy pretzel-shaped tail. */
-public class PretztailModel extends EntityModel<PretztailEntity> {
+public class PretztailModel extends EntityModel<BasePinataEntity> {
     public static final ModelLayerLocation LAYER =
             new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(ReactiveFluids.MOD_ID, "pretztail"), "main");
     private final ModelPart body, head, earL, earR, tail, legFL, legFR, legBL, legBR;
@@ -51,7 +51,7 @@ public class PretztailModel extends EntityModel<PretztailEntity> {
     }
 
     @Override
-    public void setupAnim(PretztailEntity e, float ls, float la, float age, float hy, float hp) {
+    public void setupAnim(BasePinataEntity e, float ls, float la, float age, float hy, float hp) {
         head.yRot = hy * 0.017F; head.xRot = hp * 0.017F * 0.4F;
         float trot = (float) Math.sin(ls * 0.8F) * la * 0.6F;
         legFL.xRot = trot; legFR.xRot = -trot; legBL.xRot = -trot; legBR.xRot = trot;

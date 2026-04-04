@@ -5,7 +5,8 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 
-public class HorstachioRenderer extends MobRenderer<HorstachioEntity, HorstachioModel> {
+@SuppressWarnings({"unchecked", "rawtypes"})
+public class HorstachioRenderer extends MobRenderer {
     private static final ResourceLocation TEXTURE =
             ResourceLocation.fromNamespaceAndPath(ReactiveFluids.MOD_ID, "textures/entity/pinata/horstachio.png");
     private static final ResourceLocation SOUR_TEXTURE =
@@ -16,7 +17,7 @@ public class HorstachioRenderer extends MobRenderer<HorstachioEntity, Horstachio
     }
 
     @Override
-    public ResourceLocation getTextureLocation(HorstachioEntity entity) {
-        return entity.isSour() ? SOUR_TEXTURE : TEXTURE;
+    public ResourceLocation getTextureLocation(net.minecraft.world.entity.Entity entity) {
+        return ((BasePinataEntity)entity).isSour() ? SOUR_TEXTURE : TEXTURE;
     }
 }

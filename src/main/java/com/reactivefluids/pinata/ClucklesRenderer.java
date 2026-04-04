@@ -5,7 +5,8 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 
-public class ClucklesRenderer extends MobRenderer<ClucklesEntity, ClucklesModel> {
+@SuppressWarnings({"unchecked", "rawtypes"})
+public class ClucklesRenderer extends MobRenderer {
     private static final ResourceLocation TEXTURE =
             ResourceLocation.fromNamespaceAndPath(ReactiveFluids.MOD_ID, "textures/entity/pinata/cluckles.png");
     private static final ResourceLocation SOUR_TEXTURE =
@@ -16,7 +17,7 @@ public class ClucklesRenderer extends MobRenderer<ClucklesEntity, ClucklesModel>
     }
 
     @Override
-    public ResourceLocation getTextureLocation(ClucklesEntity entity) {
-        return entity.isSour() ? SOUR_TEXTURE : TEXTURE;
+    public ResourceLocation getTextureLocation(net.minecraft.world.entity.Entity entity) {
+        return ((BasePinataEntity)entity).isSour() ? SOUR_TEXTURE : TEXTURE;
     }
 }

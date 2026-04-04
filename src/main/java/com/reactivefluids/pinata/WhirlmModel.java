@@ -14,7 +14,7 @@ import com.reactivefluids.ReactiveFluids;
  * Whirlm model — a segmented worm shape, like a piñata paper-wrapped caterpillar.
  * Three body segments + head, with a slight curve animation during movement.
  */
-public class WhirlmModel extends EntityModel<WhirlmEntity> {
+public class WhirlmModel extends EntityModel<BasePinataEntity> {
 
     public static final ModelLayerLocation LAYER =
             new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(ReactiveFluids.MOD_ID, "whirlm"), "main");
@@ -67,7 +67,7 @@ public class WhirlmModel extends EntityModel<WhirlmEntity> {
     }
 
     @Override
-    public void setupAnim(WhirlmEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float headYaw, float headPitch) {
+    public void setupAnim(BasePinataEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float headYaw, float headPitch) {
         // Worm-like undulation — sinusoidal wave through body segments
         float wave = (float) Math.sin(ageInTicks * 0.3) * 0.15F;
         float moveWave = (float) Math.sin(limbSwing * 0.8) * limbSwingAmount * 0.3F;

@@ -9,7 +9,8 @@ import net.minecraft.resources.ResourceLocation;
  * Renderer for the Whirlm piñata entity.
  * Uses the segmented worm model with piñata-paper texture.
  */
-public class WhirlmRenderer extends MobRenderer<WhirlmEntity, WhirlmModel> {
+@SuppressWarnings({"unchecked", "rawtypes"})
+public class WhirlmRenderer extends MobRenderer {
 
     private static final ResourceLocation TEXTURE =
             ResourceLocation.fromNamespaceAndPath(ReactiveFluids.MOD_ID, "textures/entity/pinata/whirlm.png");
@@ -21,7 +22,7 @@ public class WhirlmRenderer extends MobRenderer<WhirlmEntity, WhirlmModel> {
     }
 
     @Override
-    public ResourceLocation getTextureLocation(WhirlmEntity entity) {
-        return entity.isSour() ? SOUR_TEXTURE : TEXTURE;
+    public ResourceLocation getTextureLocation(net.minecraft.world.entity.Entity entity) {
+        return ((BasePinataEntity)entity).isSour() ? SOUR_TEXTURE : TEXTURE;
     }
 }

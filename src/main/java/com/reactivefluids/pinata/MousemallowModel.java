@@ -16,7 +16,7 @@ import com.reactivefluids.ReactiveFluids;
  * whiskers, four tiny feet, long curving tail.
  * Pink/white marshmallow coloring.
  */
-public class MousemallowModel extends EntityModel<MousemallowEntity> {
+public class MousemallowModel extends EntityModel<BasePinataEntity> {
 
     public static final ModelLayerLocation LAYER =
             new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(ReactiveFluids.MOD_ID, "mousemallow"), "main");
@@ -97,7 +97,7 @@ public class MousemallowModel extends EntityModel<MousemallowEntity> {
     }
 
     @Override
-    public void setupAnim(MousemallowEntity entity, float limbSwing, float limbSwingAmount,
+    public void setupAnim(BasePinataEntity entity, float limbSwing, float limbSwingAmount,
                           float ageInTicks, float headYaw, float headPitch) {
         head.yRot = headYaw * ((float) Math.PI / 180F);
         head.xRot = headPitch * ((float) Math.PI / 180F) * 0.5F;

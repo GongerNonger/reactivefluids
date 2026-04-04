@@ -5,7 +5,8 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 
-public class SyrupentRenderer extends MobRenderer<SyrupentEntity, SyrupentModel> {
+@SuppressWarnings({"unchecked", "rawtypes"})
+public class SyrupentRenderer extends MobRenderer {
 
     private static final ResourceLocation TEXTURE =
             ResourceLocation.fromNamespaceAndPath(ReactiveFluids.MOD_ID, "textures/entity/pinata/syrupent.png");
@@ -17,7 +18,7 @@ public class SyrupentRenderer extends MobRenderer<SyrupentEntity, SyrupentModel>
     }
 
     @Override
-    public ResourceLocation getTextureLocation(SyrupentEntity entity) {
-        return entity.isSour() ? SOUR_TEXTURE : TEXTURE;
+    public ResourceLocation getTextureLocation(net.minecraft.world.entity.Entity entity) {
+        return ((BasePinataEntity)entity).isSour() ? SOUR_TEXTURE : TEXTURE;
     }
 }

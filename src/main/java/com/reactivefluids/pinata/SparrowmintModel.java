@@ -15,7 +15,7 @@ import com.reactivefluids.ReactiveFluids;
  * VP reference: ball-shaped body, small pointed beak, two paper-fold wings,
  * short legs, fan-shaped tail feathers. Mint-green coloring.
  */
-public class SparrowmintModel extends EntityModel<SparrowmintEntity> {
+public class SparrowmintModel extends EntityModel<BasePinataEntity> {
 
     public static final ModelLayerLocation LAYER =
             new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(ReactiveFluids.MOD_ID, "sparrowmint"), "main");
@@ -96,7 +96,7 @@ public class SparrowmintModel extends EntityModel<SparrowmintEntity> {
     }
 
     @Override
-    public void setupAnim(SparrowmintEntity entity, float limbSwing, float limbSwingAmount,
+    public void setupAnim(BasePinataEntity entity, float limbSwing, float limbSwingAmount,
                           float ageInTicks, float headYaw, float headPitch) {
         head.yRot = headYaw * ((float) Math.PI / 180F);
         head.xRot = headPitch * ((float) Math.PI / 180F) * 0.5F;

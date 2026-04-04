@@ -11,7 +11,7 @@ import net.minecraft.resources.ResourceLocation;
 import com.reactivefluids.ReactiveFluids;
 
 /** Quackberry — flat-billed duck, wide body, stubby wings, flat webbed feet. Blue-purple. */
-public class QuackberryModel extends EntityModel<QuackberryEntity> {
+public class QuackberryModel extends EntityModel<BasePinataEntity> {
     public static final ModelLayerLocation LAYER =
             new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(ReactiveFluids.MOD_ID, "quackberry"), "main");
     private final ModelPart body, head, wingL, wingR, legL, legR, tail;
@@ -44,7 +44,7 @@ public class QuackberryModel extends EntityModel<QuackberryEntity> {
     }
 
     @Override
-    public void setupAnim(QuackberryEntity e, float ls, float la, float age, float hy, float hp) {
+    public void setupAnim(BasePinataEntity e, float ls, float la, float age, float hy, float hp) {
         head.yRot = hy * 0.017F; head.xRot = hp * 0.017F * 0.4F;
         float waddle = (float) Math.sin(ls * 0.8F) * la * 0.4F;
         legL.xRot = waddle; legR.xRot = -waddle;

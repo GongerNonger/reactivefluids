@@ -11,7 +11,7 @@ import net.minecraft.resources.ResourceLocation;
 import com.reactivefluids.ReactiveFluids;
 
 /** Shellybean — snail with spiral shell, eye stalks, soft body. Pastel jelly-bean colors. */
-public class ShellybeanModel extends EntityModel<ShellybeanEntity> {
+public class ShellybeanModel extends EntityModel<BasePinataEntity> {
     public static final ModelLayerLocation LAYER =
             new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(ReactiveFluids.MOD_ID, "shellybean"), "main");
     private final ModelPart body, shell, eyeL, eyeR;
@@ -39,7 +39,7 @@ public class ShellybeanModel extends EntityModel<ShellybeanEntity> {
     }
 
     @Override
-    public void setupAnim(ShellybeanEntity e, float ls, float la, float age, float hy, float hp) {
+    public void setupAnim(BasePinataEntity e, float ls, float la, float age, float hy, float hp) {
         // Eye stalks sway gently
         float sway = (float) Math.sin(age * 0.15F) * 0.15F;
         eyeL.xRot = -0.2F + sway;

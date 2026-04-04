@@ -11,7 +11,7 @@ import net.minecraft.resources.ResourceLocation;
 import com.reactivefluids.ReactiveFluids;
 
 /** Cluckles — plump chicken, red comb, fan tail, small wings. Choc-chip cookie coloring. */
-public class ClucklesModel extends EntityModel<ClucklesEntity> {
+public class ClucklesModel extends EntityModel<BasePinataEntity> {
     public static final ModelLayerLocation LAYER =
             new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(ReactiveFluids.MOD_ID, "cluckles"), "main");
     private final ModelPart body, head, comb, wingL, wingR, legL, legR, tail;
@@ -47,7 +47,7 @@ public class ClucklesModel extends EntityModel<ClucklesEntity> {
     }
 
     @Override
-    public void setupAnim(ClucklesEntity e, float ls, float la, float age, float hy, float hp) {
+    public void setupAnim(BasePinataEntity e, float ls, float la, float age, float hy, float hp) {
         head.yRot = hy * 0.017F; head.xRot = hp * 0.017F * 0.3F;
         comb.yRot = head.yRot; comb.xRot = head.xRot;
         float peck = (float) Math.sin(ls * 0.8F) * la * 0.5F;

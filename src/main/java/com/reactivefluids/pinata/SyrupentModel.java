@@ -16,7 +16,7 @@ import com.reactivefluids.ReactiveFluids;
  * raised triangular head with forked paper tongue.
  * Golden-amber/syrup coloring with darker diamond back pattern.
  */
-public class SyrupentModel extends EntityModel<SyrupentEntity> {
+public class SyrupentModel extends EntityModel<BasePinataEntity> {
 
     public static final ModelLayerLocation LAYER =
             new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(ReactiveFluids.MOD_ID, "syrupent"), "main");
@@ -88,7 +88,7 @@ public class SyrupentModel extends EntityModel<SyrupentEntity> {
     }
 
     @Override
-    public void setupAnim(SyrupentEntity entity, float limbSwing, float limbSwingAmount,
+    public void setupAnim(BasePinataEntity entity, float limbSwing, float limbSwingAmount,
                           float ageInTicks, float headYaw, float headPitch) {
         head.yRot = headYaw * ((float) Math.PI / 180F);
         head.xRot = headPitch * ((float) Math.PI / 180F) * 0.3F - 0.2F; // Slightly raised

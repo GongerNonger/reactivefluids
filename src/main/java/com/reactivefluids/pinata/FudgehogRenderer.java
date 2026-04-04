@@ -5,7 +5,8 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 
-public class FudgehogRenderer extends MobRenderer<FudgehogEntity, FudgehogModel> {
+@SuppressWarnings({"unchecked", "rawtypes"})
+public class FudgehogRenderer extends MobRenderer {
 
     private static final ResourceLocation TEXTURE =
             ResourceLocation.fromNamespaceAndPath(ReactiveFluids.MOD_ID, "textures/entity/pinata/fudgehog.png");
@@ -17,7 +18,7 @@ public class FudgehogRenderer extends MobRenderer<FudgehogEntity, FudgehogModel>
     }
 
     @Override
-    public ResourceLocation getTextureLocation(FudgehogEntity entity) {
-        return entity.isSour() ? SOUR_TEXTURE : TEXTURE;
+    public ResourceLocation getTextureLocation(net.minecraft.world.entity.Entity entity) {
+        return ((BasePinataEntity)entity).isSour() ? SOUR_TEXTURE : TEXTURE;
     }
 }

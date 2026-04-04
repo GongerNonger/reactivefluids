@@ -11,7 +11,7 @@ import net.minecraft.resources.ResourceLocation;
 import com.reactivefluids.ReactiveFluids;
 
 /** Horstachio — full horse, pistachio-green mane/tail, strong legs. Largest basic piñata. */
-public class HorstachioModel extends EntityModel<HorstachioEntity> {
+public class HorstachioModel extends EntityModel<BasePinataEntity> {
     public static final ModelLayerLocation LAYER =
             new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(ReactiveFluids.MOD_ID, "horstachio"), "main");
     private final ModelPart body, head, neck, mane, tail, legFL, legFR, legBL, legBR;
@@ -55,7 +55,7 @@ public class HorstachioModel extends EntityModel<HorstachioEntity> {
     }
 
     @Override
-    public void setupAnim(HorstachioEntity e, float ls, float la, float age, float hy, float hp) {
+    public void setupAnim(BasePinataEntity e, float ls, float la, float age, float hy, float hp) {
         head.yRot = hy * 0.017F * 0.5F; head.xRot = hp * 0.017F * 0.3F;
         neck.yRot = head.yRot * 0.5F;
         float gallop = (float) Math.sin(ls * 0.6F) * la * 0.7F;

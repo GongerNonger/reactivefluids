@@ -16,7 +16,7 @@ import com.reactivefluids.ReactiveFluids;
  * two thin translucent paper wings on top, six tiny legs underneath.
  * Toffee-brown/amber coloring with darker stripes.
  */
-public class TafflyModel extends EntityModel<TafflyEntity> {
+public class TafflyModel extends EntityModel<BasePinataEntity> {
 
     public static final ModelLayerLocation LAYER =
             new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(ReactiveFluids.MOD_ID, "taffly"), "main");
@@ -91,7 +91,7 @@ public class TafflyModel extends EntityModel<TafflyEntity> {
     }
 
     @Override
-    public void setupAnim(TafflyEntity entity, float limbSwing, float limbSwingAmount,
+    public void setupAnim(BasePinataEntity entity, float limbSwing, float limbSwingAmount,
                           float ageInTicks, float headYaw, float headPitch) {
         head.yRot = headYaw * ((float) Math.PI / 180F);
 

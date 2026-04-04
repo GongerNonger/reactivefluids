@@ -14,7 +14,7 @@ import com.reactivefluids.ReactiveFluids;
  * Bunnycomb — round fluffy rabbit body, long upright ears, cotton tail.
  * VP ref: honeycomb-pattern paper, warm yellow/orange, big feet.
  */
-public class BunnycombModel extends EntityModel<BunnycombEntity> {
+public class BunnycombModel extends EntityModel<BasePinataEntity> {
     public static final ModelLayerLocation LAYER =
             new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(ReactiveFluids.MOD_ID, "bunnycomb"), "main");
 
@@ -50,7 +50,7 @@ public class BunnycombModel extends EntityModel<BunnycombEntity> {
     }
 
     @Override
-    public void setupAnim(BunnycombEntity e, float limbSwing, float limbSwingAmount,
+    public void setupAnim(BasePinataEntity e, float limbSwing, float limbSwingAmount,
                           float age, float headYaw, float headPitch) {
         head.yRot = headYaw * 0.017F; head.xRot = headPitch * 0.017F * 0.5F;
         float hop = (float) Math.sin(limbSwing * 1.2F) * limbSwingAmount;

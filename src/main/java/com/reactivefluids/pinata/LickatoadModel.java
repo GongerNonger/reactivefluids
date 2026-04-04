@@ -11,7 +11,7 @@ import net.minecraft.resources.ResourceLocation;
 import com.reactivefluids.ReactiveFluids;
 
 /** Lickatoad — wide squat frog, big eyes on top, strong back legs. Lollipop-green. */
-public class LickatoadModel extends EntityModel<LickatoadEntity> {
+public class LickatoadModel extends EntityModel<BasePinataEntity> {
     public static final ModelLayerLocation LAYER =
             new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(ReactiveFluids.MOD_ID, "lickatoad"), "main");
     private final ModelPart body, head, legFL, legFR, legBL, legBR;
@@ -48,7 +48,7 @@ public class LickatoadModel extends EntityModel<LickatoadEntity> {
     }
 
     @Override
-    public void setupAnim(LickatoadEntity e, float ls, float la, float age, float hy, float hp) {
+    public void setupAnim(BasePinataEntity e, float ls, float la, float age, float hy, float hp) {
         head.yRot = hy * 0.017F;
         float hop = (float) Math.sin(ls * 1.5F) * la;
         legBL.xRot = hop * 0.5F; legBR.xRot = hop * 0.5F;
