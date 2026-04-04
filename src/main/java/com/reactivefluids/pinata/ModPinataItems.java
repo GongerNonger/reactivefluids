@@ -226,6 +226,29 @@ public class ModPinataItems {
             ITEMS.register("watering_can", () ->
                     new WateringCanItem(new Item.Properties().stacksTo(1)));
 
+    // === Batch 5: Spawn Eggs + Candy ===
+    public static final DeferredHolder<Item, DeferredSpawnEggItem> SQUAZZIL_SPAWN_EGG =
+            ITEMS.register("squazzil_spawn_egg", () -> new DeferredSpawnEggItem(ModPinataEntities.SQUAZZIL, 0x8B6914, 0xD4A06A, new Item.Properties()));
+    public static final DeferredHolder<Item, DeferredSpawnEggItem> SWEETOOTH_SPAWN_EGG =
+            ITEMS.register("sweetooth_spawn_egg", () -> new DeferredSpawnEggItem(ModPinataEntities.SWEETOOTH, 0xC88040, 0xE0C090, new Item.Properties()));
+    public static final DeferredHolder<Item, DeferredSpawnEggItem> MALLOWOLF_SPAWN_EGG =
+            ITEMS.register("mallowolf_spawn_egg", () -> new DeferredSpawnEggItem(ModPinataEntities.MALLOWOLF, 0xE8E8F0, 0x8090B0, new Item.Properties()));
+    public static final DeferredHolder<Item, DeferredSpawnEggItem> COCOADILE_SPAWN_EGG =
+            ITEMS.register("cocoadile_spawn_egg", () -> new DeferredSpawnEggItem(ModPinataEntities.COCOADILE, 0x5C3A1E, 0x8B5E3C, new Item.Properties()));
+    public static final DeferredHolder<Item, DeferredSpawnEggItem> DRAGONACHE_SPAWN_EGG =
+            ITEMS.register("dragonache_spawn_egg", () -> new DeferredSpawnEggItem(ModPinataEntities.DRAGONACHE, 0xC040FF, 0xFFD700, new Item.Properties()));
+
+    public static final DeferredHolder<Item, Item> SQUAZZIL_CANDY =
+            ITEMS.register("squazzil_candy", () -> new Item(new Item.Properties().food(candyFood(3, 0.4F))));
+    public static final DeferredHolder<Item, Item> SWEETOOTH_CANDY =
+            ITEMS.register("sweetooth_candy", () -> new Item(new Item.Properties().food(candyFood(5, 0.6F))));
+    public static final DeferredHolder<Item, Item> MALLOWOLF_CANDY =
+            ITEMS.register("mallowolf_candy", () -> new Item(new Item.Properties().food(candyFood(5, 0.6F))));
+    public static final DeferredHolder<Item, Item> COCOADILE_CANDY =
+            ITEMS.register("cocoadile_candy", () -> new Item(new Item.Properties().food(candyFood(6, 0.7F))));
+    public static final DeferredHolder<Item, Item> DRAGONACHE_CANDY =
+            ITEMS.register("dragonache_candy", () -> new Item(new Item.Properties().food(candyFood(8, 1.0F))));
+
     // === Batch 4: Spawn Eggs ===
     public static final DeferredHolder<Item, DeferredSpawnEggItem> BARKBARK_SPAWN_EGG =
             ITEMS.register("barkbark_spawn_egg", () -> new DeferredSpawnEggItem(ModPinataEntities.BARKBARK, 0x8B5A2B, 0xD2A06D, new Item.Properties()));

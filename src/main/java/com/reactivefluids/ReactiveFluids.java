@@ -136,6 +136,16 @@ public class ReactiveFluids {
                 DoenutEntity.createAttributes().build());
         event.put(ModPinataEntities.SEEDOS.get(),
                 SeedosEntity.createAttributes().build());
+        event.put(ModPinataEntities.SQUAZZIL.get(),
+                SquazzilEntity.createAttributes().build());
+        event.put(ModPinataEntities.SWEETOOTH.get(),
+                SweetoothEntity.createAttributes().build());
+        event.put(ModPinataEntities.MALLOWOLF.get(),
+                MallowolfEntity.createAttributes().build());
+        event.put(ModPinataEntities.COCOADILE.get(),
+                CocoadileEntity.createAttributes().build());
+        event.put(ModPinataEntities.DRAGONACHE.get(),
+                DragonacheEntity.createAttributes().build());
         event.put(ModPinataEntities.RUFFIAN.get(),
                 RuffianEntity.createAttributes().build());
         event.put(ModPinataEntities.DASTARDOS.get(),

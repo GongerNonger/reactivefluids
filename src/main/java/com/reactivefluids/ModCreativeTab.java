@@ -132,6 +132,11 @@ public class ModCreativeTab {
                     output.accept(ModPinataItems.GOOBAA_SPAWN_EGG.get());
                     output.accept(ModPinataItems.RASHBERRY_SPAWN_EGG.get());
                     output.accept(ModPinataItems.DOENUT_SPAWN_EGG.get());
+                    output.accept(ModPinataItems.SQUAZZIL_SPAWN_EGG.get());
+                    output.accept(ModPinataItems.SWEETOOTH_SPAWN_EGG.get());
+                    output.accept(ModPinataItems.MALLOWOLF_SPAWN_EGG.get());
+                    output.accept(ModPinataItems.COCOADILE_SPAWN_EGG.get());
+                    output.accept(ModPinataItems.DRAGONACHE_SPAWN_EGG.get());
                     // --- Viva Piñata: Candy ---
                     output.accept(ModPinataItems.WHIRLM_CANDY.get());
                     output.accept(ModPinataItems.SPARROWMINT_CANDY.get());
@@ -153,6 +158,11 @@ public class ModCreativeTab {
                     output.accept(ModPinataItems.GOOBAA_CANDY.get());
                     output.accept(ModPinataItems.RASHBERRY_CANDY.get());
                     output.accept(ModPinataItems.DOENUT_CANDY.get());
+                    output.accept(ModPinataItems.SQUAZZIL_CANDY.get());
+                    output.accept(ModPinataItems.SWEETOOTH_CANDY.get());
+                    output.accept(ModPinataItems.MALLOWOLF_CANDY.get());
+                    output.accept(ModPinataItems.COCOADILE_CANDY.get());
+                    output.accept(ModPinataItems.DRAGONACHE_CANDY.get());
                 })
                 .build()
         );

@@ -154,6 +154,23 @@ public class ModPinataEntities {
                     EntityType.Builder.<SeedosEntity>of(SeedosEntity::new, MobCategory.CREATURE)
                             .sized(0.6F, 1.8F).clientTrackingRange(10).build("seedos"));
 
+    // === Batch 5 ===
+    public static final DeferredHolder<EntityType<?>, EntityType<SquazzilEntity>> SQUAZZIL =
+            ENTITY_TYPES.register("squazzil", () -> EntityType.Builder.<SquazzilEntity>of(SquazzilEntity::new, MobCategory.CREATURE)
+                    .sized(0.4F, 0.45F).clientTrackingRange(8).build("squazzil"));
+    public static final DeferredHolder<EntityType<?>, EntityType<SweetoothEntity>> SWEETOOTH =
+            ENTITY_TYPES.register("sweetooth", () -> EntityType.Builder.<SweetoothEntity>of(SweetoothEntity::new, MobCategory.CREATURE)
+                    .sized(0.9F, 0.9F).clientTrackingRange(10).build("sweetooth"));
+    public static final DeferredHolder<EntityType<?>, EntityType<MallowolfEntity>> MALLOWOLF =
+            ENTITY_TYPES.register("mallowolf", () -> EntityType.Builder.<MallowolfEntity>of(MallowolfEntity::new, MobCategory.CREATURE)
+                    .sized(0.6F, 0.8F).clientTrackingRange(10).build("mallowolf"));
+    public static final DeferredHolder<EntityType<?>, EntityType<CocoadileEntity>> COCOADILE =
+            ENTITY_TYPES.register("cocoadile", () -> EntityType.Builder.<CocoadileEntity>of(CocoadileEntity::new, MobCategory.CREATURE)
+                    .sized(1.2F, 0.5F).clientTrackingRange(10).build("cocoadile"));
+    public static final DeferredHolder<EntityType<?>, EntityType<DragonacheEntity>> DRAGONACHE =
+            ENTITY_TYPES.register("dragonache", () -> EntityType.Builder.<DragonacheEntity>of(DragonacheEntity::new, MobCategory.CREATURE)
+                    .sized(1.6F, 1.8F).clientTrackingRange(16).fireImmune().build("dragonache"));
+
     // === Threats ===
     public static final DeferredHolder<EntityType<?>, EntityType<RuffianEntity>> RUFFIAN =
             ENTITY_TYPES.register("ruffian", () ->

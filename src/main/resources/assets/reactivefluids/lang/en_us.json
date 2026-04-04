@@ -256,6 +256,26 @@
   "entity.reactivefluids.seedos":                                "Seedos",
   "item.reactivefluids.seedos_spawn_egg":                        "Seedos Spawn Egg",
 
+  "entity.reactivefluids.squazzil":                              "Squazzil",
+  "item.reactivefluids.squazzil_spawn_egg":                      "Squazzil Spawn Egg",
+  "item.reactivefluids.squazzil_candy":                          "Squazzil Candy",
+
+  "entity.reactivefluids.sweetooth":                             "Sweetooth",
+  "item.reactivefluids.sweetooth_spawn_egg":                     "Sweetooth Spawn Egg",
+  "item.reactivefluids.sweetooth_candy":                         "Sweetooth Candy",
+
+  "entity.reactivefluids.mallowolf":                             "Mallowolf",
+  "item.reactivefluids.mallowolf_spawn_egg":                     "Mallowolf Spawn Egg",
+  "item.reactivefluids.mallowolf_candy":                         "Mallowolf Candy",
+
+  "entity.reactivefluids.cocoadile":                             "Cocoadile",
+  "item.reactivefluids.cocoadile_spawn_egg":                     "Cocoadile Spawn Egg",
+  "item.reactivefluids.cocoadile_candy":                         "Cocoadile Candy",
+
+  "entity.reactivefluids.dragonache":                            "Dragonache",
+  "item.reactivefluids.dragonache_spawn_egg":                    "Dragonache Spawn Egg",
+  "item.reactivefluids.dragonache_candy":                        "Dragonache Candy",
+
   "entity.reactivefluids.ruffian":                               "Ruffian",
   "item.reactivefluids.ruffian_spawn_egg":                       "Ruffian Spawn Egg",
   "entity.reactivefluids.dastardos":                             "Dastardos",

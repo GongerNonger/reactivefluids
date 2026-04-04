@@ -54,6 +54,12 @@ public class ClientEvents {
         event.registerEntityRenderer(ModPinataEntities.GOOBAA.get(), GoobaaRenderer::new);
         event.registerEntityRenderer(ModPinataEntities.RASHBERRY.get(), RashberryRenderer::new);
         event.registerEntityRenderer(ModPinataEntities.DOENUT.get(), DoenutRenderer::new);
+        // Batch 5
+        event.registerEntityRenderer(ModPinataEntities.SQUAZZIL.get(), SquazzilRenderer::new);
+        event.registerEntityRenderer(ModPinataEntities.SWEETOOTH.get(), SweetoothRenderer::new);
+        event.registerEntityRenderer(ModPinataEntities.MALLOWOLF.get(), MallowolfRenderer::new);
+        event.registerEntityRenderer(ModPinataEntities.COCOADILE.get(), CocoadileRenderer::new);
+        event.registerEntityRenderer(ModPinataEntities.DRAGONACHE.get(), DragonacheRenderer::new);
         // NPCs and threats — use villager model as placeholder
         event.registerEntityRenderer(ModPinataEntities.RUFFIAN.get(),
                 ctx -> new net.minecraft.client.renderer.entity.MobRenderer<RuffianEntity, VillagerModel<RuffianEntity>>(

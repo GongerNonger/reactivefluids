@@ -472,6 +472,41 @@ SPECIES = {
         "dark": (140, 100, 60, 255),    # Dark choc chip
         "accent": (192, 48, 32, 255),   # Red comb
     },
+    "squazzil": {
+        "w": 32, "h": 16,
+        "main": (139, 105, 20, 255),    # Hazelnut brown
+        "light": (212, 166, 106, 255),  # Light hazel
+        "dark": (90, 65, 15, 255),      # Dark hazel
+        "accent": (180, 140, 60, 255),  # Golden stripe
+    },
+    "sweetooth": {
+        "w": 48, "h": 32,
+        "main": (200, 128, 64, 255),    # Caramel/toffee
+        "light": (224, 192, 144, 255),  # Light caramel
+        "dark": (140, 80, 30, 255),     # Dark toffee
+        "accent": (240, 200, 120, 255), # Honey highlight
+    },
+    "mallowolf": {
+        "w": 32, "h": 32,
+        "main": (232, 232, 240, 255),   # Marshmallow white
+        "light": (248, 248, 255, 255),  # Pure white
+        "dark": (180, 180, 200, 255),   # Blue-gray shadow
+        "accent": (128, 144, 176, 255), # Blue-gray accent
+    },
+    "cocoadile": {
+        "w": 32, "h": 32,
+        "main": (92, 58, 30, 255),      # Cocoa brown
+        "light": (139, 94, 60, 255),    # Light cocoa
+        "dark": (50, 30, 15, 255),      # Dark chocolate
+        "accent": (120, 80, 40, 255),   # Milk chocolate stripe
+    },
+    "dragonache": {
+        "w": 64, "h": 32,
+        "main": (192, 64, 255, 255),    # Royal purple
+        "light": (230, 150, 255, 255),  # Light purple
+        "dark": (100, 20, 160, 255),    # Deep purple
+        "accent": (255, 215, 0, 255),   # Gold accents
+    },
     "barkbark": {
         "w": 32, "h": 32,
         "main": (139, 90, 43, 255),     # Bark brown
