@@ -43,19 +43,23 @@ public class MoonlightJellyfishRenderer extends MobRenderer<MoonlightJellyfishEn
     }
 
     /**
-     * Squid-style body rotation setup — orients the jellyfish based on
-     * movement direction so the bell faces the direction of travel with
-     * tentacles trailing behind.
+     * Custom orientation: bell on top, tentacles below.
+     * Flip 180 on X so tentacles hang down, then apply yaw so
+     * the front faces the movement direction.
+     * Slight tilt toward movement direction for organic feel.
      */
     @Override
     protected void setupRotations(MoonlightJellyfishEntity entity, PoseStack poseStack,
                                    float ageInTicks, float rotationYaw, float partialTick, float scale) {
-        float xRot = Mth.lerp(partialTick, entity.xBodyRotO, entity.xBodyRot);
-        float zRot = Mth.lerp(partialTick, entity.zBodyRotO, entity.zBodyRot);
         poseStack.translate(0.0F, 0.5F, 0.0F);
+        // Yaw: face direction of movement
         poseStack.mulPose(Axis.YP.rotationDegrees(180.0F - rotationYaw));
-        poseStack.mulPose(Axis.XP.rotationDegrees(xRot));
-        poseStack.mulPose(Axis.YP.rotationDegrees(zRot));
+        // Flip 180 on X axis: this puts bell on top, tentacles hanging down
+        poseStack.mulPose(Axis.XP.rotationDegrees(180.0F));
+        // Slight tilt based on vertical movement — nose up when rising, down when sinking
+        float verticalTilt = (float) (entity.getDeltaMovement().y * -30.0);
+        verticalTilt = Mth.clamp(verticalTilt, -15.0F, 15.0F);
+        poseStack.mulPose(Axis.XP.rotationDegrees(verticalTilt));
         poseStack.translate(0.0F, -1.2F, 0.0F);
     }
 
