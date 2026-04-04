@@ -154,14 +154,12 @@ public class MoonlightJellyfishEntity extends WaterAnimal {
                 this.tentacleAngle = Mth.sin(f * f * (float) Math.PI) * (float) Math.PI * 0.25F;
                 if ((double) f > 0.75) {
                     this.speed = 0.7F;
-                    this.rotateSpeed = 1.0F;
                 } else {
-                    this.rotateSpeed *= 0.8F;
+                    this.speed *= 0.8F;
                 }
             } else {
                 this.tentacleAngle = 0.0F;
                 this.speed *= 0.85F;
-                this.rotateSpeed *= 0.99F;
             }
 
             if (!this.level().isClientSide) {
@@ -173,13 +171,22 @@ public class MoonlightJellyfishEntity extends WaterAnimal {
 
             Vec3 vel = this.getDeltaMovement();
             double hDist = vel.horizontalDistance();
-            this.yBodyRot += (-((float) Mth.atan2(vel.x, vel.z)) * (180F / (float) Math.PI) - this.yBodyRot) * 0.1F;
+            // Yaw: slowly track movement direction
+            this.yBodyRot += (-((float) Mth.atan2(vel.x, vel.z)) * (180F / (float) Math.PI) - this.yBodyRot) * 0.05F;
             this.setYRot(this.yBodyRot);
-            this.zBodyRot += (float) Math.PI * this.rotateSpeed * 1.5F;
-            this.xBodyRot += (-((float) Mth.atan2(hDist, vel.y)) * (180F / (float) Math.PI) - this.xBodyRot) * 0.1F;
+            // No Z roll — jellyfish don't spin like squid
+            this.zBodyRot = 0.0F;
+            // X pitch: very gentle tilt toward movement, heavily damped to prevent flipping
+            float targetPitch = -((float) Mth.atan2(hDist, vel.y)) * (180F / (float) Math.PI);
+            // Clamp target so it never goes past 45 degrees from neutral (90 = upright)
+            targetPitch = Mth.clamp(targetPitch, 45.0F, 135.0F);
+            this.xBodyRot += (targetPitch - this.xBodyRot) * 0.03F; // very slow interpolation
         } else {
-            // Out of water — fall with tentacles spread
+            // Out of water — fall upright, tentacles spread
             this.tentacleAngle = Mth.abs(Mth.sin(this.tentacleMovement)) * (float) Math.PI * 0.25F;
+            // Slowly return to upright orientation (90 degrees)
+            this.xBodyRot += (90.0F - this.xBodyRot) * 0.05F;
+            this.zBodyRot = 0.0F;
             if (!this.level().isClientSide) {
                 double dy = this.getDeltaMovement().y;
                 if (this.hasEffect(MobEffects.LEVITATION)) {
