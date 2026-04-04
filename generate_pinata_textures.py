@@ -243,12 +243,200 @@ def generate_whirlm_candy_texture():
     write_png(os.path.join(ITEM_TEXTURE_DIR, "whirlm_candy.png"), W, H, pixels)
     print("  Generated whirlm_candy.png")
 
+def generate_entity_texture(name, w, h, main_color, light_color, dark_color,
+                            accent_color, eye_color=(20,15,15,255), has_stripes=True):
+    """Generic piñata entity texture generator.
+    Creates a paper-piñata look with stripes, highlights, shadows, and eyes."""
+    pixels = [main_color] * (w * h)
+
+    def set_pixel(x, y, color):
+        if 0 <= x < w and 0 <= y < h:
+            pixels[y * w + x] = color
+
+    def fill_rect(x1, y1, rw, rh, color):
+        for dy in range(rh):
+            for dx in range(rw):
+                set_pixel(x1 + dx, y1 + dy, color)
+
+    # Paper-fold horizontal stripes
+    if has_stripes:
+        for y in range(0, h, 3):
+            for x in range(w):
+                set_pixel(x, y, accent_color)
+
+    # Top shadow
+    for x in range(w):
+        set_pixel(x, 0, dark_color)
+        if h > 1:
+            set_pixel(x, 1, dark_color)
+
+    # Bottom highlight
+    for x in range(w):
+        set_pixel(x, h - 1, light_color)
+        if h > 1:
+            set_pixel(x, h - 2, light_color)
+
+    # Eye area (top-left quadrant of texture, front face area)
+    eye_y = min(h // 4, 4)
+    eye_x1 = w // 4
+    eye_x2 = w // 4 + 3
+    set_pixel(eye_x1, eye_y, eye_color)
+    set_pixel(eye_x1 + 1, eye_y, eye_color)
+    set_pixel(eye_x2, eye_y, eye_color)
+    set_pixel(eye_x2 + 1, eye_y, eye_color)
+    # Eye highlights
+    set_pixel(eye_x1, eye_y - 1, (255, 255, 255, 255))
+    set_pixel(eye_x2, eye_y - 1, (255, 255, 255, 255))
+
+    # Side shading
+    for y in range(h):
+        set_pixel(0, y, dark_color)
+        set_pixel(w - 1, y, dark_color)
+
+    write_png(os.path.join(TEXTURE_DIR, f"{name}.png"), w, h, pixels)
+    print(f"  Generated {name}.png")
+
+def generate_sour_texture(name, w, h, main_color, dark_color):
+    """Generate a sour variant — dark, cracked, hostile."""
+    # Darken the main color
+    sour_main = tuple(max(0, c - 80) for c in main_color[:3]) + (255,)
+    sour_dark = tuple(max(0, c - 100) for c in dark_color[:3]) + (255,)
+    sour_light = tuple(min(255, c + 20) for c in sour_main[:3]) + (255,)
+    crack = tuple(max(0, c - 120) for c in main_color[:3]) + (255,)
+
+    pixels = [sour_main] * (w * h)
+
+    def set_pixel(x, y, color):
+        if 0 <= x < w and 0 <= y < h:
+            pixels[y * w + x] = color
+
+    # Cracks
+    import random
+    rng = random.Random(hash(name))
+    for _ in range(w * h // 20):
+        cx = rng.randint(0, w - 1)
+        cy = rng.randint(0, h - 1)
+        set_pixel(cx, cy, crack)
+        if cx + 1 < w:
+            set_pixel(cx + 1, cy, crack)
+
+    # Dark top/bottom
+    for x in range(w):
+        set_pixel(x, 0, sour_dark)
+        set_pixel(x, h - 1, sour_dark)
+
+    # Red angry eyes
+    eye_y = min(h // 4, 4)
+    eye_x1 = w // 4
+    eye_x2 = w // 4 + 3
+    red_eye = (220, 30, 30, 255)
+    set_pixel(eye_x1, eye_y, red_eye)
+    set_pixel(eye_x1 + 1, eye_y, red_eye)
+    set_pixel(eye_x2, eye_y, red_eye)
+    set_pixel(eye_x2 + 1, eye_y, red_eye)
+
+    write_png(os.path.join(TEXTURE_DIR, f"{name}_sour.png"), w, h, pixels)
+    print(f"  Generated {name}_sour.png")
+
+def generate_candy_texture(name, main_color, light_color, dark_color, stripe_color):
+    """Generate a 16x16 wrapped candy item texture."""
+    W, H = 16, 16
+    pixels = [(0, 0, 0, 0)] * (W * H)
+
+    def set_pixel(x, y, color):
+        if 0 <= x < W and 0 <= y < H:
+            pixels[y * W + x] = color
+
+    def fill_rect(x1, y1, w, h, color):
+        for dy in range(h):
+            for dx in range(w):
+                set_pixel(x1 + dx, y1 + dy, color)
+
+    # Candy body
+    fill_rect(5, 5, 6, 6, main_color)
+    fill_rect(6, 4, 4, 8, main_color)
+    fill_rect(4, 6, 8, 4, main_color)
+    # Highlight
+    set_pixel(6, 5, light_color)
+    set_pixel(7, 5, light_color)
+    set_pixel(6, 6, light_color)
+    # Shadow
+    fill_rect(5, 10, 6, 1, dark_color)
+    fill_rect(6, 11, 4, 1, dark_color)
+    # Wrapper twist left
+    wrapper = tuple(min(255, c + 40) for c in main_color[:3]) + (255,)
+    fill_rect(2, 7, 2, 2, wrapper)
+    set_pixel(1, 6, wrapper)
+    set_pixel(1, 9, wrapper)
+    # Wrapper twist right
+    fill_rect(12, 7, 2, 2, wrapper)
+    set_pixel(14, 6, wrapper)
+    set_pixel(14, 9, wrapper)
+    # Stripe
+    for y in range(5, 11):
+        set_pixel(8, y, stripe_color)
+
+    write_png(os.path.join(ITEM_TEXTURE_DIR, f"{name}_candy.png"), W, H, pixels)
+    print(f"  Generated {name}_candy.png")
+
+# === Species color definitions ===
+SPECIES = {
+    "sparrowmint": {
+        "w": 32, "h": 32,
+        "main": (123, 200, 108, 255),   # Mint green
+        "light": (180, 230, 160, 255),  # Light green
+        "dark": (70, 140, 60, 255),     # Dark green
+        "accent": (200, 230, 160, 255), # Yellow-green stripe
+    },
+    "fudgehog": {
+        "w": 48, "h": 32,
+        "main": (139, 94, 60, 255),     # Chocolate brown
+        "light": (200, 160, 100, 255),  # Caramel
+        "dark": (90, 55, 30, 255),      # Dark chocolate
+        "accent": (212, 160, 86, 255),  # Fudge highlight
+    },
+    "mousemallow": {
+        "w": 32, "h": 16,
+        "main": (245, 224, 232, 255),   # White-pink marshmallow
+        "light": (255, 240, 248, 255),  # Near white
+        "dark": (210, 180, 195, 255),   # Dusty pink
+        "accent": (255, 182, 217, 255), # Pink stripe
+    },
+    "syrupent": {
+        "w": 32, "h": 32,
+        "main": (212, 150, 10, 255),    # Golden amber
+        "light": (240, 200, 80, 255),   # Light gold
+        "dark": (139, 101, 8, 255),     # Dark amber
+        "accent": (180, 130, 40, 255),  # Diamond pattern brown
+    },
+    "taffly": {
+        "w": 32, "h": 16,
+        "main": (200, 120, 40, 255),    # Toffee brown
+        "light": (232, 208, 160, 255),  # Light toffee
+        "dark": (140, 80, 20, 255),     # Dark toffee
+        "accent": (220, 180, 100, 255), # Amber stripe
+    },
+}
+
 if __name__ == "__main__":
     os.makedirs(TEXTURE_DIR, exist_ok=True)
     os.makedirs(ITEM_TEXTURE_DIR, exist_ok=True)
 
     print("Generating Viva Piñata textures...")
+
+    # Whirlm (custom textures)
     generate_whirlm_texture()
     generate_whirlm_sour_texture()
     generate_whirlm_candy_texture()
+
+    # All other species (generic system)
+    for name, colors in SPECIES.items():
+        generate_entity_texture(name, colors["w"], colors["h"],
+                                colors["main"], colors["light"],
+                                colors["dark"], colors["accent"])
+        generate_sour_texture(name, colors["w"], colors["h"],
+                              colors["main"], colors["dark"])
+        generate_candy_texture(name, colors["main"], colors["light"],
+                               colors["dark"], (255, 255, 255, 200))
+
     print("Done!")

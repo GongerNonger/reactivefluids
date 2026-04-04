@@ -151,5 +151,25 @@
 
   "entity.reactivefluids.whirlm":                                "Whirlm",
   "item.reactivefluids.whirlm_spawn_egg":                        "Whirlm Spawn Egg",
-  "item.reactivefluids.whirlm_candy":                            "Whirlm Candy"
+  "item.reactivefluids.whirlm_candy":                            "Whirlm Candy",
+
+  "entity.reactivefluids.sparrowmint":                           "Sparrowmint",
+  "item.reactivefluids.sparrowmint_spawn_egg":                   "Sparrowmint Spawn Egg",
+  "item.reactivefluids.sparrowmint_candy":                       "Sparrowmint Candy",
+
+  "entity.reactivefluids.fudgehog":                              "Fudgehog",
+  "item.reactivefluids.fudgehog_spawn_egg":                      "Fudgehog Spawn Egg",
+  "item.reactivefluids.fudgehog_candy":                          "Fudgehog Candy",
+
+  "entity.reactivefluids.mousemallow":                           "Mousemallow",
+  "item.reactivefluids.mousemallow_spawn_egg":                   "Mousemallow Spawn Egg",
+  "item.reactivefluids.mousemallow_candy":                       "Mousemallow Candy",
+
+  "entity.reactivefluids.syrupent":                              "Syrupent",
+  "item.reactivefluids.syrupent_spawn_egg":                      "Syrupent Spawn Egg",
+  "item.reactivefluids.syrupent_candy":                          "Syrupent Candy",
+
+  "entity.reactivefluids.taffly":                                "Taffly",
+  "item.reactivefluids.taffly_spawn_egg":                        "Taffly Spawn Egg",
+  "item.reactivefluids.taffly_candy":                            "Taffly Candy"
 }

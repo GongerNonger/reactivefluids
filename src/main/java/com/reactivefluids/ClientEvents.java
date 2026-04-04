@@ -1,8 +1,6 @@
 package com.reactivefluids;
 
-import com.reactivefluids.pinata.ModPinataEntities;
-import com.reactivefluids.pinata.WhirlmModel;
-import com.reactivefluids.pinata.WhirlmRenderer;
+import com.reactivefluids.pinata.*;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
@@ -34,11 +32,21 @@ public class ClientEvents {
 
         // Piñata renderers
         event.registerEntityRenderer(ModPinataEntities.WHIRLM.get(), WhirlmRenderer::new);
+        event.registerEntityRenderer(ModPinataEntities.SPARROWMINT.get(), SparrowmintRenderer::new);
+        event.registerEntityRenderer(ModPinataEntities.FUDGEHOG.get(), FudgehogRenderer::new);
+        event.registerEntityRenderer(ModPinataEntities.MOUSEMALLOW.get(), MousemallowRenderer::new);
+        event.registerEntityRenderer(ModPinataEntities.SYRUPENT.get(), SyrupentRenderer::new);
+        event.registerEntityRenderer(ModPinataEntities.TAFFLY.get(), TafflyRenderer::new);
     }
 
     @SubscribeEvent
     public static void registerModelLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(WhirlmModel.LAYER, WhirlmModel::createBodyLayer);
+        event.registerLayerDefinition(SparrowmintModel.LAYER, SparrowmintModel::createBodyLayer);
+        event.registerLayerDefinition(FudgehogModel.LAYER, FudgehogModel::createBodyLayer);
+        event.registerLayerDefinition(MousemallowModel.LAYER, MousemallowModel::createBodyLayer);
+        event.registerLayerDefinition(SyrupentModel.LAYER, SyrupentModel::createBodyLayer);
+        event.registerLayerDefinition(TafflyModel.LAYER, TafflyModel::createBodyLayer);
     }
 
     @SubscribeEvent

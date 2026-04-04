@@ -1,9 +1,9 @@
 package com.reactivefluids;
 
 import com.mojang.logging.LogUtils;
+import com.reactivefluids.pinata.*;
 import com.reactivefluids.pinata.ModPinataEntities;
 import com.reactivefluids.pinata.ModPinataItems;
-import com.reactivefluids.pinata.WhirlmEntity;
 import net.minecraft.core.dispenser.ProjectileDispenseBehavior;
 import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.server.level.ServerLevel;
@@ -95,6 +95,16 @@ public class ReactiveFluids {
         // Piñata entities
         event.put(ModPinataEntities.WHIRLM.get(),
                 WhirlmEntity.createAttributes().build());
+        event.put(ModPinataEntities.SPARROWMINT.get(),
+                SparrowmintEntity.createAttributes().build());
+        event.put(ModPinataEntities.FUDGEHOG.get(),
+                FudgehogEntity.createAttributes().build());
+        event.put(ModPinataEntities.MOUSEMALLOW.get(),
+                MousemallowEntity.createAttributes().build());
+        event.put(ModPinataEntities.SYRUPENT.get(),
+                SyrupentEntity.createAttributes().build());
+        event.put(ModPinataEntities.TAFFLY.get(),
+                TafflyEntity.createAttributes().build());
     }
 
     private void onServerTick(ServerTickEvent.Post event) {

@@ -24,8 +24,46 @@ public class ModPinataEntities {
                             .clientTrackingRange(8)
                             .build("whirlm"));
 
-    // Future piñata registrations will go here:
-    // SPARROWMINT, FUDGEHOG, PRETZTAIL, BUNNYCOMB, TAFFLY, MOUSEMALLOW,
-    // SYRUPENT, SHELLYBEAN, QUACKBERRY, NEWTGAT, BADGESICLE, EAGLAIR,
-    // HORSTACHIO, ELEPHANILLA, DRAGONACHE, CHOCLODOCUS, etc.
+    // === Sparrowmint (sparrow) — small bird, eats Whirlms ===
+    public static final DeferredHolder<EntityType<?>, EntityType<SparrowmintEntity>> SPARROWMINT =
+            ENTITY_TYPES.register("sparrowmint", () ->
+                    EntityType.Builder.<SparrowmintEntity>of(SparrowmintEntity::new, MobCategory.CREATURE)
+                            .sized(0.5F, 0.5F)
+                            .clientTrackingRange(8)
+                            .build("sparrowmint"));
+
+    // === Fudgehog (hedgehog) — small, spiky, loves long grass ===
+    public static final DeferredHolder<EntityType<?>, EntityType<FudgehogEntity>> FUDGEHOG =
+            ENTITY_TYPES.register("fudgehog", () ->
+                    EntityType.Builder.<FudgehogEntity>of(FudgehogEntity::new, MobCategory.CREATURE)
+                            .sized(0.6F, 0.45F)
+                            .clientTrackingRange(8)
+                            .build("fudgehog"));
+
+    // === Mousemallow (mouse) — tiny, fast herbivore ===
+    public static final DeferredHolder<EntityType<?>, EntityType<MousemallowEntity>> MOUSEMALLOW =
+            ENTITY_TYPES.register("mousemallow", () ->
+                    EntityType.Builder.<MousemallowEntity>of(MousemallowEntity::new, MobCategory.CREATURE)
+                            .sized(0.35F, 0.25F)  // Very small
+                            .clientTrackingRange(8)
+                            .build("mousemallow"));
+
+    // === Syrupent (snake) — medium predator, eats Mousemallows ===
+    public static final DeferredHolder<EntityType<?>, EntityType<SyrupentEntity>> SYRUPENT =
+            ENTITY_TYPES.register("syrupent", () ->
+                    EntityType.Builder.<SyrupentEntity>of(SyrupentEntity::new, MobCategory.CREATURE)
+                            .sized(0.6F, 0.4F)
+                            .clientTrackingRange(8)
+                            .build("syrupent"));
+
+    // === Taffly (fly) — tiny, attracted to flowers ===
+    public static final DeferredHolder<EntityType<?>, EntityType<TafflyEntity>> TAFFLY =
+            ENTITY_TYPES.register("taffly", () ->
+                    EntityType.Builder.<TafflyEntity>of(TafflyEntity::new, MobCategory.CREATURE)
+                            .sized(0.3F, 0.3F)  // Tiny buzzer
+                            .clientTrackingRange(8)
+                            .build("taffly"));
+
+    // Future: PRETZTAIL, BUNNYCOMB, QUACKBERRY, SHELLYBEAN, NEWTGAT,
+    // LICKATOAD, BUZZLEGUM, CLUCKLES, HORSTACHIO, etc.
 }

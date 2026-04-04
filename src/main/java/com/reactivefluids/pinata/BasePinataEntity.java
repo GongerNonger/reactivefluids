@@ -290,7 +290,7 @@ public abstract class BasePinataEntity extends Animal {
                 10, getBbWidth() / 2, getBbHeight() / 2, getBbWidth() / 2, 0.05);
     }
 
-    protected void spawnHappyParticles() {
+    public void spawnHappyParticles() {
         if (level() instanceof ServerLevel serverLevel) {
             serverLevel.sendParticles(ParticleTypes.HAPPY_VILLAGER,
                     getX(), getY() + getBbHeight(), getZ(),
