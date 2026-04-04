@@ -1,6 +1,9 @@
 package com.reactivefluids;
 
 import com.mojang.logging.LogUtils;
+import com.reactivefluids.pinata.ModPinataEntities;
+import com.reactivefluids.pinata.ModPinataItems;
+import com.reactivefluids.pinata.WhirlmEntity;
 import net.minecraft.core.dispenser.ProjectileDispenseBehavior;
 import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.server.level.ServerLevel;
@@ -29,6 +32,10 @@ public class ReactiveFluids {
         ModEntities.ENTITY_TYPES.register(modEventBus);
         ModParticles.PARTICLE_TYPES.register(modEventBus);
         ModCreativeTab.CREATIVE_MODE_TABS.register(modEventBus);
+
+        // Viva Piñata registrations
+        ModPinataEntities.ENTITY_TYPES.register(modEventBus);
+        ModPinataItems.ITEMS.register(modEventBus);
 
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(this::registerAttributes);
@@ -84,6 +91,10 @@ public class ReactiveFluids {
                 RaisedZombieEntity.createAttributes().build());
         event.put(ModEntities.RAISED_SKELETON.get(),
                 RaisedSkeletonEntity.createAttributes().build());
+
+        // Piñata entities
+        event.put(ModPinataEntities.WHIRLM.get(),
+                WhirlmEntity.createAttributes().build());
     }
 
     private void onServerTick(ServerTickEvent.Post event) {

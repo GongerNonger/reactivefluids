@@ -147,5 +147,9 @@
   "message.reactivefluids.raise_dead_fail":                      "Must target two stacked rotten flesh blocks or bone blocks!",
   "block.reactivefluids.rotten_flesh_block":                     "Rotten Flesh Block",
   "entity.reactivefluids.raised_zombie":                         "Raised Zombie",
-  "entity.reactivefluids.raised_skeleton":                       "Raised Skeleton"
+  "entity.reactivefluids.raised_skeleton":                       "Raised Skeleton",
+
+  "entity.reactivefluids.whirlm":                                "Whirlm",
+  "item.reactivefluids.whirlm_spawn_egg":                        "Whirlm Spawn Egg",
+  "item.reactivefluids.whirlm_candy":                            "Whirlm Candy"
 }

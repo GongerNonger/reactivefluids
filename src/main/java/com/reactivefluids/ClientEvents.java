@@ -1,5 +1,8 @@
 package com.reactivefluids;
 
+import com.reactivefluids.pinata.ModPinataEntities;
+import com.reactivefluids.pinata.WhirlmModel;
+import com.reactivefluids.pinata.WhirlmRenderer;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
@@ -28,6 +31,14 @@ public class ClientEvents {
         event.registerEntityRenderer(ModEntities.METEOR.get(), MeteorRenderer::new);
         event.registerEntityRenderer(ModEntities.RAISED_ZOMBIE.get(), RaisedZombieRenderer::new);
         event.registerEntityRenderer(ModEntities.RAISED_SKELETON.get(), RaisedSkeletonRenderer::new);
+
+        // Piñata renderers
+        event.registerEntityRenderer(ModPinataEntities.WHIRLM.get(), WhirlmRenderer::new);
+    }
+
+    @SubscribeEvent
+    public static void registerModelLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
+        event.registerLayerDefinition(WhirlmModel.LAYER, WhirlmModel::createBodyLayer);
     }
 
     @SubscribeEvent

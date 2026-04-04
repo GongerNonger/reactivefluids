@@ -1,5 +1,6 @@
 package com.reactivefluids;
 
+import com.reactivefluids.pinata.ModPinataItems;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
@@ -80,6 +81,9 @@ public class ModCreativeTab {
                     output.accept(ModItems.RAISE_DEAD_SCROLL.get());         // 3rd level
                     // Undead crafting blocks
                     output.accept(ModItems.ROTTEN_FLESH_BLOCK_ITEM.get());
+                    // --- Viva Piñata ---
+                    output.accept(ModPinataItems.WHIRLM_SPAWN_EGG.get());
+                    output.accept(ModPinataItems.WHIRLM_CANDY.get());
                 })
                 .build()
         );
