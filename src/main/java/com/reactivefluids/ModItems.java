@@ -313,4 +313,19 @@ public class ModItems {
                 0x142850, // dark ocean blue base
                 0x64DCFF, // glowing cyan spots
                 new Item.Properties()));
+
+    // =========================================================================
+    // Lava Lamp Block Items
+    // =========================================================================
+    public static final DeferredItem<BlockItem> LAVA_LAMP_RED_ITEM =
+        ITEMS.register("lava_lamp_red", () -> new BlockItem(ModBlocks.LAVA_LAMP_RED.get(), new Item.Properties()));
+
+    public static final DeferredItem<BlockItem> LAVA_LAMP_BLUE_ITEM =
+        ITEMS.register("lava_lamp_blue", () -> new BlockItem(ModBlocks.LAVA_LAMP_BLUE.get(), new Item.Properties()));
+
+    public static final DeferredItem<BlockItem> LAVA_LAMP_GREEN_ITEM =
+        ITEMS.register("lava_lamp_green", () -> new BlockItem(ModBlocks.LAVA_LAMP_GREEN.get(), new Item.Properties()));
+
+    public static final DeferredItem<BlockItem> LAVA_LAMP_PURPLE_ITEM =
+        ITEMS.register("lava_lamp_purple", () -> new BlockItem(ModBlocks.LAVA_LAMP_PURPLE.get(), new Item.Properties()));
 }

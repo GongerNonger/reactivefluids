@@ -172,5 +172,10 @@
   "entity.reactivefluids.raised_skeleton":                       "Raised Skeleton",
 
   "entity.reactivefluids.moonlight_jellyfish":                   "Moonlight Jellyfish",
-  "item.reactivefluids.moonlight_jellyfish_spawn_egg":           "Moonlight Jellyfish Spawn Egg"
+  "item.reactivefluids.moonlight_jellyfish_spawn_egg":           "Moonlight Jellyfish Spawn Egg",
+
+  "block.reactivefluids.lava_lamp_red":    "Red Lava Lamp",
+  "block.reactivefluids.lava_lamp_blue":   "Blue Lava Lamp",
+  "block.reactivefluids.lava_lamp_green":  "Green Lava Lamp",
+  "block.reactivefluids.lava_lamp_purple": "Purple Lava Lamp"
 }

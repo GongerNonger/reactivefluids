@@ -68,6 +68,12 @@ public class ClientEvents {
 
             // Return Portal — translucent (pocket dimension exit)
             ItemBlockRenderTypes.setRenderLayer(ModBlocks.RETURN_PORTAL.get(), RenderType.translucent());
+
+            // Lava Lamps — translucent glass
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.LAVA_LAMP_RED.get(), RenderType.translucent());
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.LAVA_LAMP_BLUE.get(), RenderType.translucent());
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.LAVA_LAMP_GREEN.get(), RenderType.translucent());
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.LAVA_LAMP_PURPLE.get(), RenderType.translucent());
         });
     }
 

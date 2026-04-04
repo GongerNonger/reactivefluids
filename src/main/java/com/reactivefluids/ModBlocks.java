@@ -290,4 +290,26 @@ public class ModBlocks {
         BLOCKS.register("indicator_block", () ->
             new IndicatorBlock((FlowingFluid) ModFluids.INDICATOR_SOURCE.get(),
                 fluidProps(MapColor.COLOR_GREEN)));
+
+    // =========================================================================
+    // Lava Lamps — decorative glowing blocks with rising blob particles
+    // =========================================================================
+    private static BlockBehaviour.Properties lavaLampProps(MapColor color) {
+        return BlockBehaviour.Properties.of()
+                .strength(0.5f, 0.5f).sound(SoundType.GLASS)
+                .noOcclusion().isSuffocating((s,l,p) -> false).isViewBlocking((s,l,p) -> false)
+                .lightLevel(state -> 12).mapColor(color);
+    }
+
+    public static final DeferredBlock<LavaLampBlock> LAVA_LAMP_RED =
+        BLOCKS.register("lava_lamp_red", () -> new LavaLampBlock(lavaLampProps(MapColor.COLOR_RED), 0xFF3020));
+
+    public static final DeferredBlock<LavaLampBlock> LAVA_LAMP_BLUE =
+        BLOCKS.register("lava_lamp_blue", () -> new LavaLampBlock(lavaLampProps(MapColor.COLOR_BLUE), 0x2080FF));
+
+    public static final DeferredBlock<LavaLampBlock> LAVA_LAMP_GREEN =
+        BLOCKS.register("lava_lamp_green", () -> new LavaLampBlock(lavaLampProps(MapColor.COLOR_GREEN), 0x20FF60));
+
+    public static final DeferredBlock<LavaLampBlock> LAVA_LAMP_PURPLE =
+        BLOCKS.register("lava_lamp_purple", () -> new LavaLampBlock(lavaLampProps(MapColor.COLOR_PURPLE), 0xA030FF));
 }
