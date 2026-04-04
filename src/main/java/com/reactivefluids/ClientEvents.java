@@ -32,12 +32,6 @@ public class ClientEvents {
     }
 
     @SubscribeEvent
-    public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
-        event.registerLayerDefinition(MoonlightJellyfishModel.LAYER_LOCATION,
-                MoonlightJellyfishModel::createBodyLayer);
-    }
-
-    @SubscribeEvent
     public static void registerParticleProviders(RegisterParticleProvidersEvent event) {
         event.registerSpriteSet(ModParticles.DISINTEGRATE.get(), DisintegrateParticle.Provider::new);
         event.registerSpriteSet(ModParticles.DANCING_LIGHT.get(), DancingLightParticle.Provider::new);

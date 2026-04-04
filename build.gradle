@@ -42,10 +42,12 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
     maven { url = 'https://maven.neoforged.net/releases' }
+    maven { url = 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/' }
 }
 
 dependencies {
     implementation "net.neoforged:neoforge:${project.neo_version}"
+    implementation "software.bernie.geckolib:geckolib-neoforge-1.21.1:4.7.5.1"
 }
 
 publishing {

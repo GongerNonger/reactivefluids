@@ -30,13 +30,19 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.animation.*;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
 /**
  * Moonlight Jellyfish — ambient bioluminescent water creature.
  * Movement based on vanilla Squid: pulse-driven propulsion with
  * bell contraction/expansion animation. Periodically glows.
  */
-public class MoonlightJellyfishEntity extends WaterAnimal {
+public class MoonlightJellyfishEntity extends WaterAnimal implements GeoEntity {
+
+    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
     private static final int GLOW_CYCLE_LENGTH = 80;
 
@@ -285,6 +291,23 @@ public class MoonlightJellyfishEntity extends WaterAnimal {
     @Override
     public boolean removeWhenFarAway(double distanceToPlayer) {
         return false;
+    }
+
+    // =========================================================================
+    // GeckoLib animation
+    // =========================================================================
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+        controllers.add(new AnimationController<>(this, "idle", 5, state -> {
+            state.getController().setAnimation(
+                    RawAnimation.begin().thenLoop("animation.jellyfish.idle"));
+            return PlayState.CONTINUE;
+        }));
+    }
+
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return this.cache;
     }
 
     // =========================================================================

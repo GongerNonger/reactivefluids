@@ -14,7 +14,6 @@ import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 import net.neoforged.neoforge.fluids.FluidInteractionRegistry;
 import org.slf4j.Logger;
-
 @Mod(ReactiveFluids.MOD_ID)
 public class ReactiveFluids {
 
