@@ -32,14 +32,14 @@ public class ClientEvents {
         event.registerEntityRenderer(ModEntities.RAISED_ZOMBIE.get(), RaisedZombieRenderer::new);
         event.registerEntityRenderer(ModEntities.RAISED_SKELETON.get(), RaisedSkeletonRenderer::new);
 
-        // Piñata renderers
-        event.registerEntityRenderer(ModPinataEntities.WHIRLM.get(), WhirlmRenderer::new);
-        event.registerEntityRenderer(ModPinataEntities.SPARROWMINT.get(), SparrowmintRenderer::new);
-        event.registerEntityRenderer(ModPinataEntities.FUDGEHOG.get(), FudgehogRenderer::new);
-        event.registerEntityRenderer(ModPinataEntities.MOUSEMALLOW.get(), MousemallowRenderer::new);
+        // Piñata renderers — GeckoLib for species with Bedrock reference models
+        event.registerEntityRenderer(ModPinataEntities.WHIRLM.get(), PinataGeoRenderer.provider("whirlm"));
+        event.registerEntityRenderer(ModPinataEntities.SPARROWMINT.get(), PinataGeoRenderer.provider("sparrowmint"));
+        event.registerEntityRenderer(ModPinataEntities.FUDGEHOG.get(), PinataGeoRenderer.providerAnimated("fudgehog"));
+        event.registerEntityRenderer(ModPinataEntities.MOUSEMALLOW.get(), PinataGeoRenderer.provider("mousemallow"));
         event.registerEntityRenderer(ModPinataEntities.SYRUPENT.get(), SyrupentRenderer::new);
         event.registerEntityRenderer(ModPinataEntities.TAFFLY.get(), TafflyRenderer::new);
-        event.registerEntityRenderer(ModPinataEntities.BUNNYCOMB.get(), BunnycombRenderer::new);
+        event.registerEntityRenderer(ModPinataEntities.BUNNYCOMB.get(), PinataGeoRenderer.provider("bunnycomb"));
         event.registerEntityRenderer(ModPinataEntities.QUACKBERRY.get(), QuackberryRenderer::new);
         event.registerEntityRenderer(ModPinataEntities.SHELLYBEAN.get(), ShellybeanRenderer::new);
         event.registerEntityRenderer(ModPinataEntities.NEWTGAT.get(), NewtgatRenderer::new);
@@ -56,7 +56,7 @@ public class ClientEvents {
         event.registerEntityRenderer(ModPinataEntities.DOENUT.get(), DoenutRenderer::new);
         // Batches 7-9
         event.registerEntityRenderer(ModPinataEntities.CANDARY.get(), CandaryRenderer::new);
-        event.registerEntityRenderer(ModPinataEntities.PARMADILLO.get(), ParmadilloRenderer::new);
+        event.registerEntityRenderer(ModPinataEntities.PARMADILLO.get(), PinataGeoRenderer.provider("parmadillo"));
         event.registerEntityRenderer(ModPinataEntities.ZUMBUG.get(), ZumbugRenderer::new);
         event.registerEntityRenderer(ModPinataEntities.PIEENA.get(), PieenaRenderer::new);
         event.registerEntityRenderer(ModPinataEntities.JUICYGOOSE.get(), JuicygooseRenderer::new);
@@ -67,7 +67,7 @@ public class ClientEvents {
         event.registerEntityRenderer(ModPinataEntities.CINNAMONKEY.get(), CinnamonkeyRenderer::new);
         event.registerEntityRenderer(ModPinataEntities.SARSGORILLA.get(), SarsgorillaRenderer::new);
         event.registerEntityRenderer(ModPinataEntities.CAMELLO.get(), CamelloRenderer::new);
-        event.registerEntityRenderer(ModPinataEntities.PENGUM.get(), PengumRenderer::new);
+        event.registerEntityRenderer(ModPinataEntities.PENGUM.get(), PinataGeoRenderer.provider("pengum"));
         event.registerEntityRenderer(ModPinataEntities.WALRUSK.get(), WalruskRenderer::new);
         event.registerEntityRenderer(ModPinataEntities.POLOLLYBEAR.get(), PolollybearRenderer::new);
         event.registerEntityRenderer(ModPinataEntities.FIZZLYBEAR.get(), FizzlybearRenderer::new);
@@ -79,7 +79,7 @@ public class ClientEvents {
         event.registerEntityRenderer(ModPinataEntities.JAMELEON.get(), JameleonRenderer::new);
         event.registerEntityRenderer(ModPinataEntities.GECKIE.get(), GeckieRenderer::new);
         event.registerEntityRenderer(ModPinataEntities.JELI.get(), JeliRenderer::new);
-        event.registerEntityRenderer(ModPinataEntities.CUSTACEAN.get(), CustaceanRenderer::new);
+        event.registerEntityRenderer(ModPinataEntities.CUSTACEAN.get(), PinataGeoRenderer.provider("custacean"));
         event.registerEntityRenderer(ModPinataEntities.MOTHDROP.get(), MothdropRenderer::new);
         event.registerEntityRenderer(ModPinataEntities.SWEETLE.get(), SweetleRenderer::new);
         event.registerEntityRenderer(ModPinataEntities.RAISANT.get(), RaisantRenderer::new);

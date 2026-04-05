@@ -1,0 +1,10 @@
+{
+  "format_version": "1.8.0",
+  "animations": {
+    "animation.fudgehog.idle": {
+      "animation_length": 3.0,
+      "loop": true,
+      "bones": {}
+    }
+  }
+}

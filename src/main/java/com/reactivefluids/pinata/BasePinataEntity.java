@@ -26,6 +26,15 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.animation.AnimatableManager;
+import software.bernie.geckolib.animation.AnimationController;
+import software.bernie.geckolib.animation.AnimationState;
+import software.bernie.geckolib.animation.PlayState;
+import software.bernie.geckolib.animation.RawAnimation;
+import software.bernie.geckolib.util.GeckoLibUtil;
+
 import javax.annotation.Nullable;
 import java.util.List;
 
@@ -33,8 +42,25 @@ import java.util.List;
  * Base class for all Viva Piñata creatures.
  * Handles the core piñata lifecycle: wild → visitor → resident, happiness,
  * candy drops on death (breaking the piñata), and romance mechanics.
+ * Implements GeoEntity for GeckoLib support on species with Bedrock geo models.
  */
-public abstract class BasePinataEntity extends Animal {
+public abstract class BasePinataEntity extends Animal implements GeoEntity {
+
+    private final AnimatableInstanceCache geoCache = GeckoLibUtil.createInstanceCache(this);
+
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+        // Only species with animation files should register; others use procedural animation
+    }
+
+    protected String getIdleAnimationName() {
+        return "animation." + getPinataSpeciesName().toLowerCase() + ".idle";
+    }
+
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return geoCache;
+    }
 
     // --- Synched Data ---
     private static final EntityDataAccessor<Integer> DATA_HAPPINESS =

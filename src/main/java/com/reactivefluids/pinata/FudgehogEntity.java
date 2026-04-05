@@ -14,6 +14,10 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 
+import software.bernie.geckolib.animation.AnimatableManager;
+import software.bernie.geckolib.animation.AnimationController;
+import software.bernie.geckolib.animation.RawAnimation;
+
 import javax.annotation.Nullable;
 import java.util.List;
 
@@ -55,6 +59,12 @@ public class FudgehogEntity extends BasePinataEntity {
 
     @Override
     public String getPinataSpeciesName() { return "Fudgehog"; }
+
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+        controllers.add(new AnimationController<>(this, "idle", 5, state ->
+                state.setAndContinue(RawAnimation.begin().thenLoop(getIdleAnimationName()))));
+    }
 
     @Override
     public List<ItemStack> getVisitFoods() {
