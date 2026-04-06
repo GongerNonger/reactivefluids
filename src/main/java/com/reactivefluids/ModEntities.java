@@ -109,4 +109,12 @@ public class ModEntities {
                             .sized(0.6F, 1.99F)
                             .clientTrackingRange(8)
                             .build("raised_skeleton"));
+
+    public static final DeferredHolder<EntityType<?>, EntityType<FireballEntity>> FIREBALL =
+            ENTITY_TYPES.register("fletchers_fireball", () ->
+                    EntityType.Builder.<FireballEntity>of(FireballEntity::new, MobCategory.MISC)
+                            .sized(0.3F, 0.3F)
+                            .clientTrackingRange(16)
+                            .updateInterval(1)
+                            .build("fletchers_fireball"));
 }

@@ -236,4 +236,7 @@ public class ModItems {
 
     public static final DeferredItem<RaiseDeadScrollItem> RAISE_DEAD_SCROLL =
         ITEMS.register("raise_dead_scroll", () -> new RaiseDeadScrollItem(new Item.Properties().stacksTo(1)));
+
+    public static final DeferredItem<FletchersFireballScrollItem> FLETCHERS_FIREBALL_SCROLL =
+        ITEMS.register("fletchers_fireball_scroll", () -> new FletchersFireballScrollItem(new Item.Properties().stacksTo(1)));
 }

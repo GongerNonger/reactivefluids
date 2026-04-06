@@ -28,6 +28,7 @@ public class ClientEvents {
         event.registerEntityRenderer(ModEntities.METEOR.get(), MeteorRenderer::new);
         event.registerEntityRenderer(ModEntities.RAISED_ZOMBIE.get(), RaisedZombieRenderer::new);
         event.registerEntityRenderer(ModEntities.RAISED_SKELETON.get(), RaisedSkeletonRenderer::new);
+        event.registerEntityRenderer(ModEntities.FIREBALL.get(), FireballRenderer::new);
     }
 
     @SubscribeEvent

@@ -10,10 +10,11 @@ Reactive Fluids is a NeoForge 1.21.1 Minecraft mod that adds colored reactive fl
 - **Mod ID:** `reactivefluids`
 - **NeoForge version:** 21.1.172, Minecraft 1.21.1, Java 21
 - **Build:** Gradle 8.8, plugin `net.neoforged.gradle.userdev 7.0.145`
-- **IMPORTANT build command** — always requires explicit JAVA_HOME:
+- **Build command:**
   ```
-  JAVA_HOME="/c/Program Files/Eclipse Adoptium/jdk-21.0.10.7-hotspot" ./gradlew build
+  ./gradlew build
   ```
+  Gradle's toolchain auto-detects Java 21 on the local machine (`auto-detect=true`, `auto-download=true` in `gradle.properties`). No `JAVA_HOME` needed.
 
 ## Fluid System
 
@@ -69,6 +70,20 @@ Opaque epoxy is named "Solid Epoxy" in lang (e.g., "Amber Solid Epoxy").
 | `TranslucentLiquidBlock.java` | `LiquidBlock` subclass with `@OnlyIn(CLIENT)` static `registerRenderLayers()` that sets all fluid blocks to `RenderType.translucent()`. |
 | `generate_textures.py` | Procedural texture generator (stdlib only, no pip deps). Run with `python generate_textures.py`. |
 | `generate_textures_ai.py` | AI-based texture generator. Requires `OPENAI_API_KEY`. See `AI_TEXTURE_SETUP.md`. |
+| `ModParticles.java` | Registers 5 custom `SimpleParticleType`s: `disintegrate`, `dancing_light`, `spectral`, `fog_cloud`, `necrotic`. |
+| `ModDimensions.java` | Declares `ResourceKey<Level>` for `mansion` and `grotto` pocket dimensions. |
+| `AcidBlock.java` | `TranslucentLiquidBlock` subclass. Source blocks drill downward dissolving stone/dirt, stopping at ores and immune blocks. |
+| `FoamBlock.java` | `Block` subclass. Grows upward (max 20) and outward via scheduled ticks, simulating elephant's toothpaste eruption. |
+| `PlanktonBlock.java` | `TranslucentLiquidBlock` subclass. `GLOW` block state (0–4); lit by entities passing through, cascades to neighbors, fades over time. |
+| `CrystalSolutionBlock.java` | `TranslucentLiquidBlock` subclass. Grows `CrystalBlock` on random ticks; converts skeletons to `CrystallizedSkeleton` after 30 s. |
+| `IndicatorBlock.java` | `TranslucentLiquidBlock` subclass. `PH` block state (0–6); shifted by `ReagentEntity` BFS flood-fill. |
+| `ReagentItem.java` | Throwable `ACID_REAGENT` / `BASE_REAGENT`. Spawns `ReagentEntity`; implements `ProjectileItem` for dispenser support. |
+| `ReagentEntity.java` | `ThrowableItemProjectile`. BFS flood-fills up to 512 indicator blocks, shifting pH ±1 based on thrown item type. |
+| `CrystalBlock.java` | Solid crystal deposit block grown by `CrystalSolutionBlock`. |
+| `CrystallizedSkeleton.java` | Hostile mob — skeleton converted by crystal solution. Has `CrystalOverlayLayer` render layer and `CrystalLaserGoal`. |
+| `ArcaneBarrierBlock.java` | Translucent shimmering dome block placed by Tiny Hut scroll. |
+| `ReturnPortalBlock.java` | Exit portal block placed inside pocket dimensions (Mansion, Grotto) to return players to overworld. |
+| `GaldersTower.java` | Helper class that builds the 7×11 two-story Galder's Tower structure with randomly-themed rooms. |
 
 ## Texture Generation
 
@@ -81,19 +96,144 @@ Opaque epoxy is named "Solid Epoxy" in lang (e.g., "Amber Solid Epoxy").
 
 Run after any color or art change:
 ```
-cd /c/Users/Administrator/reactivefluids
 python generate_textures.py
 ```
 
 ## Build & Deploy
 
 ```
-cd /c/Users/Administrator/reactivefluids
-JAVA_HOME="/c/Program Files/Eclipse Adoptium/jdk-21.0.10.7-hotspot" ./gradlew build
-cp build/libs/reactivefluids-1.0.0.jar "/c/Users/Administrator/curseforge/minecraft/Instances/Reactive Fluids Dev/mods/"
+./gradlew build
 ```
 
-Test instance: "Reactive Fluids Dev" in CurseForge.
+To deploy to a local CurseForge test instance, copy `build/libs/reactivefluids-1.0.0.jar` to your instance's `mods/` folder.
+
+## Special Reactive Fluids
+
+Beyond the color-family resin/epoxy system, the mod includes five standalone reactive fluid systems. Each has its own fluid type, source/flowing registrations in `ModFluids`, and a custom block class.
+
+### Elephant's Toothpaste
+- **Fluids:** `HYDROGEN_PEROXIDE` (pale blue) + `POTASSIUM_IODIDE` (tan/brown)
+- **Reaction:** `FluidInteractionRegistry` triggers when they meet — produces `FOAM_BLOCK`
+- **`FoamBlock`** — grows upward via scheduled ticks (max height 20). Blooms outward as it rises (cone/mushroom shape). Only the reaction-placed base block initiates growth; player-placed or side-bloomed foam does not cascade. Emits CLOUD particles during eruption.
+
+### Bioluminescent Plankton
+- **Fluid:** `PLANKTON` (deep ocean blue)
+- **`PlanktonBlock`** — has `GLOW` integer block state (0–4). When a `LivingEntity` moves through it, `entityInside` calls `illuminate()` which BFS-cascades glow to neighboring plankton blocks within radius 3, with brightness falling off by distance. Glow fades stepwise over ~3 seconds via scheduled ticks. Light level = `GLOW * 3` (0–12).
+- Emits a bright blue particle eruption when lit (registered separately).
+
+### Acid
+- **Fluid:** `ACID` (light green)
+- **`AcidBlock`** — only source blocks (amount ≥ 8) act. On `tick`, dissolves the block directly below if it is dissolvable (stone family, dirt, sand, gravel, etc.) and is not immune (bedrock, obsidian, reinforced deepslate, etc.) and is not an ore. Ores are deliberately left exposed. Drills a 1×1 shaft straight down; emits SMOKE + CLOUD particles on each dissolve. Rescheduled every 8 ticks to continue drilling.
+
+### Crystal Solution
+- **Fluid:** `CRYSTAL_SOLUTION` (pale icy blue)
+- **`CrystalSolutionBlock`** — source blocks grow `CrystalBlock` instances on adjacent surfaces via `randomTick` (1-in-15 chance). Requires at least one solid or existing crystal face adjacent to the target. Also: skeletons standing in the fluid accumulate `crystal_soak_time` ticks in persistent data; at 600 ticks (30 s) they convert to a `CrystallizedSkeleton` via `convertTo`.
+- **`CrystalBlock`** — the grown crystal deposit block.
+- **`CrystallizedSkeleton`** — hostile mob variant of skeleton with crystal overlay render layer (`CrystalOverlayLayer`). Has a `CrystalLaserGoal` for ranged crystal attacks.
+
+### Rainbow Indicator
+- **Fluid:** `INDICATOR` (starts green/neutral)
+- **`IndicatorBlock`** — has `PH` integer block state (0–6). 0 = red (acid), 3 = green (neutral), 6 = violet (base). Does not shift on its own.
+- **`ReagentItem`** — throwable item (like hardener). Two variants: `ACID_REAGENT` (shifts pH −1) and `BASE_REAGENT` (shifts pH +1). Spawns `ReagentEntity` on right-click.
+- **`ReagentEntity`** — `ThrowableItemProjectile`. On impact, BFS flood-fills up to 512 connected indicator blocks and shifts each block's PH by ±1 depending on the thrown item. Supports dispenser fire via `ProjectileItem`.
+
+## Spell Scroll System
+
+A WIP D&D 5e–inspired system of 22 consumable spell scrolls. All scrolls are items that trigger their effect on right-click (`use()`). Most stack to 1 (except `MOLD_EARTH_SCROLL` which stacks to 16). All registered in `ModItems`.
+
+### Scroll Items
+
+| Item ID | Class | D&D Level | Effect |
+|---------|-------|-----------|--------|
+| `mold_earth_scroll` | `MoldEarthScrollItem` | Cantrip | Excavates a 3×3×3 cube of soft earth |
+| `fog_cloud_scroll` | `FogCloudScrollItem` | 1st | Spawns a `FogCloudEntity` that blinds nearby hostile mobs |
+| `plant_growth_scroll` | `PlantGrowthScrollItem` | 3rd | Accelerates vegetation growth in wide radius |
+| `erupting_earth_scroll` | `EruptingEarthScrollItem` | 3rd | Violently erupts blocks upward in a localized explosion |
+| `tiny_hut_scroll` | `TinyHutScrollItem` | 3rd | Builds an `ArcaneBarrierBlock` dome shelter lasting 10 min |
+| `raise_dead_scroll` | `RaiseDeadScrollItem` | 3rd | Cast on rotten flesh block or bone block — raises `RaisedZombieEntity` or `RaisedSkeletonEntity` |
+| `control_water_scroll` | `ControlWaterScrollItem` | 4th | Parts water blocks temporarily (60 s); tracked by `ControlWaterData` |
+| `conjure_animals_scroll` | `ConjureAnimalsScrollItem` | 4th | Summons spectral wolves, foxes, and axolotls for 2 min |
+| `wall_of_stone_scroll` | `WallOfStoneScrollItem` | 5th | Places a permanent stone brick wall |
+| `passwall_scroll` | `PasswallScrollItem` | 5th | Creates a temporary tunnel through solid walls; tracked by `PasswallData` |
+| `dimension_door_scroll` | `DimensionDoorScrollItem` | 4th | Teleports player up to 64 blocks in look direction with safety checks |
+| `dancing_lights_scroll` | `DancingLightsScrollItem` | Cantrip | Spawns 4 orbiting `DancingLightEntity` instances for 1 min |
+| `disintegrate_scroll` | `DisintegrateScrollItem` | 6th | Fires a `DisintegrateBeamEntity` green ray that destroys the target block/entity |
+| `reverse_gravity_scroll` | `ReverseGravityScrollItem` | 7th | Launches all nearby creatures skyward |
+| `steed_scroll` | `SteedScrollItem` | 2nd | Conjures a rideable `PhantomSteedEntity` for 10 min |
+| `move_earth_scroll` | `MoveEarthScrollItem` | 6th | Raises or lowers soft terrain (sneak to lower) |
+| `bones_of_the_earth_scroll` | `BonesOfTheEarthScrollItem` | 6th | Erupts stone pillars from the ground |
+| `arcane_gate_scroll` | `ArcaneGateScrollItem` | 6th | Two-use linked portal pair; state tracked by `ArcaneGateData` |
+| `tower_scroll` | `TowerScrollItem` | 4th | Builds Galder's Tower (7×11 two-story structure via `GaldersTower`); tracked by `ConjuredTowerData` |
+| `magnificent_mansion_scroll` | `MagnificentMansionScrollItem` | 7th | Opens portal to `ModDimensions.MANSION` pocket dimension; tracked by `MansionData` + `PocketDimensionData` |
+| `gongers_grotto_scroll` | `GongersGrottoScrollItem` | 7th | Opens portal to `ModDimensions.GROTTO` pocket dimension; tracked by `GrottoData` + `PocketDimensionData` |
+| `meteor_swarm_scroll` | `MeteorSwarmScrollItem` | 9th | Spawns 4 `MeteorEntity` projectiles from above |
+
+### Supporting Infrastructure
+
+**Persistence (SavedData):**
+
+| Class | Tracks |
+|-------|--------|
+| `ArcaneGateData` | Active portal pairs, entity teleportation between portals, expiry |
+| `TinyHutData` | Dome structure positions and expiry |
+| `PasswallData` | Tunnel block positions and expiry |
+| `ControlWaterData` | Parted water block sets and expiry |
+| `ConjuredTowerData` | Tower footprint positions and expiry |
+| `MansionData` | Magnificent Mansion portal instances and expiry |
+| `GrottoData` | Gonger's Grotto portal instances and expiry |
+| `PocketDimensionData` | Player return positions for pocket dimensions |
+
+**Special Blocks:**
+
+| Block | Class | Notes |
+|-------|-------|-------|
+| `arcane_barrier` | `ArcaneBarrierBlock` | Translucent shimmering dome block used by Tiny Hut |
+| `return_portal` | `ReturnPortalBlock` | Exit block placed inside pocket dimensions |
+| `rotten_flesh_block` | `Block` | Crafted from 9 rotten flesh; used as catalyst for Raise Dead |
+
+**Custom Entities (spell-spawned):**
+
+| Entity | Class | Spawned By |
+|--------|-------|------------|
+| `phantom_steed` | `PhantomSteedEntity` | Steed scroll |
+| `dancing_light` | `DancingLightEntity` | Dancing Lights scroll |
+| `disintegrate_beam` | `DisintegrateBeamEntity` | Disintegrate scroll |
+| `spectral_wolf` | `SpectralWolfEntity` | Conjure Animals scroll |
+| `spectral_fox` | `SpectralFoxEntity` | Conjure Animals scroll |
+| `spectral_axolotl` | `SpectralAxolotlEntity` | Conjure Animals scroll |
+| `fog_cloud` | `FogCloudEntity` | Fog Cloud scroll |
+| `meteor` | `MeteorEntity` | Meteor Swarm scroll |
+| `raised_zombie` | `RaisedZombieEntity` | Raise Dead scroll |
+| `raised_skeleton` | `RaisedSkeletonEntity` | Raise Dead scroll |
+| `crystallized_skeleton` | `CrystallizedSkeleton` | Crystal Solution fluid (mob conversion) |
+
+**Custom Particles (`ModParticles`):**
+
+| ID | Class | Used By |
+|----|-------|---------|
+| `disintegrate` | `DisintegrateParticle` | Disintegrate beam |
+| `dancing_light` | `DancingLightParticle` | Dancing Lights entities |
+| `spectral` | `SpectralParticle` | Spectral creature summons |
+| `fog_cloud` | `FogCloudParticle` | Fog Cloud entity |
+| `necrotic` | `NecroticParticle` | Raise Dead / raised undead |
+
+**Dimensions (`ModDimensions`):**
+
+| Key | Used By |
+|-----|---------|
+| `reactivefluids:mansion` | Magnificent Mansion scroll |
+| `reactivefluids:grotto` | Gonger's Grotto scroll |
+
+### Adding a New Spell Scroll
+
+1. Create `YourSpellScrollItem.java` extending `Item`. Implement the effect in `use()`.
+2. Register it in `ModItems`: `ITEMS.register("your_spell_scroll", () -> new YourSpellScrollItem(...))`.
+3. Add to `ModCreativeTab.displayItems`.
+4. If the spell spawns a custom entity: add entity type to `ModEntities`, add renderer registration in `ClientEvents`.
+5. If the spell needs timed persistence: create a `SavedData` subclass following the pattern of `TinyHutData` or `PasswallData`.
+6. If the spell builds a structure: follow `GaldersTower` — build via `level.setBlock` calls from a helper class.
+7. Add lang entry to `en_us.json`: `"item.reactivefluids.your_spell_scroll": "Your Spell Scroll"`.
+8. Add a scroll texture PNG to `assets/reactivefluids/textures/item/` and model JSON to `assets/reactivefluids/models/item/`.
 
 ## Known Issues / Design Decisions
 

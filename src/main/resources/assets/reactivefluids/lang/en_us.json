@@ -147,5 +147,9 @@
   "message.reactivefluids.raise_dead_fail":                      "Must target two stacked rotten flesh blocks or bone blocks!",
   "block.reactivefluids.rotten_flesh_block":                     "Rotten Flesh Block",
   "entity.reactivefluids.raised_zombie":                         "Raised Zombie",
-  "entity.reactivefluids.raised_skeleton":                       "Raised Skeleton"
+  "entity.reactivefluids.raised_skeleton":                       "Raised Skeleton",
+
+  "item.reactivefluids.fletchers_fireball_scroll":               "Fletcher's Fireball Scroll",
+  "item.reactivefluids.fletchers_fireball_scroll.tooltip":       "Launches a fireball in your look direction. Hold a dye in your offhand to color the flame.",
+  "entity.reactivefluids.fletchers_fireball":                    "Fletcher's Fireball"
 }
