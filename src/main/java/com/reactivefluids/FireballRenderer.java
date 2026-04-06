@@ -43,21 +43,28 @@ public class FireballRenderer extends EntityRenderer<FireballEntity> {
         PoseStack.Pose pose = poseStack.last();
         Matrix4f mat = pose.pose();
 
-        // Core — two perpendicular quads
-        quad(vc, mat, pose, -size, -size, 0,  size, -size, 0,  size, size, 0,  -size, size, 0,
-                0, 0, 1, 1, r, g, b, 1.0F);
-        quad(vc, mat, pose, 0, -size, -size,  0, -size, size,  0, size, size,  0, size, -size,
-                0, 0, 1, 1, r, g, b, 1.0F);
+        // White-hot inner core — always bright white regardless of color
+        float ws = size * 0.45F;
+        quad(vc, mat, pose, -ws, -ws, 0,  ws, -ws, 0,  ws, ws, 0,  -ws, ws, 0,
+                0, 0, 1, 1, 1.0F, 1.0F, 1.0F, 1.0F);
+        quad(vc, mat, pose, 0, -ws, -ws,  0, -ws, ws,  0, ws, ws,  0, ws, -ws,
+                0, 0, 1, 1, 1.0F, 1.0F, 1.0F, 1.0F);
 
-        // Outer glow — larger, translucent, slightly brighter
-        float gs = size * 2.2F;
-        float gr = Math.min(1.0F, r * 1.3F);
-        float gg = Math.min(1.0F, g * 1.3F);
-        float gb = Math.min(1.0F, b * 1.3F);
+        // Colored mid layer
+        quad(vc, mat, pose, -size, -size, 0,  size, -size, 0,  size, size, 0,  -size, size, 0,
+                0, 0, 1, 1, r, g, b, 0.9F);
+        quad(vc, mat, pose, 0, -size, -size,  0, -size, size,  0, size, size,  0, size, -size,
+                0, 0, 1, 1, r, g, b, 0.9F);
+
+        // Outer glow — wide, semi-transparent halo
+        float gs = size * 2.8F;
+        float gr = Math.min(1.0F, r * 1.5F + 0.2F);
+        float gg = Math.min(1.0F, g * 1.5F + 0.2F);
+        float gb = Math.min(1.0F, b * 1.5F + 0.2F);
         quad(vc, mat, pose, -gs, -gs, 0,  gs, -gs, 0,  gs, gs, 0,  -gs, gs, 0,
-                0, 0, 1, 1, gr, gg, gb, 0.3F);
+                0, 0, 1, 1, gr, gg, gb, 0.45F);
         quad(vc, mat, pose, 0, -gs, -gs,  0, -gs, gs,  0, gs, gs,  0, gs, -gs,
-                0, 0, 1, 1, gr, gg, gb, 0.3F);
+                0, 0, 1, 1, gr, gg, gb, 0.45F);
 
         poseStack.popPose();
     }
