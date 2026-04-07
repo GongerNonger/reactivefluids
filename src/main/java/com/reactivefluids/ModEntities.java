@@ -110,6 +110,14 @@ public class ModEntities {
                             .clientTrackingRange(8)
                             .build("raised_skeleton"));
 
+    public static final DeferredHolder<EntityType<?>, EntityType<MagicMissileEntity>> MAGIC_MISSILE =
+            ENTITY_TYPES.register("magic_missile", () ->
+                    EntityType.Builder.<MagicMissileEntity>of(MagicMissileEntity::new, MobCategory.MISC)
+                            .sized(0.3F, 0.3F)
+                            .clientTrackingRange(8)
+                            .updateInterval(2)
+                            .build("magic_missile"));
+
     public static final DeferredHolder<EntityType<?>, EntityType<MoonlightJellyfishEntity>> MOONLIGHT_JELLYFISH =
             ENTITY_TYPES.register("moonlight_jellyfish", () ->
                     EntityType.Builder.<MoonlightJellyfishEntity>of(MoonlightJellyfishEntity::new, MobCategory.WATER_AMBIENT)

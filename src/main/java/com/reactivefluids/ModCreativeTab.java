@@ -95,6 +95,7 @@ public class ModCreativeTab {
                     output.accept(ModItems.MAGNIFICENT_MANSION_SCROLL.get()); // 7th level
                     output.accept(ModItems.GONGERS_GROTTO_SCROLL.get());      // 7th level
                     output.accept(ModItems.RAISE_DEAD_SCROLL.get());         // 3rd level
+                    output.accept(ModItems.MAGIC_MISSILE_SCROLL.get());    // 1st level
                     // Undead crafting blocks
                     output.accept(ModItems.ROTTEN_FLESH_BLOCK_ITEM.get());
                     // Mobs

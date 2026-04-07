@@ -304,6 +304,9 @@ public class ModItems {
     public static final DeferredItem<RaiseDeadScrollItem> RAISE_DEAD_SCROLL =
         ITEMS.register("raise_dead_scroll", () -> new RaiseDeadScrollItem(new Item.Properties().stacksTo(1)));
 
+    public static final DeferredItem<MagicMissileScrollItem> MAGIC_MISSILE_SCROLL =
+        ITEMS.register("magic_missile_scroll", () -> new MagicMissileScrollItem(new Item.Properties().stacksTo(16)));
+
     // =========================================================================
     // Moonlight Jellyfish Spawn Egg
     // =========================================================================
