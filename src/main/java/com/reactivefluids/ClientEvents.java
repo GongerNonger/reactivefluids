@@ -28,8 +28,7 @@ public class ClientEvents {
         event.registerEntityRenderer(ModEntities.METEOR.get(), MeteorRenderer::new);
         event.registerEntityRenderer(ModEntities.RAISED_ZOMBIE.get(), RaisedZombieRenderer::new);
         event.registerEntityRenderer(ModEntities.RAISED_SKELETON.get(), RaisedSkeletonRenderer::new);
-        event.registerEntityRenderer(ModEntities.MAGIC_MISSILE.get(),
-                ctx -> new net.minecraft.client.renderer.entity.NoopRenderer<>(ctx));
+        event.registerEntityRenderer(ModEntities.MAGIC_MISSILE.get(), MagicMissileRenderer::new);
         event.registerEntityRenderer(ModEntities.MOONLIGHT_JELLYFISH.get(), MoonlightJellyfishRenderer::new);
     }
 

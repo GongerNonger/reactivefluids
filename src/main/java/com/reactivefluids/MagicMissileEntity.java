@@ -86,18 +86,13 @@ public class MagicMissileEntity extends Entity {
         // Move
         this.move(MoverType.SELF, this.getDeltaMovement());
 
-        // Trail particles
+        // Trail particles — small subtle sparkles, not big blobs
         if (this.level() instanceof ServerLevel serverLevel) {
-            // Purple-blue arcane trail
+            // Tiny purple-blue arcane spark
             serverLevel.sendParticles(
-                    new DustParticleOptions(new Vector3f(0.47f, 0.31f, 1.0f), 0.8f),
+                    new DustParticleOptions(new Vector3f(0.47f, 0.31f, 1.0f), 0.3f),
                     this.getX(), this.getY(), this.getZ(),
-                    2, 0.05, 0.05, 0.05, 0.01);
-            // White-blue core sparkle
-            serverLevel.sendParticles(
-                    new DustParticleOptions(new Vector3f(0.78f, 0.86f, 1.0f), 0.5f),
-                    this.getX(), this.getY(), this.getZ(),
-                    1, 0.02, 0.02, 0.02, 0.0);
+                    1, 0.03, 0.03, 0.03, 0.0);
         }
     }
 
