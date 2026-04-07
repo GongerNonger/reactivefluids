@@ -39,8 +39,8 @@ public class MagicMissileRenderer extends EntityRenderer<MagicMissileEntity> {
 
         poseStack.pushPose();
 
-        // Scale the sprite
-        float scale = 0.5F;
+        // Scale the sprite — small arcane dart, not a billboard
+        float scale = 0.15F;
         poseStack.scale(scale, scale, scale);
 
         // Billboard — face the camera

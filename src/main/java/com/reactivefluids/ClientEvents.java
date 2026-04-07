@@ -39,6 +39,7 @@ public class ClientEvents {
         event.registerSpriteSet(ModParticles.SPECTRAL.get(), SpectralParticle.Provider::new);
         event.registerSpriteSet(ModParticles.FOG_CLOUD.get(), FogCloudParticle.Provider::new);
         event.registerSpriteSet(ModParticles.NECROTIC.get(), NecroticParticle.Provider::new);
+        event.registerSpriteSet(ModParticles.MAGIC_MISSILE.get(), MagicMissileParticle.Provider::new);
     }
 
     @SubscribeEvent

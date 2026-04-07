@@ -1,6 +1,5 @@
 package com.reactivefluids;
 
-import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -11,7 +10,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import org.joml.Vector3f;
 
 /**
  * Magic Missile projectile — a homing arcane bolt that never misses.
@@ -86,13 +84,11 @@ public class MagicMissileEntity extends Entity {
         // Move
         this.move(MoverType.SELF, this.getDeltaMovement());
 
-        // Trail particles — small subtle sparkles, not big blobs
+        // Trail particles — custom Manus-textured arcane sparks
         if (this.level() instanceof ServerLevel serverLevel) {
-            // Tiny purple-blue arcane spark
-            serverLevel.sendParticles(
-                    new DustParticleOptions(new Vector3f(0.47f, 0.31f, 1.0f), 0.3f),
+            serverLevel.sendParticles(ModParticles.MAGIC_MISSILE.get(),
                     this.getX(), this.getY(), this.getZ(),
-                    1, 0.03, 0.03, 0.03, 0.0);
+                    2, 0.02, 0.02, 0.02, 0.01);
         }
     }
 
@@ -101,11 +97,10 @@ public class MagicMissileEntity extends Entity {
             // Damage
             target.hurt(this.damageSources().magic(), DAMAGE);
 
-            // Impact particles
-            serverLevel.sendParticles(
-                    new DustParticleOptions(new Vector3f(0.47f, 0.31f, 1.0f), 1.2f),
+            // Impact burst — custom arcane sparks
+            serverLevel.sendParticles(ModParticles.MAGIC_MISSILE.get(),
                     target.getX(), target.getY() + target.getBbHeight() * 0.5, target.getZ(),
-                    8, 0.3, 0.3, 0.3, 0.05);
+                    10, 0.3, 0.3, 0.3, 0.08);
 
             // Impact sound
             serverLevel.playSound(null, target.blockPosition(),
