@@ -81,14 +81,14 @@ Opaque epoxy is named "Solid Epoxy" in lang (e.g., "Amber Solid Epoxy").
 
 Run after any color or art change:
 ```
-cd /c/Users/Administrator/reactivefluids
+cd /c/Users/Administrator/Documents/reactivefluids
 python generate_textures.py
 ```
 
 ## Build & Deploy
 
 ```
-cd /c/Users/Administrator/reactivefluids
+cd /c/Users/Administrator/Documents/reactivefluids
 JAVA_HOME="/c/Program Files/Eclipse Adoptium/jdk-21.0.10.7-hotspot" ./gradlew build
 cp build/libs/reactivefluids-1.0.0.jar "/c/Users/Administrator/curseforge/minecraft/Instances/Reactive Fluids Dev/mods/"
 ```
