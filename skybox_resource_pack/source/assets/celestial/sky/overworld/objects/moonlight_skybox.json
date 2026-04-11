@@ -22,7 +22,7 @@
     "degrees_x": "skyAngle + 90",
     "degrees_y": "0",
     "degrees_z": "0",
-    "base_degrees_x": "0",
-    "base_degrees_z": "0"
+    "base_degrees_x": "-90",
+    "base_degrees_z": "-90"
   }
 }

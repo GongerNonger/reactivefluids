@@ -43,9 +43,9 @@ All of these limitations are solved by migrating to Nuit on NeoForge 1.21.4+, wh
 | `source/assets/reactivefluids/textures/sky/night_skybox.png` | 384×256 cubemap texture, 3×2 face grid, 128×128 per face |
 | `source/assets/reactivefluids/textures/sky/night_skybox.png.mcmeta` | blur off, clamp on — partial seam mitigation |
 
-## Celestial cubemap face mapping (empirically derived)
+## Celestial cubemap face mapping (empirically derived, v7 layout)
 
-The 3×2 texture atlas maps to cube faces in a non-obvious way. Layout derived from in-game calibration with the numbered calibration texture:
+The 3×2 texture atlas maps to cube faces in a non-obvious way. This is the v7 layout derived from the first successful in-game test. A later attempt to re-derive it under rotation produced a broken v8 that put the empty face on the north side, so v7 is the canonical working mapping.
 
 | Grid cell | Face |
 |---|---|
