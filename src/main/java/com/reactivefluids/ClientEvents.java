@@ -30,6 +30,7 @@ public class ClientEvents {
         event.registerEntityRenderer(ModEntities.RAISED_SKELETON.get(), RaisedSkeletonRenderer::new);
         event.registerEntityRenderer(ModEntities.MAGIC_MISSILE.get(), MagicMissileRenderer::new);
         event.registerEntityRenderer(ModEntities.MOONLIGHT_JELLYFISH.get(), MoonlightJellyfishRenderer::new);
+        event.registerEntityRenderer(ModEntities.LUNAR_JELLYFISH.get(), LunarJellyfishRenderer::new);
     }
 
     @SubscribeEvent

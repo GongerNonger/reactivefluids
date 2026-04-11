@@ -100,6 +100,7 @@ public class ModCreativeTab {
                     output.accept(ModItems.ROTTEN_FLESH_BLOCK_ITEM.get());
                     // Mobs
                     output.accept(ModItems.MOONLIGHT_JELLYFISH_SPAWN_EGG.get());
+                    output.accept(ModItems.LUNAR_JELLYFISH_SPAWN_EGG.get());
                     // Lava Lamps
                     output.accept(ModItems.LAVA_LAMP_RED_ITEM.get());
                     output.accept(ModItems.LAVA_LAMP_BLUE_ITEM.get());

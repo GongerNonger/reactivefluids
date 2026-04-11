@@ -124,4 +124,11 @@ public class ModEntities {
                             .sized(0.6F, 1.0F) // bell width ~0.6, total height ~1.0 (bell + tentacles)
                             .clientTrackingRange(10)
                             .build("moonlight_jellyfish"));
+
+    public static final DeferredHolder<EntityType<?>, EntityType<LunarJellyfishEntity>> LUNAR_JELLYFISH =
+            ENTITY_TYPES.register("lunar_jellyfish", () ->
+                    EntityType.Builder.<LunarJellyfishEntity>of(LunarJellyfishEntity::new, MobCategory.WATER_AMBIENT)
+                            .sized(1.0F, 1.5F) // v2 model is larger — 16-unit bell + 16-unit tentacles
+                            .clientTrackingRange(10)
+                            .build("lunar_jellyfish"));
 }

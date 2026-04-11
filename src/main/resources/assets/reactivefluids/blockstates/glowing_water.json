@@ -1,0 +1,5 @@
+{
+  "multipart": [
+    { "apply": { "model": "reactivefluids:block/glowing_water" } }
+  ]
+}

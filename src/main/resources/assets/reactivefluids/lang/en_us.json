@@ -173,6 +173,8 @@
 
   "entity.reactivefluids.moonlight_jellyfish":                   "Moonlight Jellyfish",
   "item.reactivefluids.moonlight_jellyfish_spawn_egg":           "Moonlight Jellyfish Spawn Egg",
+  "entity.reactivefluids.lunar_jellyfish":                       "Lunar Jellyfish",
+  "item.reactivefluids.lunar_jellyfish_spawn_egg":               "Lunar Jellyfish Spawn Egg",
 
   "item.reactivefluids.magic_missile_scroll":            "Magic Missile Scroll",
   "item.reactivefluids.magic_missile_scroll.tooltip":    "Fires 4 arcane bolts at nearby hostiles",

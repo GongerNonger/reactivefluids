@@ -85,6 +85,8 @@ public class ReactiveFluids {
                 RaisedSkeletonEntity.createAttributes().build());
         event.put(ModEntities.MOONLIGHT_JELLYFISH.get(),
                 MoonlightJellyfishEntity.createAttributes().build());
+        event.put(ModEntities.LUNAR_JELLYFISH.get(),
+                LunarJellyfishEntity.createAttributes().build());
     }
 
     private void onServerTick(ServerTickEvent.Post event) {

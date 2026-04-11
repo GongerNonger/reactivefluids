@@ -161,6 +161,23 @@ public class ModBlocks {
                     state.getValue(PlanktonBlock.GLOW) * 3)));
 
     // =========================================================================
+    // Glowing water — transient block left behind by bioluminescent entities.
+    // Visually invisible (identical to water when waterlogged), emits light
+    // based on GLOW property, fades back to plain water via scheduled ticks.
+    // =========================================================================
+    public static final DeferredBlock<GlowingWaterBlock> GLOWING_WATER =
+        BLOCKS.register("glowing_water", () ->
+            new GlowingWaterBlock(BlockBehaviour.Properties.of()
+                .noCollission()
+                .noOcclusion()
+                .noLootTable()
+                .replaceable()
+                .strength(100f)
+                .sound(SoundType.EMPTY)
+                .mapColor(MapColor.COLOR_BLUE)
+                .lightLevel(state -> state.getValue(GlowingWaterBlock.GLOW) * 3)));
+
+    // =========================================================================
     // Acid — dissolves stone downward, exposes ores
     // =========================================================================
     public static final DeferredBlock<AcidBlock> ACID_BLOCK =

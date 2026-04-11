@@ -317,6 +317,13 @@ public class ModItems {
                 0x64DCFF, // glowing cyan spots
                 new Item.Properties()));
 
+    public static final DeferredItem<DeferredSpawnEggItem> LUNAR_JELLYFISH_SPAWN_EGG =
+        ITEMS.register("lunar_jellyfish_spawn_egg", () ->
+            new DeferredSpawnEggItem(ModEntities.LUNAR_JELLYFISH,
+                0x1A2040, // deeper indigo base
+                0xC8E4FF, // pale moonlit highlights
+                new Item.Properties()));
+
     // =========================================================================
     // Lava Lamp Block Items
     // =========================================================================
