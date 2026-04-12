@@ -12,7 +12,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.monster.Skeleton;
 import net.minecraft.world.entity.player.Player;
@@ -69,15 +69,15 @@ public class GongersGrottoScrollItem extends Item {
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+    public InteractionResult use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
 
-        if (level.isClientSide()) return InteractionResultHolder.success(stack);
-        if (!(player instanceof ServerPlayer serverPlayer)) return InteractionResultHolder.pass(stack);
+        if (level.isClientSide()) return InteractionResult.SUCCESS;
+        if (!(player instanceof ServerPlayer serverPlayer)) return InteractionResult.PASS;
 
         MinecraftServer server = serverPlayer.server;
         ServerLevel grottoLevel = server.getLevel(ModDimensions.GROTTO);
-        if (grottoLevel == null) return InteractionResultHolder.fail(stack);
+        if (grottoLevel == null) return InteractionResult.FAIL;
 
         PocketDimensionData pocketData = PocketDimensionData.get(server);
         RandomSource random = level.getRandom();
@@ -133,7 +133,7 @@ public class GongersGrottoScrollItem extends Item {
             stack.shrink(1);
         }
 
-        return InteractionResultHolder.consume(stack);
+        return InteractionResult.CONSUME;
     }
 
     @Override

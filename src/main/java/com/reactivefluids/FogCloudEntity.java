@@ -13,6 +13,8 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.damagesource.DamageSource;
 
 /**
  * Persistent invisible entity that maintains a fog cloud area.
@@ -146,4 +148,10 @@ public class FogCloudEntity extends Entity {
         tag.putInt("TicksRemaining", entityData.get(DATA_TICKS_REMAINING));
         tag.putFloat("Radius", entityData.get(DATA_RADIUS));
     }
+
+    @Override
+    public boolean hurtServer(ServerLevel level, DamageSource source, float amount) {
+        return false;
+    }
+
 }

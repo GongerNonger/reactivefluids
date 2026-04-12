@@ -16,7 +16,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -106,7 +106,7 @@ public class MoonlightJellyfishEntity extends WaterAnimal implements GeoEntity {
     @Nullable
     @Override
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty,
-                                         MobSpawnType spawnType, @Nullable SpawnGroupData groupData) {
+                                         EntitySpawnReason spawnType, @Nullable SpawnGroupData groupData) {
         // 10% chance to spawn as rare green variant
         if (this.random.nextFloat() < 0.1F) {
             this.setVariant(VARIANT_GREEN);

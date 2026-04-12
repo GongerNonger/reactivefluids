@@ -25,6 +25,6 @@ license = "${mod_license}"
 [[dependencies.reactivefluids]]
     modId = "geckolib"
     type = "required"
-    versionRange = "[4.7,)"
+    versionRange = "[4.8,)"
     ordering = "NONE"
     side = "BOTH"

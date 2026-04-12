@@ -113,4 +113,10 @@ public class MagicMissileEntity extends Entity {
     public boolean isNoGravity() {
         return true;
     }
+
+    @Override
+    public boolean hurtServer(ServerLevel level, DamageSource source, float amount) {
+        return false;
+    }
+
 }

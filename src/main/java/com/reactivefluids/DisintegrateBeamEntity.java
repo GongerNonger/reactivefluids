@@ -8,6 +8,8 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.damagesource.DamageSource;
 
 /**
  * A purely visual entity that renders a green disintegration beam
@@ -121,4 +123,10 @@ public class DisintegrateBeamEntity extends Entity {
         tag.putFloat("EndZ", entityData.get(DATA_END_Z));
         tag.putInt("Ticks", entityData.get(DATA_TICKS));
     }
+
+    @Override
+    public boolean hurtServer(ServerLevel level, DamageSource source, float amount) {
+        return false;
+    }
+
 }

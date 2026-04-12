@@ -7,7 +7,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -38,9 +38,9 @@ public class ReverseGravityScrollItem extends Item {
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+    public InteractionResult use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
-        if (level.isClientSide()) return InteractionResultHolder.success(stack);
+        if (level.isClientSide()) return InteractionResult.SUCCESS;
 
         ServerLevel serverLevel = (ServerLevel) level;
         Vec3 center = player.position();
@@ -90,7 +90,7 @@ public class ReverseGravityScrollItem extends Item {
         if (!player.getAbilities().instabuild) {
             stack.shrink(1);
         }
-        return InteractionResultHolder.consume(stack);
+        return InteractionResult.CONSUME;
     }
 
     @Override

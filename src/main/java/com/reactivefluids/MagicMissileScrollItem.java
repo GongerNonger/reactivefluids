@@ -7,7 +7,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
@@ -37,10 +37,10 @@ public class MagicMissileScrollItem extends Item {
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+    public InteractionResult use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
 
-        if (level.isClientSide()) return InteractionResultHolder.success(stack);
+        if (level.isClientSide()) return InteractionResult.SUCCESS;
 
         ServerLevel serverLevel = (ServerLevel) level;
 
@@ -52,7 +52,7 @@ public class MagicMissileScrollItem extends Item {
         if (hostiles.isEmpty()) {
             player.displayClientMessage(
                     Component.literal("No hostile targets in range!").withStyle(ChatFormatting.RED), true);
-            return InteractionResultHolder.fail(stack);
+            return InteractionResult.FAIL;
         }
 
         hostiles.sort(Comparator.comparingDouble(player::distanceToSqr));
@@ -99,7 +99,7 @@ public class MagicMissileScrollItem extends Item {
         // Cooldown
         player.getCooldowns().addCooldown(this, 20); // 1 second
 
-        return InteractionResultHolder.consume(stack);
+        return InteractionResult.CONSUME;
     }
 
     @Override

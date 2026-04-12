@@ -65,7 +65,7 @@ public class DevilsCigarBlock extends BushBlock {
                                   InteractionHand hand, BlockHitResult hit) {
         if (!state.getValue(OPEN)) {
             burstOpen(state, level, pos);
-            return InteractionResult.sidedSuccess(level.isClientSide());
+            return InteractionResult.SUCCESS;
         }
         return InteractionResult.PASS;
     }

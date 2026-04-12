@@ -5,7 +5,7 @@ import net.minecraft.core.Position;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.Item;
@@ -20,7 +20,7 @@ public class HardenerItem extends Item implements ProjectileItem {
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+    public InteractionResult use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         level.playSound(null, player.getX(), player.getY(), player.getZ(),
                 SoundEvents.SPLASH_POTION_THROW, SoundSource.NEUTRAL,
@@ -32,7 +32,7 @@ public class HardenerItem extends Item implements ProjectileItem {
             level.addFreshEntity(entity);
         }
         if (!player.getAbilities().instabuild) stack.shrink(1);
-        return InteractionResultHolder.sidedSuccess(stack, level.isClientSide());
+        return InteractionResult.SUCCESS;
     }
 
     @Override

@@ -20,6 +20,7 @@ import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nullable;
 import java.util.UUID;
+import net.minecraft.world.damagesource.DamageSource;
 
 /**
  * A single dancing light orb — orbits the caster, places invisible light blocks,
@@ -238,4 +239,10 @@ public class DancingLightEntity extends Entity {
             tag.putInt("LightZ", lastLightPos.getZ());
         }
     }
+
+    @Override
+    public boolean hurtServer(ServerLevel level, DamageSource source, float amount) {
+        return false;
+    }
+
 }

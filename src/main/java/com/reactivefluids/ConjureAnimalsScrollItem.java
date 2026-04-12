@@ -7,7 +7,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
@@ -36,9 +36,9 @@ public class ConjureAnimalsScrollItem extends Item {
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+    public InteractionResult use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
-        if (level.isClientSide()) return InteractionResultHolder.success(stack);
+        if (level.isClientSide()) return InteractionResult.SUCCESS;
 
         ServerLevel serverLevel = (ServerLevel) level;
 
@@ -67,7 +67,7 @@ public class ConjureAnimalsScrollItem extends Item {
         if (!player.getAbilities().instabuild) {
             stack.shrink(1);
         }
-        return InteractionResultHolder.consume(stack);
+        return InteractionResult.CONSUME;
     }
 
     private Mob spawnRandomCreature(ServerLevel level, Player player, int index) {

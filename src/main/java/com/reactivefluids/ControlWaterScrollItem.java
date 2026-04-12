@@ -9,7 +9,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -46,9 +46,9 @@ public class ControlWaterScrollItem extends Item {
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+    public InteractionResult use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
-        if (level.isClientSide()) return InteractionResultHolder.success(stack);
+        if (level.isClientSide()) return InteractionResult.SUCCESS;
 
         ServerLevel serverLevel = (ServerLevel) level;
 
@@ -62,7 +62,7 @@ public class ControlWaterScrollItem extends Item {
         if (hitResult.getType() == HitResult.Type.MISS) {
             player.displayClientMessage(
                     Component.translatable("message.reactivefluids.control_water_fail"), true);
-            return InteractionResultHolder.fail(stack);
+            return InteractionResult.FAIL;
         }
 
         BlockPos hitPos = hitResult.getBlockPos();
@@ -73,7 +73,7 @@ public class ControlWaterScrollItem extends Item {
                 && !hitState.getFluidState().is(Fluids.FLOWING_WATER)) {
             player.displayClientMessage(
                     Component.translatable("message.reactivefluids.control_water_fail"), true);
-            return InteractionResultHolder.fail(stack);
+            return InteractionResult.FAIL;
         }
 
         // Determine corridor direction from player facing (horizontal only)
@@ -117,7 +117,7 @@ public class ControlWaterScrollItem extends Item {
         if (replacedPositions.isEmpty()) {
             player.displayClientMessage(
                     Component.translatable("message.reactivefluids.control_water_fail"), true);
-            return InteractionResultHolder.fail(stack);
+            return InteractionResult.FAIL;
         }
 
         // Register for restoration
@@ -141,7 +141,7 @@ public class ControlWaterScrollItem extends Item {
         if (!player.getAbilities().instabuild) {
             stack.shrink(1);
         }
-        return InteractionResultHolder.consume(stack);
+        return InteractionResult.CONSUME;
     }
 
     @Override

@@ -83,11 +83,11 @@ public class CrystalSolutionBlock extends TranslucentLiquidBlock {
             if (ticks >= CRYSTALLIZE_TICKS) {
                 // Convert to crystallized skeleton
                 CrystallizedSkeleton crystal = skeleton.convertTo(
-                        ModEntities.CRYSTALLIZED_SKELETON.get(), true);
-                if (crystal != null) {
-                    crystal.finalizeSpawn(serverLevel, level.getCurrentDifficultyAt(pos),
-                            net.minecraft.world.entity.MobSpawnType.CONVERSION, null);
-                }
+                        ModEntities.CRYSTALLIZED_SKELETON.get(),
+                        net.minecraft.world.entity.ConversionParams.single(skeleton, true, true),
+                        net.minecraft.world.entity.EntitySpawnReason.CONVERSION,
+                        converted -> converted.finalizeSpawn(serverLevel, level.getCurrentDifficultyAt(pos),
+                                net.minecraft.world.entity.EntitySpawnReason.CONVERSION, null));
             }
         }
     }

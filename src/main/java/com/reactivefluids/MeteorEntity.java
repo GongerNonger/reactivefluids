@@ -15,6 +15,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.damagesource.DamageSource;
 
 /**
  * A visual falling meteor entity that streaks down from the sky,
@@ -206,4 +207,10 @@ public class MeteorEntity extends Entity {
     protected void addAdditionalSaveData(CompoundTag tag) {
         // Short-lived entity, minimal save data
     }
+
+    @Override
+    public boolean hurtServer(ServerLevel level, DamageSource source, float amount) {
+        return false;
+    }
+
 }
