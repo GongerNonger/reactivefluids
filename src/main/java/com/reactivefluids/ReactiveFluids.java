@@ -28,6 +28,8 @@ public class ReactiveFluids {
         ModEntities.ENTITY_TYPES.register(modEventBus);
         ModParticles.PARTICLE_TYPES.register(modEventBus);
         ModCreativeTab.CREATIVE_MODE_TABS.register(modEventBus);
+        ModEffects.MOB_EFFECTS.register(modEventBus);
+        ModPotions.POTIONS.register(modEventBus);
 
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(this::registerAttributes);
@@ -87,6 +89,8 @@ public class ReactiveFluids {
                 MoonlightJellyfishEntity.createAttributes().build());
         event.put(ModEntities.LUNAR_JELLYFISH.get(),
                 LunarJellyfishEntity.createAttributes().build());
+        event.put(ModEntities.TROPICAL_SLIME.get(),
+                TropicalSlimeEntity.createAttributes().build());
     }
 
     private void onServerTick(ServerTickEvent.Post event) {

@@ -31,6 +31,15 @@ public class ClientEvents {
         event.registerEntityRenderer(ModEntities.MAGIC_MISSILE.get(), MagicMissileRenderer::new);
         event.registerEntityRenderer(ModEntities.MOONLIGHT_JELLYFISH.get(), MoonlightJellyfishRenderer::new);
         event.registerEntityRenderer(ModEntities.LUNAR_JELLYFISH.get(), LunarJellyfishRenderer::new);
+        event.registerEntityRenderer(ModEntities.TROPICAL_SLIME.get(), TropicalSlimeRenderer::new);
+    }
+
+    @SubscribeEvent
+    public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
+        event.registerLayerDefinition(TropicalSlimeRenderer.TROPICAL_SLIME_INNER,
+            TropicalSlimeModel::createInnerBodyLayer);
+        event.registerLayerDefinition(TropicalSlimeRenderer.TROPICAL_SLIME_OUTER,
+            TropicalSlimeModel::createOuterBodyLayer);
     }
 
     @SubscribeEvent

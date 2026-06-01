@@ -182,5 +182,13 @@
   "block.reactivefluids.lava_lamp_red":    "Red Lava Lamp",
   "block.reactivefluids.lava_lamp_blue":   "Blue Lava Lamp",
   "block.reactivefluids.lava_lamp_green":  "Green Lava Lamp",
-  "block.reactivefluids.lava_lamp_purple": "Purple Lava Lamp"
+  "block.reactivefluids.lava_lamp_purple": "Purple Lava Lamp",
+
+  "block.reactivefluids.semper_augustus":                      "Semper Augustus",
+  "entity.reactivefluids.tropical_slime":                     "Tropical Slime",
+  "item.reactivefluids.tropical_slime_spawn_egg":             "Tropical Slime Spawn Egg",
+  "effect.reactivefluids.tulip_mania":                        "Tulip Mania",
+  "item.reactivefluids.potion.tulip_mania":                   "Potion of Tulip Mania",
+  "item.reactivefluids.potion.long_tulip_mania":              "Long Potion of Tulip Mania",
+  "item.reactivefluids.potion.strong_tulip_mania":            "Strong Potion of Tulip Mania"
 }

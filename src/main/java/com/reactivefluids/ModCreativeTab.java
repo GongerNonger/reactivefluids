@@ -106,6 +106,10 @@ public class ModCreativeTab {
                     output.accept(ModItems.LAVA_LAMP_BLUE_ITEM.get());
                     output.accept(ModItems.LAVA_LAMP_GREEN_ITEM.get());
                     output.accept(ModItems.LAVA_LAMP_PURPLE_ITEM.get());
+                    // Semper Augustus
+                    output.accept(ModItems.SEMPER_AUGUSTUS_ITEM.get());
+                    // Tropical Slime
+                    output.accept(ModItems.TROPICAL_SLIME_SPAWN_EGG.get());
                 })
                 .build()
         );

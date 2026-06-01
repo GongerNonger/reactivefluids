@@ -131,4 +131,11 @@ public class ModEntities {
                             .sized(1.0F, 1.5F) // v2 model is larger — 16-unit bell + 16-unit tentacles
                             .clientTrackingRange(10)
                             .build("lunar_jellyfish"));
+
+    public static final DeferredHolder<EntityType<?>, EntityType<TropicalSlimeEntity>> TROPICAL_SLIME =
+            ENTITY_TYPES.register("tropical_slime", () ->
+                    EntityType.Builder.<TropicalSlimeEntity>of(TropicalSlimeEntity::new, MobCategory.CREATURE)
+                            .sized(0.52F, 0.52F)
+                            .clientTrackingRange(10)
+                            .build("tropical_slime"));
 }

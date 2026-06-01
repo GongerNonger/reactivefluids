@@ -329,4 +329,14 @@ public class ModBlocks {
 
     public static final DeferredBlock<LavaLampBlock> LAVA_LAMP_PURPLE =
         BLOCKS.register("lava_lamp_purple", () -> new LavaLampBlock(lavaLampProps(MapColor.COLOR_PURPLE), 0xA030FF));
+
+    // =========================================================================
+    // Semper Augustus Tulip — rare decorative flower
+    // =========================================================================
+    public static final DeferredBlock<SemperAugustusBlock> SEMPER_AUGUSTUS =
+        BLOCKS.register("semper_augustus", () ->
+            new SemperAugustusBlock(BlockBehaviour.Properties.of()
+                .noCollission().instabreak().sound(SoundType.GRASS)
+                .mapColor(MapColor.PLANT)
+                .pushReaction(net.minecraft.world.level.material.PushReaction.DESTROY)));
 }

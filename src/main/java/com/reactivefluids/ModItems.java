@@ -338,4 +338,21 @@ public class ModItems {
 
     public static final DeferredItem<BlockItem> LAVA_LAMP_PURPLE_ITEM =
         ITEMS.register("lava_lamp_purple", () -> new BlockItem(ModBlocks.LAVA_LAMP_PURPLE.get(), new Item.Properties()));
+
+    // =========================================================================
+    // Tropical Slime Spawn Egg
+    // =========================================================================
+    public static final DeferredItem<DeferredSpawnEggItem> TROPICAL_SLIME_SPAWN_EGG =
+        ITEMS.register("tropical_slime_spawn_egg", () ->
+            new DeferredSpawnEggItem(ModEntities.TROPICAL_SLIME,
+                0x2D8A3B, // tropical green base
+                0x7FD4FF, // cyan accents
+                new Item.Properties()));
+
+    // =========================================================================
+    // Semper Augustus Block Item
+    // =========================================================================
+    public static final DeferredItem<BlockItem> SEMPER_AUGUSTUS_ITEM =
+        ITEMS.register("semper_augustus", () ->
+            new BlockItem(ModBlocks.SEMPER_AUGUSTUS.get(), new Item.Properties()));
 }
